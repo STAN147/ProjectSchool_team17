@@ -712,3 +712,42 @@ results = run_experiments(
     n_trials=10
 )
 
+import pandas as pd
+
+def run_experiments(model_names, datasets, seeds, preprocessor, n_trials=100):
+    results = []
+
+    for dataset in datasets:
+        for model_name in model_names:
+            best_params = tune_hyperparameters(
+                model_name=model_name,
+                dataset=dataset,
+                seed=0,
+                preprocessor=preprocessor,
+                n_trials=n_trials
+            )
+
+            for seed in seeds:
+                result = run_experiment(
+                    model_name=model_name,
+                    dataset=dataset,
+                    seed=seed,
+                    config=best_params,
+                    preprocessor=preprocessor
+                )
+                results.append(result)
+
+    df = pd.DataFrame([
+        {
+            "dataset": result.dataset,
+            "model": result.model,
+            "seed": result.seed,
+            "task_type": result.task_type,
+            "metric": result.metric_name,
+            "metric_value": result.metric_value,
+            "config": result.config
+        }
+        for result in results
+    ])
+
+    return df
