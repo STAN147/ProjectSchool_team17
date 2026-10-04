@@ -1,0 +1,32 @@
+{
+    "name": "MiamiHousing2016",
+    "n_num_features": 16,
+    "n_cat_features": 0,
+    "train_size": 8916,
+    "val_size": 2229,
+    "test_size": 2787,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43093&sort=runs",
+    "task_intro": "The dataset contains information on 13,932 single-family homes sold in Miami in 2016. Besides publicly available information, the dataset creator Steven C. Bourassa has added distance variables, aviation noise as well as latitude and longitude.\n\nThe dataset containts the following columns:\n\n        - PARCELNO: unique identifier for each property. About 1% appear multiple times.\n        - SALE_PRC: sale price ($)\n        - LND_SQFOOT: land area (square feet) \n        - TOT_LVG_AREA: floor area (square feet) \n        - SPEC_FEAT_VAL: value of special features (e.g., swimming pools) ($)\n        - RAIL_DIST: distance to the nearest rail line (an indicator of noise) (feet)\n        - OCEAN_DIST: distance to the ocean (feet) \n        - WATER_DIST: distance to the nearest body of water (feet) \n        - CNTR_DIST: distance to the Miami central business district (feet)\n        - SUBCNTR_DI: distance to the nearest subcenter (feet)\n        - HWY_DIST: distance to the nearest highway (an indicator of noise) (feet) \n        - age: age of the structure\n        - avno60plus: dummy variable for airplane noise exceeding an acceptable level \n        - structure_quality: quality of the structure \n        - month_sold: sale month in 2016 (1 = jan)\n        - LATITUDE\n        - LONGITUDE\n \nA typical model would try to predict log(SALE_PRC) as a function of all variables except the PARCELNO.",
+    "task_type": "regression",
+    "openml_id": 43093,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "LATITUDE": "LATITUDE",
+        "LONGITUDE": "LONGITUDE",
+        "PARCELNO": "PARCELNO",
+        "LND_SQFOOT": "LND_SQFOOT",
+        "TOT_LVG_AREA": "TOT_LVG_AREA",
+        "SPEC_FEAT_VAL": "SPEC_FEAT_VAL",
+        "RAIL_DIST": "RAIL_DIST",
+        "OCEAN_DIST": "OCEAN_DIST",
+        "WATER_DIST": "WATER_DIST",
+        "CNTR_DIST": "CNTR_DIST",
+        "SUBCNTR_DI": "SUBCNTR_DI",
+        "HWY_DIST": "HWY_DIST",
+        "age": "age",
+        "avno60plus": "avno60plus",
+        "month_sold": "month_sold",
+        "structure_quality": "structure_quality"
+    },
+    "cat_feature_intro": {}
+}

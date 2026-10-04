@@ -1,0 +1,24 @@
+{
+    "name": "kin8nm",
+    "n_num_features": 8,
+    "n_cat_features": 0,
+    "train_size": 5242,
+    "val_size": 1311,
+    "test_size": 1639,
+    "source": "https://www.openml.org/search?type=data&status=active&id=189&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown -   \n**Please cite**:   \n\nThis is data set is concerned with the forward kinematics of an 8 link\n robot arm. Among the existing variants of this data set we have used\n the variant 8nm, which is known to be highly non-linear and medium\n noisy.\n\n Original source: DELVE repository of data. \n Source: collection of regression datasets by Luis Torgo (ltorgo@ncc.up.pt) at\n http://www.ncc.up.pt/~ltorgo/Regression/DataSets.html\n Characteristics: 8192 cases, 9 attributes (0 nominal, 9 continuous).",
+    "task_type": "regression",
+    "openml_id": 189,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "theta1": "theta1",
+        "theta2": "theta2",
+        "theta3": "theta3",
+        "theta4": "theta4",
+        "theta5": "theta5",
+        "theta6": "theta6",
+        "theta7": "theta7",
+        "theta8": "theta8"
+    },
+    "cat_feature_intro": {}
+}

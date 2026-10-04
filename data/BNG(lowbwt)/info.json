@@ -1,0 +1,26 @@
+{
+    "name": "BNG(lowbwt)",
+    "n_num_features": 2,
+    "n_cat_features": 7,
+    "train_size": 19906,
+    "val_size": 4977,
+    "test_size": 6221,
+    "source": "https://www.openml.org/search?type=data&status=active&id=1193&sort=runs",
+    "task_intro": null,
+    "task_type": "regression",
+    "openml_id": 1193,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "AGE": "AGE",
+        "LWT": "LWT"
+    },
+    "cat_feature_intro": {
+        "LOW": "LOW",
+        "RACE": "RACE",
+        "SMOKE": "SMOKE",
+        "PTL": "PTL",
+        "HT": "HT",
+        "UI": "UI",
+        "FTV": "FTV"
+    }
+}

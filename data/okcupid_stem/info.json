@@ -1,0 +1,31 @@
+{
+    "name": "okcupid_stem",
+    "n_num_features": 2,
+    "n_cat_features": 11,
+    "train_size": 17072,
+    "val_size": 4269,
+    "test_size": 5336,
+    "source": "https://www.openml.org/search?type=data&status=active&id=45067&sort=runs",
+    "task_intro": "User profile data for San Francisco OkCupid users published in [Kim, A. Y., & Escobedo-Land, A. (2015). OKCupid data for introductory statistics and data science courses. Journal of Statistics Education, 23(2).]. The curated dataset was downloaded from [https://github.com/rudeboybert/JSE_OkCupid]. The original dataset was created with the use of a python script that pulled the data from public profiles on www.okcupid.com on 06/30/2012. It includes people (n = 59946) within a 25 mile radius of San Francisco, who were online in the last year (06/30/2011), with at least one profile picture. Permission to use this data was obtained by the author of the original paper from OkCupid president and co-founder Christian Rudder under the condition that the dataset remains public. As target, the variable 'job' was collapsed into three categories: 'stem', 'non_stem', and 'student'. STEM jobs were defined as 'job' %in% c('computer / hardware / software', 'science / tech / engineering'). Observations with 'job' %in% c('unemployed', 'retired', 'rather not say') or missing values in 'job' were removed. The factor labels of the variable 'speaks' had to be changed to integers to prevent a bug which would not allow the upload of the variable as a nominal feature. The original dataset also included ten open text variables 'essay0' to 'essay9', which were removed from the dataset uploaded here. The dataset further includes the date/time variable 'last_online' (ignored by default) which could be used to construct additional features. Using OkCupid data for predicting STEM jobs was inspired by Max Kuhns book 'Feature Engineering and Selection: A Practical Approach for Predictive Models' [https://bookdown.org/max/FES/].",
+    "task_type": "multiclass",
+    "openml_id": 45067,
+    "imbalance_ratio": 6.826226012793177,
+    "n_classes": 3,
+    "num_feature_intro": {
+        "age": "age",
+        "height": "height"
+    },
+    "cat_feature_intro": {
+        "body_type": "body_type",
+        "drinks": "drinks",
+        "drugs": "drugs",
+        "education": "education",
+        "ethnicity": "ethnicity",
+        "location": "location",
+        "orientation": "orientation",
+        "sex": "sex",
+        "sign": "sign",
+        "smokes": "smokes",
+        "status": "status"
+    }
+}

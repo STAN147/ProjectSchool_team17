@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 3,
+    "n_num_features": 8,
+    "n_cat_features": 4,
+    "train_size": 64000,
+    "val_size": 16000,
+    "test_size": 20000,
+"source":"https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17"
+}

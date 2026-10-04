@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 3,
+    "n_cat_features": 3,
+    "train_size": 960,
+    "val_size": 240,
+    "test_size": 300,
+    "source": "https://www.kaggle.com/datasets/ddosad/datacamps-data-science-associate-certification"
+}

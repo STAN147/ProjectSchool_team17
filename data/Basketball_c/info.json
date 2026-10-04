@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 11,
+    "n_cat_features": 0,
+    "train_size": 857,
+    "val_size": 215,
+    "test_size": 268,
+    "source": "https://www.kaggle.com/datasets/yakhyojon/national-basketball-association-nba"
+}

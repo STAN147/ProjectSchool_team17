@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 7,
+    "n_num_features": 25,
+    "n_cat_features": 2,
+    "train_size": 1241,
+    "val_size": 311,
+    "test_size": 389,
+    "source": "https://archive.ics.uci.edu/dataset/198/steel+plates+faults"
+}

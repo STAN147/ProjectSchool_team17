@@ -1,0 +1,24 @@
+{
+    "name": "Brazilian_houses_reproduced",
+    "n_num_features": 8,
+    "n_cat_features": 0,
+    "train_size": 6842,
+    "val_size": 1711,
+    "test_size": 2139,
+    "source": "https://www.openml.org/search?type=data&status=active&id=44152&sort=runs",
+    "task_intro": "Dataset used in the tabular data benchmark https://github.com/LeoGrin/tabular-benchmark, transformed in the same way. This dataset belongs to the \"regression on numerical features\" benchmark. Original description: \n \n**Author**: Kaggle  \n**Source**: [original](https://www.kaggle.com/rubenssjr/brasilian-houses-to-rent) - 20-03-2020  \n**Please cite**:   \n\nThis dataset contains 10962 houses to rent with 13 diferent features.\n\n**Outliers **\nSome values in the dataset can be considered as outliers for further analyses. Bear in mind that the Web Crawler was used only to get the data, so it's possible that errors in the original data exist.\n\n**Changes in data between versions of dataset **\nSince the WebCrawler was ran in different days for each version of dataset, there may be differences like added or deleted houses (as well as added cities).\n\nNotes: \n\n1) This dataset corresponds to the 2nd version of the original dataset (\"houses_to_rent_v2.csv\").\n\n2) The value '-' in the attribute floor was replaced by '0' as the data contributor stated that this refers to houses with just one floor (see https://www.kaggle.com/rubenssjr/brasilian-houses-to-rent/discussion).\n\n Reproduced from OpenML: https://www.openml.org/d/44141",
+    "task_type": "regression",
+    "openml_id": 44152,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "area": "area",
+        "rooms": "rooms",
+        "bathroom": "bathroom",
+        "parking_spaces": "parking_spaces",
+        "hoa_(BRL)": "hoa_(BRL)",
+        "rent_amount_(BRL)": "rent_amount_(BRL)",
+        "property_tax_(BRL)": "property_tax_(BRL)",
+        "fire_insurance_(BRL)": "fire_insurance_(BRL)"
+    },
+    "cat_feature_intro": {}
+}

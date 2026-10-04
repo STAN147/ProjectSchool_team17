@@ -1,0 +1,25 @@
+{
+    "name": "airlines_seed_0_nrows_2000_nclasses_10_ncols_100_stratify_True",
+    "n_num_features": 3,
+    "n_cat_features": 4,
+    "train_size": 1280,
+    "val_size": 320,
+    "test_size": 400,
+    "source": "https://www.openml.org/search?type=data&status=active&id=44528&sort=runs",
+    "task_intro": "Subsampling of the dataset airlines (1169) with\n\nseed=0\nargs.nrows=2000\nargs.ncols=100\nargs.nclasses=10\nargs.no_stratify=True\nGenerated with the following source code:\n\n\n```python\n    def subsample(\n        self,\n        seed: int,\n        nrows_max: int = 2_000,\n        ncols_max: int = 100,\n        nclasses_max: int = 10,\n        stratified: bool = True,\n    ) -> Dataset:\n        rng = np.random.default_rng(seed)\n\n        x = self.x\n        y = self.y\n\n        # Uniformly sample\n        classes = y.unique()\n        if len(classes) > nclasses_max:\n            vcs = y.value_counts()\n            selected_classes = rng.choice(\n                classes,\n                size=nclasses_max,\n                replace=False,\n                p=vcs / sum(vcs),\n            )\n\n            # Select the indices where one of these classes is present\n            idxs = y.index[y.isin(classes)]\n            x = x.iloc[idxs]\n            y = y.iloc[idxs]\n\n        # Uniformly sample columns if required\n        if len(x.columns) > ncols_max:\n            columns_idxs = rng.choice(\n                list(range(len(x.columns))), size=ncols_max, replace=False\n            )\n            sorted_column_idxs = sorted(columns_idxs)\n            selected_columns = list(x.columns[sorted_column_idxs])\n            x = x[selected_columns]\n        else:\n            sorted_column_idxs = list(range(len(x.columns)))\n\n        if len(x) > nrows_max:\n            # Stratify accordingly\n            target_name = y.name\n            data = pd.concat((x, y), axis=\"columns\")\n            _, subset = train_test_split(\n                data,\n                test_size=nrows_max,\n                stratify=data[target_name],\n                shuffle=True,\n                random_state=seed,\n            )\n            x = subset.drop(target_name, axis=\"columns\")\n            y = subset[target_name]\n\n        # We need to convert categorical columns to string for openml\n        categorical_mask = [self.categorical_mask[i] for i in sorted_column_idxs]\n        columns = list(x.columns)\n\n        return Dataset(\n            # Technically this is not the same but it's where it was derived from\n            dataset=self.dataset,\n            x=x,\n            y=y,\n            categorical_mask=categorical_mask,\n            columns=columns,\n        )\n```",
+    "task_type": "binclass",
+    "openml_id": 44528,
+    "imbalance_ratio": 1.244668911335578,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "Flight": "Flight",
+        "Time": "Time",
+        "Length": "Length"
+    },
+    "cat_feature_intro": {
+        "Airline": "Airline",
+        "AirportFrom": "AirportFrom",
+        "AirportTo": "AirportTo",
+        "DayOfWeek": "DayOfWeek"
+    }
+}

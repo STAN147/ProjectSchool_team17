@@ -1,0 +1,26 @@
+{
+    "name": "shuttle",
+    "n_num_features": 9,
+    "n_cat_features": 0,
+    "train_size": 37120,
+    "val_size": 9280,
+    "test_size": 11600,
+    "source": "https://www.openml.org/search?type=data&status=active&id=40685&sort=runs",
+    "task_intro": "Source: [UCI](https://archive.ics.uci.edu/ml/datasets/Statlog+(Shuttle))\n\nDonor:\n\nJason Catlett\nBasser Department of Computer Science,\nUniversity of Sydney, N.S.W., Australia\n\n\n\nData Set Information:\n\nApproximately 80% of the data belongs to class 1. Therefore the default accuracy is about 80%. The aim here is to obtain an accuracy of 99 - 99.9%.\n\nThe examples in the original dataset were in time order, and this time order could presumably be relevant in classification. However, this was not deemed relevant for StatLog purposes, so the order of the examples in the original dataset was randomised, and a portion of the original dataset removed for validation purposes.\n\n\nAttribute Information:\n\nThe shuttle dataset contains 9 attributes all of which are numerical. The first one being time. The last column is the class which has been coded as follows :\n1 Rad Flow\n2 Fpv Close\n3 Fpv Open\n4 High\n5 Bypass\n6 Bpv Close\n7 Bpv Open\n\n\nRelevant Papers:\n\nN/A",
+    "task_type": "multiclass",
+    "openml_id": 40685,
+    "imbalance_ratio": 4558.6,
+    "n_classes": 7,
+    "num_feature_intro": {
+        "A1": "A1",
+        "A2": "A2",
+        "A3": "A3",
+        "A4": "A4",
+        "A5": "A5",
+        "A6": "A6",
+        "A7": "A7",
+        "A8": "A8",
+        "A9": "A9"
+    },
+    "cat_feature_intro": {}
+}

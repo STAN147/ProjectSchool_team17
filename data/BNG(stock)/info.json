@@ -1,0 +1,25 @@
+{
+    "name": "BNG(stock)",
+    "n_num_features": 9,
+    "n_cat_features": 0,
+    "train_size": 37791,
+    "val_size": 9448,
+    "test_size": 11810,
+    "source": "https://www.openml.org/search?type=data&status=active&id=1200&sort=runs",
+    "task_intro": null,
+    "task_type": "regression",
+    "openml_id": 1200,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "company1": "company1",
+        "company2": "company2",
+        "company3": "company3",
+        "company4": "company4",
+        "company5": "company5",
+        "company6": "company6",
+        "company7": "company7",
+        "company8": "company8",
+        "company9": "company9"
+    },
+    "cat_feature_intro": {}
+}

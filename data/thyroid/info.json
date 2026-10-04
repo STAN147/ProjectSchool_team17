@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 3,
+    "n_num_features": 21,
+    "n_cat_features": 0,
+    "train_size": 4608,
+    "val_size": 1152,
+    "test_size": 1440,
+    "source":"https://archive.ics.uci.edu/dataset/102/thyroid+disease"
+}

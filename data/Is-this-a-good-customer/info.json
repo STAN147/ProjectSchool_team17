@@ -1,0 +1,30 @@
+{
+    "name": "Is-this-a-good-customer",
+    "n_num_features": 9,
+    "n_cat_features": 4,
+    "train_size": 1102,
+    "val_size": 276,
+    "test_size": 345,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43442&sort=runs",
+    "task_intro": "Context\nImbalanced classes put accuracy out of business. This is a surprisingly common problem in machine learning (specifically in classification), occurring in datasets with a disproportionate ratio of observations in each class.\nContent\nStandard accuracy no longer reliably measures performance, which makes model training much trickier.\nImbalanced classes appear in many domains, including:\n\nAntifraud\nAntispam\n\n\nInspiration\n5 tactics for handling imbalanced classes in machine learning:\n\nUp-sample the minority class\nDown-sample the majority class\nChange your performance metric\nPenalize algorithms (cost-sensitive training)\nUse tree-based algorithms",
+    "task_type": "binclass",
+    "openml_id": 43442,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "month": "month",
+        "credit_amount": "credit_amount",
+        "credit_term": "credit_term",
+        "age": "age",
+        "having_children_flg": "having_children_flg",
+        "region": "region",
+        "income": "income",
+        "phone_operator": "phone_operator",
+        "is_client": "is_client"
+    },
+    "cat_feature_intro": {
+        "sex": "sex",
+        "education": "education",
+        "product_type": "product_type",
+        "family_status": "family_status"
+    }
+}

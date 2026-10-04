@@ -1,0 +1,21 @@
+{
+    "name": "fifa",
+    "n_num_features": 5,
+    "n_cat_features": 0,
+    "train_size": 11560,
+    "val_size": 2890,
+    "test_size": 3613,
+    "source": "https://www.openml.org/search?type=data&status=active&id=44026&sort=runs",
+    "task_intro": "Dataset used in the tabular data benchmark https://github.com/LeoGrin/tabular-benchmark, transformed in the same way. This dataset belongs to the \"regression on numerical features\" benchmark.\n        Original source: https://www.kaggle.com/datasets/stefanoleone992/fifa-22-complete-player-dataset?select=players_22.csv Please give credit to the original source if you use this dataset.",
+    "task_type": "regression",
+    "openml_id": 44026,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "age": "age",
+        "height_cm": "height_cm",
+        "weight_kg": "weight_kg",
+        "release_clause_eur": "release_clause_eur",
+        "club_joined": "club_joined"
+    },
+    "cat_feature_intro": {}
+}

@@ -1,0 +1,26 @@
+{
+    "name": "2dplanes",
+    "n_num_features": 10,
+    "n_cat_features": 0,
+    "train_size": 26091,
+    "val_size": 6523,
+    "test_size": 8154,
+    "source": "https://www.openml.org/search?type=data&status=active&id=215&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown -   \n**Please cite**:   \n\nThis is an artificial data set described in Breiman et al. (1984,p.238) \n (with variance 1 instead of 2).  \n \n Generate the values of the 10 attributes independently\n using the following probabilities:\n\n P(X_1 = -1) = P(X_1 = 1) = 1/2\n P(X_m = -1) = P(X_m = 0) = P(X_m = 1) = 1/3, m=2,...,10\n\n Obtain the value of the target variable Y using the rule:\n\n if X_1 = 1 set Y = 3 + 3X_2 + 2X_3 + X_4 + sigma(0,1)\n if X_1 = -1 set Y = -3 + 3X_5 + 2X_6 + X_7 + sigma(0,1)\n\n Characteristics: 40768 cases, 11 continuous attributes\n Source: collection of regression datasets by Luis Torgo (ltorgo@ncc.up.pt) at\n http://www.ncc.up.pt/~ltorgo/Regression/DataSets.html\n Original source: Breiman et al. (1984, p.238).",
+    "task_type": "regression",
+    "openml_id": 215,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "x1": "x1",
+        "x2": "x2",
+        "x3": "x3",
+        "x4": "x4",
+        "x5": "x5",
+        "x6": "x6",
+        "x7": "x7",
+        "x8": "x8",
+        "x9": "x9",
+        "x10": "x10"
+    },
+    "cat_feature_intro": {}
+}

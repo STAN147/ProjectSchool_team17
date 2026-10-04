@@ -1,0 +1,25 @@
+{
+    "name": "yeast",
+    "n_num_features": 8,
+    "n_cat_features": 0,
+    "train_size": 949,
+    "val_size": 238,
+    "test_size": 297,
+    "source": "https://www.openml.org/search?type=data&status=active&id=181&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown -   \n**Please cite**:",
+    "task_type": "multiclass",
+    "openml_id": 181,
+    "imbalance_ratio": 92.6,
+    "n_classes": 10,
+    "num_feature_intro": {
+        "mcg": "mcg",
+        "gvh": "gvh",
+        "alm": "alm",
+        "mit": "mit",
+        "erl": "erl",
+        "pox": "pox",
+        "vac": "vac",
+        "nuc": "nuc"
+    },
+    "cat_feature_intro": {}
+}

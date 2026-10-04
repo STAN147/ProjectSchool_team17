@@ -1,0 +1,22 @@
+{
+    "name": "socmob",
+    "n_num_features": 1,
+    "n_cat_features": 4,
+    "train_size": 739,
+    "val_size": 185,
+    "test_size": 232,
+    "source": "https://www.openml.org/search?type=data&status=active&id=541&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown - Date unknown  \n**Please cite**:   \n\n17x17x2x2 tables of counts in GLIM-ready format used for the analyses\nin Biblarz, Timothy J., and Adrian E. Raftery. 1993. \"The Effects of\nFamily Disruption on Social Mobility.\" American Sociological Review\n(In press). For further details of the data, see this reference.\nColumn 1 is father's occupation, coded as follows:\n17. Professional, Self-Employed\n16. Professional-Salaried\n15. Manager\n14. Salesman-Nonretail\n13. Proprietor\n12. Clerk\n11. Salesman-Retail\n10. Craftsman-Manufacturing\n9. Craftsmen-Other\n8. Craftsman-Construction\n7. Service Worker\n6. Operative-Nonmanufacturing\n5. Operative-Manufacturing\n4. Laborer-Manufacturing\n3. Laborer-Nonmanufacturing\n2. Farmer/Farm Manager\n1. Farm Laborer\nColumn 2 is son's occupation, coded in the same way as father's.\nColumn 3 is family structure, coded 1=intact family background and\n2=nonintact family background.\nColumn 4 is race, coded 1=white and 2=black.\nColumn 5 is counts for son's first occupation.\nColumn 6 is counts for son's current occupation.\nThe counts have been weighted to take account of the survey\ndesign, which is why they are not integers.\n************************************************************\n***********************************************************\nThis file was constructed from publicly available data collected\nby David Featherman and Robert Hauser in 1973: the \"Occupational\nChange in a Generation II\" (OCG II) Survey. Permission is hereby given to\nuse the above data for non-commercial scholarly and teaching purposes.\nIf these data are used in a published article or book,\nthe authors, the original data (in the form given in\nBiblarz and Raftery (1993), cited above), and StatLib should\nall be acknowledged.\n\n\nInformation about the dataset\nCLASSTYPE: numeric\nCLASSINDEX: none specific",
+    "task_type": "regression",
+    "openml_id": 541,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "counts_for_sons_first_occupation": "counts_for_sons_first_occupation"
+    },
+    "cat_feature_intro": {
+        "fathers_occupation": "fathers_occupation",
+        "sons_occupation": "sons_occupation",
+        "family_structure": "family_structure",
+        "race": "race"
+    }
+}

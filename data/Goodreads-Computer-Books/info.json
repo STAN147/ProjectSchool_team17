@@ -1,0 +1,21 @@
+{
+    "name": "Goodreads-Computer-Books",
+    "n_num_features": 5,
+    "n_cat_features": 0,
+    "train_size": 789,
+    "val_size": 198,
+    "test_size": 247,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43785&sort=runs",
+    "task_intro": "Context\nThe reason for creating this dataset is the requirement of a good clean dataset of computer books. I had searched for datasets on books in Kaggle and I found out that while most of the datasets had a good amount of books listed, there were either major columns missing or grossly unclean data. I mean, you can't determine how good a book is just from a few text reviews. So I collected this data from the Goodreads website from the \"Computer\" category to help people who are like this type of book.\nAcknowledgements\nThis data was entirely scraped via the Webdriver\nInspiration\nThe reason behind creating this dataset is pretty straightforward, I'm listing the books for all who need computer books, irrespective of the language and publication and all of that. So go ahead and use it to your liking, find out what book you should be reading next,  all possible approaches to exploring this dataset are welcome.\nI started creating this dataset on Jan 18, 2021, and intend to update it frequently.\nP.S. If you like this, please don't forget to give an upvote!\nNotes\nThe missing values are imputed in this data by the creator.",
+    "task_type": "regression",
+    "openml_id": 43785,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "ratings_count": "ratings_count",
+        "Publish_year": "Publish_year",
+        "Edition": "Edition",
+        "Pages_no": "Pages_no",
+        "Reviews": "Reviews"
+    },
+    "cat_feature_intro": {}
+}

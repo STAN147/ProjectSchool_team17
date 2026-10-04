@@ -1,0 +1,26 @@
+{
+    "name": "dataset_sales",
+    "n_num_features": 10,
+    "n_cat_features": 0,
+    "train_size": 6872,
+    "val_size": 1718,
+    "test_size": 2148,
+    "source": "https://www.openml.org/search?type=data&status=active&id=42183&sort=runs",
+    "task_intro": "Dataset sales",
+    "task_type": "regression",
+    "openml_id": 42183,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "temp": "temp",
+        "daysoff": "daysoff",
+        "year": "year",
+        "month": "month",
+        "day": "day",
+        "week_day": "week_day",
+        "avail0": "avail0",
+        "avail1": "avail1",
+        "avail2": "avail2",
+        "stdv": "stdv"
+    },
+    "cat_feature_intro": {}
+}

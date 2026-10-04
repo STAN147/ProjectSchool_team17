@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 81,
+    "n_cat_features": 0,
+    "train_size": 13565,
+    "val_size": 3392,
+    "test_size": 4240,
+    "source": "https://archive.ics.uci.edu/dataset/464/superconductivty+data"
+}

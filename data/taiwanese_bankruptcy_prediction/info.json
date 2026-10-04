@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 95,
+    "n_cat_features": 0,
+    "train_size": 4364,
+    "val_size": 1091,
+    "test_size": 1364,
+    "source": "https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction"
+}

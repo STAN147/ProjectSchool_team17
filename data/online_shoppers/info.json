@@ -1,0 +1,32 @@
+{
+    "name": "online_shoppers",
+    "n_num_features": 5,
+    "n_cat_features": 9,
+    "train_size": 7891,
+    "val_size": 1973,
+    "test_size": 2466,
+    "source": "https://www.openml.org/search?type=data&status=active&id=45060&sort=runs",
+    "task_intro": "The dataset consists of feature vectors belonging to 12,330 sessions.The dataset was formed so that each sessionwould belong to a different user in a 1-year period to avoidany tendency to a specific campaign, special day, userprofile, or period.Source: https://archive.ics.uci.edu/ml/datasets/Online+Shoppers+Purchasing+Intention+Dataset",
+    "task_type": "binclass",
+    "openml_id": 45060,
+    "imbalance_ratio": 5.462264150943396,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "BounceRates": "BounceRates",
+        "ExitRates": "ExitRates",
+        "PageValues": "PageValues",
+        "SpecialDay": "SpecialDay",
+        "Weekend": "Weekend"
+    },
+    "cat_feature_intro": {
+        "Browser": "Browser",
+        "OperatingSystems": "OperatingSystems",
+        "VisitorType": "VisitorType",
+        "Month": "Month",
+        "Region": "Region",
+        "ProductRelated": "ProductRelated",
+        "Informational": "Informational",
+        "TrafficType": "TrafficType",
+        "Administrative": "Administrative"
+    }
+}

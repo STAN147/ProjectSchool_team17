@@ -1,0 +1,24 @@
+{
+    "name": "led7",
+    "n_num_features": 0,
+    "n_cat_features": 7,
+    "train_size": 2048,
+    "val_size": 512,
+    "test_size": 640,
+    "source": "https://www.openml.org/search?type=data&status=active&id=40678&sort=runs",
+    "task_intro": "led7-pmlb",
+    "task_type": "multiclass",
+    "openml_id": 40678,
+    "imbalance_ratio": 1.262962962962963,
+    "n_classes": 10,
+    "num_feature_intro": {},
+    "cat_feature_intro": {
+        "attribute#1": "attribute#1",
+        "attribute#2": "attribute#2",
+        "attribute#3": "attribute#3",
+        "attribute#4": "attribute#4",
+        "attribute#5": "attribute#5",
+        "attribute#6": "attribute#6",
+        "attribute#7": "attribute#7"
+    }
+}

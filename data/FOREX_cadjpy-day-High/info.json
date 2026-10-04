@@ -1,0 +1,27 @@
+{
+    "name": "FOREX_cadjpy-day-High",
+    "n_num_features": 10,
+    "n_cat_features": 0,
+    "train_size": 1173,
+    "val_size": 294,
+    "test_size": 367,
+    "source": "https://www.openml.org/search?type=data&status=active&id=41839&sort=runs",
+    "task_intro": "**Source**: Dukascopy Historical Data Feed https://www.dukascopy.com/swiss/english/marketwatch/historical/\n**Edited by**: Fabian Schut\n \n# Data Description\nThis is the historical price data of the FOREX CAD/JPY from Dukascopy.\nOne instance (row) is one candlestick of one day.\nThe whole dataset has the data range from 1-1-2018 to 13-12-2018 and does not include the weekends, since the FOREX is not traded in the weekend.\nThe timezone of the feature Timestamp is Europe/Amsterdam.\nThe class attribute is the direction of the mean of the High_Bid and the High_Ask of the following day,\nrelative to the High_Bid and High_Ask mean of the current minute.\nThis means the class attribute is True when the mean High price is going up the following day,\nand the class attribute is False when the mean High price is going down (or stays the same) the following day.\n**Note that this is a hypothetical task, meant for scientific purposes only. Realistic trade strategies can only be applied to predictions on 'Close'-attributes (also available).\n# Attributes \n`Timestamp`: The time of the current data point (Europe/Amsterdam)\n`Bid_Open`: The bid price at the start of this time interval\n`Bid_High`: The highest bid price during this time interval\n`Bid_Low`: The lowest bid price during this time interval\n`Bid_Close`: The bid price at the end of this time interval\n`Bid_Volume`: The number of times the Bid Price changed within this time interval\n`Ask_Open`: The ask price at the start of this time interval\n`Ask_High`: The highest ask price during this time interval\n`Ask_Low`: The lowest ask price during this time interval\n`Ask_Close`: The ask price at the end of this time interval\n`Ask_Volume`: The number of times the Ask Price changed within this time interval\n`Class`: Whether the average price will go up during the next interval",
+    "task_type": "binclass",
+    "openml_id": 41839,
+    "imbalance_ratio": 1.0065645514223194,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "Bid_Open": "Bid_Open",
+        "Bid_High": "Bid_High",
+        "Bid_Low": "Bid_Low",
+        "Bid_Close": "Bid_Close",
+        "Bid_Volume": "Bid_Volume",
+        "Ask_Open": "Ask_Open",
+        "Ask_High": "Ask_High",
+        "Ask_Low": "Ask_Low",
+        "Ask_Close": "Ask_Close",
+        "Ask_Volume": "Ask_Volume"
+    },
+    "cat_feature_intro": {}
+}

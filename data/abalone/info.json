@@ -1,0 +1,26 @@
+{
+    "name": "abalone",
+    "n_num_features": 7,
+    "n_cat_features": 1,
+    "train_size": 2672,
+    "val_size": 669,
+    "test_size": 836,
+    "source": "https://www.openml.org/search?type=data&status=active&id=1557&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: [original](http://www.openml.org/d/183) - UCI    \n**Please cite**:   \n\n* Abstract: \n\nA 3-class version of abalone dataset.\n\n* Sources:  \n\n(a) Original owners of database: Marine Resources Division Marine Research Laboratories - Taroona Department of Primary Industry and Fisheries, Tasmania GPO Box 619F, Hobart, Tasmania 7001, Australia (contact: Warwick Nash +61 02 277277, wnash@dpi.tas.gov.au)\n\n(b) Donor of database: Sam Waugh (Sam.Waugh@cs.utas.edu.au) Department of Computer Science, University of Tasmania GPO Box 252C, Hobart, Tasmania 7001, Australia",
+    "task_type": "multiclass",
+    "openml_id": 1557,
+    "imbalance_ratio": 1.093726379440665,
+    "n_classes": 3,
+    "num_feature_intro": {
+        "V2": "V2",
+        "V3": "V3",
+        "V4": "V4",
+        "V5": "V5",
+        "V6": "V6",
+        "V7": "V7",
+        "V8": "V8"
+    },
+    "cat_feature_intro": {
+        "V1": "V1"
+    }
+}

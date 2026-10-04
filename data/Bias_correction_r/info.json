@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 21,
+    "n_cat_features": 0,
+    "train_size": 4944,
+    "val_size": 1236,
+    "test_size": 1545,
+    "source": "https://archive.ics.uci.edu/dataset/514/bias+correction+of+numerical+prediction+model+temperature+forecast"
+}

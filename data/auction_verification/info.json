@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 6,
+    "n_cat_features": 1,
+    "train_size": 1307,
+    "val_size": 327,
+    "test_size": 409,
+    "source": "https://archive.ics.uci.edu/dataset/713/auction+verification"
+}

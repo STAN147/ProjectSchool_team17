@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 14,
+    "n_cat_features": 4,
+    "train_size": 1653,
+    "val_size": 414,
+    "test_size": 517,
+    "source": "https://archive.ics.uci.edu/dataset/266/seismic+bumps"
+}

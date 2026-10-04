@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 93,
+    "n_cat_features": 2,
+    "train_size": 4364,
+    "val_size": 1091,
+    "test_size": 1364,
+    "source": "https://www.kaggle.com/datasets/fedesoriano/company-bankruptcy-prediction"
+}

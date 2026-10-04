@@ -1,0 +1,9 @@
+{
+    "task_type": "multiclass",
+    "n_num_features": 14,
+    "n_cat_features": 5,
+    "train_size": 470,
+    "val_size": 118,
+    "test_size": 148,
+    "source": "https://www.openml.org/search?type=data&status=active&id=188"
+}

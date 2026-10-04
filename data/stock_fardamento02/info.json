@@ -1,0 +1,23 @@
+{
+    "name": "stock_fardamento02",
+    "n_num_features": 5,
+    "n_cat_features": 1,
+    "train_size": 4016,
+    "val_size": 1005,
+    "test_size": 1256,
+    "source": "https://www.openml.org/search?type=data&status=active&id=42545&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown - Date unknown  \n**Please cite**:   \n\nvalores de saida de fardamento com temperaturas, admiss&otilde;es e demiss&otilde;es",
+    "task_type": "regression",
+    "openml_id": 42545,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "Material": "Material",
+        "pp": "pp",
+        "TEMP": "TEMP",
+        "adm": "adm",
+        "Dem": "Dem"
+    },
+    "cat_feature_intro": {
+        "Dia": "Dia"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 26,
+    "n_cat_features": 0,
+    "train_size": 665,
+    "val_size": 167,
+    "test_size": 208,
+    "source": "https://archive.ics.uci.edu/dataset/301/parkinson+speech+dataset+with+multiple+types+of+sound+recordings"
+}

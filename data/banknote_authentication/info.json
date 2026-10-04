@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 4,
+    "n_cat_features": 0,
+    "train_size": 877,
+    "val_size": 220,
+    "test_size": 275,
+    "source": "https://archive.ics.uci.edu/dataset/267/banknote+authentication"
+}

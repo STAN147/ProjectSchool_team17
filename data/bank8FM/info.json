@@ -1,0 +1,24 @@
+{
+    "name": "bank8FM",
+    "n_num_features": 8,
+    "n_cat_features": 0,
+    "train_size": 5242,
+    "val_size": 1311,
+    "test_size": 1639,
+    "source": "https://www.openml.org/search?type=data&status=active&id=572&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown - Date unknown  \n**Please cite**:   \n\nA family of datasets synthetically generated from a simulation of how bank-customers choose their banks. Tasks are\nbased on predicting the fraction of bank customers who leave the bank because of full queues. The bank family of\ndatasets are generated from a simplistic simulator, which simulates the queues in a series of banks. The simulator was\nconstructed with the explicit purpose of generating a family of datasets for DELVE. Customers come from several\nresidential areas, choose their preferred bank depending on distances and have tasks of varying complexity, and various\nlevels of patience. Each bank has several queues, that open and close according to demand. The tellers have various\neffectivities, and customers may change queue, if their patience expires. In the rej prototasks, the object is to predict the\nrate of rejections, ie the fraction of customers that are turned away from the bank because all the open tellers have full\nqueues.\nSource: collection of regression datasets by Luis Torgo (ltorgo@ncc.up.pt) at\nhttp://www.ncc.up.pt/~ltorgo/Regression/DataSets.html\nOrginal source: DELVE repository of data.\nCharacteristics: Data set contains 8192 (4500+3692) cases. and 9 continuous\nattributes",
+    "task_type": "regression",
+    "openml_id": 572,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "a1cx": "a1cx",
+        "a1cy": "a1cy",
+        "b2x": "b2x",
+        "b2y": "b2y",
+        "a2pop": "a2pop",
+        "a3pop": "a3pop",
+        "temp": "temp",
+        "mxql": "mxql"
+    },
+    "cat_feature_intro": {}
+}

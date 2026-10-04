@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 20,
+    "n_cat_features": 0,
+    "train_size": 5116,
+    "val_size": 1280,
+    "test_size": 1600,
+    "source": "https://www.kaggle.com/datasets/mssmartypants/water-quality"
+}

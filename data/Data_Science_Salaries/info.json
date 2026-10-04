@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 1,
+    "n_cat_features": 4,
+    "train_size": 2403,
+    "val_size": 601,
+    "test_size": 751,
+    "source": "https://www.kaggle.com/datasets/arnabchaki/data-science-salaries-2023/data"
+}

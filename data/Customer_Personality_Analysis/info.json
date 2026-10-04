@@ -1,0 +1,45 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 22,
+    "n_cat_features": 2,
+    "train_size": 1433,
+    "val_size": 359,
+    "test_size": 448,
+    "task_intro": "The data is related with direct marketing campaigns of a Portuguese banking institution. The marketing campaigns were based on phone calls. Often, more than one contact to the same client was required, in order to access if the product (bank term deposit) would be (or not) subscribed. The classification goal is to predict if the client will subscribe (1/0) a term deposit (variable y)",
+	"feature_intro": {
+		"cat":{
+			"Education": "Education Qualification of customer",
+			"Marital_Status": "Marital Status of customer"
+		},
+		"num":{
+			"Year_Birth": "Customer's age",
+			"Income": "Yearly Income of customer",
+			"Kidhome": "Number of children in household",
+			"Teenhome": "Number of teenagers in household",
+			"Recency": "Number of days since the last purchase",
+			"MntWines": "Amount spent on wine in last 2 years",
+			"MntFruits": "Amount spent on fruits in last 2 years",
+			"MntMeatProducts": "Amount spent on meat in last 2 years",
+			"MntFishProducts": "Amount spent on fish in last 2 years",
+			"MntSweetProducts": "Amount spent on sweets in last 2 years",
+			"MntGoldProds": "Amount spent on gold in last 2 years",
+			"NumDealsPurchases": "Number of purchases made with discount",
+			"NumWebPurchases": "Number of purchases made through the company’s web site",
+			"NumCatalogPurchases": "Number of purchases made using a catalogue",
+			"NumStorePurchases": "Number of purchases made directly in stores",
+			"NumWebVisitsMonth": "Number of visits to company’s web site in the last month",
+			"AcceptedCmp3": "1 if customer accepted the offer in the 3rd campaign, 0 otherwise",
+			"AcceptedCmp4": "1 if customer accepted the offer in the 4th campaign, 0 otherwise",
+			"AcceptedCmp5": "1 if customer accepted the offer in the 5th campaign, 0 otherwise",
+			"AcceptedCmp1": "1 if customer accepted the offer in the 1st campaign, 0 otherwise",
+			"AcceptedCmp2": "1 if customer accepted the offer in the 2nd campaign, 0 otherwise",
+			"Complain": "1 if customer complained in the last 2 years, 0 otherwise"
+		}
+	},
+	"target_intro": {
+		"0": "customer didn't accept the offer in the last campaign",
+		"1": "customer accepted the offer in the last campaign"
+	},
+    "source":"https://www.kaggle.com/datasets/imakash3011/customer-personality-analysis"
+}

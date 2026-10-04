@@ -1,0 +1,27 @@
+{
+    "name": "Insurance",
+    "n_num_features": 3,
+    "n_cat_features": 7,
+    "train_size": 15070,
+    "val_size": 3768,
+    "test_size": 4710,
+    "source": "https://www.openml.org/search?type=data&status=active&id=45064&sort=runs",
+    "task_intro": "This dataset is for classification tasks, and has both continuous and categorical variables.",
+    "task_type": "binclass",
+    "openml_id": 45064,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "Upper_Age": "Upper_Age",
+        "Lower_Age": "Lower_Age",
+        "Reco_Policy_Premium": "Reco_Policy_Premium"
+    },
+    "cat_feature_intro": {
+        "City_Code": "City_Code",
+        "Accomodation_Type": "Accomodation_Type",
+        "Reco_Insurance_Type": "Reco_Insurance_Type",
+        "Is_Spouse": "Is_Spouse",
+        "Health Indicator": "Health Indicator",
+        "Holding_Policy_Duration": "Holding_Policy_Duration",
+        "Holding_Policy_Type": "Holding_Policy_Type"
+    }
+}

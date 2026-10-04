@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 4,
+    "n_cat_features": 2,
+    "train_size": 1280,
+    "val_size": 320,
+    "test_size": 400,
+    "source": "https://www.kaggle.com/datasets/datascientistanna/customers-dataset"
+}

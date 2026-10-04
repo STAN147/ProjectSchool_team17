@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 0,
+    "n_cat_features": 86,
+    "train_size": 18772,
+    "val_size": 4693,
+    "test_size": 5867,
+    "source": "https://archive.ics.uci.edu/dataset/722/naticusdroid+android+permissions+dataset"
+}

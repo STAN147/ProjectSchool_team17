@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 8,
+    "n_cat_features": 5,
+    "train_size": 765,
+    "val_size": 192,
+    "test_size": 240,
+    "source": "https://archive.ics.uci.edu/dataset/597/productivity+prediction+of+garment+employees"
+}

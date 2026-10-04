@@ -1,0 +1,24 @@
+{
+    "name": "kr-vs-k",
+    "n_num_features": 3,
+    "n_cat_features": 3,
+    "train_size": 17955,
+    "val_size": 4489,
+    "test_size": 5612,
+    "source": "https://www.openml.org/search?type=data&status=active&id=1481&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: KEEL \n**Please cite**:   \n\nAbstract:\n\nA chess endgame data set representing the positions on the board of the white king, the white rook, and the black king. The task is to determine the optimum number of turn required for white to win the game, which can be a draw if it takes more than sixteen turns.\n\nAttributes Details:\n\n\n1. White_king_col {a, b, c, d, e, f, g, h}\n2. White_king_row {1, 2, 3, 4, 5, 6, 7, 8}\n3. White_rook_col {a, b, c, d, e, f, g, h}\n4. White_rook_row {1, 2, 3, 4, 5, 6, 7, 8}\n5. Black_king_col {a, b, c, d, e, f, g, h}\n6. Black_king_row {1, 2, 3, 4, 5, 6, 7, 8}\n7. Class - Game {draw, zero, one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen}",
+    "task_type": "multiclass",
+    "openml_id": 1481,
+    "imbalance_ratio": 168.62962962962962,
+    "n_classes": 18,
+    "num_feature_intro": {
+        "V2": "V2",
+        "V4": "V4",
+        "V6": "V6"
+    },
+    "cat_feature_intro": {
+        "V1": "V1",
+        "V3": "V3",
+        "V5": "V5"
+    }
+}

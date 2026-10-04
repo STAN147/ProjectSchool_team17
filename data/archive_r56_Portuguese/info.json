@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 1,
+    "n_cat_features": 29,
+    "train_size": 416,
+    "val_size": 104,
+    "test_size": 131,
+    "source": "https://www.kaggle.com/datasets/whenamancodes/student-performance/data"
+}

@@ -1,0 +1,23 @@
+{
+    "name": "CPS1988",
+    "n_num_features": 2,
+    "n_cat_features": 4,
+    "train_size": 18019,
+    "val_size": 4505,
+    "test_size": 5631,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43963&sort=runs",
+    "task_intro": "**Source**\n\nThis dataset was obtained from the **AER** R package (see citation request below).\n\n**Data description**\n\nCross-section data originating from the March 1988 Current Population Survey by the US Census Bureau.\nThe data is a sample of men aged 18 to 70 with positive annual income greater than USD 50 in 1992, who\nare not self-employed nor working without pay. Wages are deflated by the deflator of Personal\nConsumption Expenditure for 1992.\nA problem with CPS data is that it does not provide actual work experience. It is therefore customary\nto compute experience as age - education - 6 (as was done by Bierens and Ginther, 2001), this\nmay be considered potential experience. As a result, some respondents have negative experience\n\n\n**Attribute Information**\n\n* wage Wage (in dollars per week).\n* education Number of years of education.\n* experience Number of years of potential work experience.\n* ethnicity Factor with levels \"cauc\" and \"afam\" (African-American).\n* smsa Factor. Does the individual reside in a Standard Metropolitan Statistical Area (SMSA)?\n* region Factor with levels \"northeast\", \"midwest\", \"south\", \"west\".\n* parttime Factor. Does the individual work part-time?\n\n\n**Citation Request**\n\nChristian Kleiber and Achim Zeileis (2008). Applied Econometrics with\nR. New York: Springer-Verlag. ISBN 978-0-387-77316-2. URL\nhttps://CRAN.R-project.org/package=AER\n\n*Bibtex*\n\n@book{kleiber2008applied,\n  title={Applied econometrics with R},\n  author={Kleiber, Christian and Zeileis, Achim},\n  year={2008},\n  publisher={Springer Science \\& Business Media}\n}",
+    "task_type": "regression",
+    "openml_id": 43963,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "education": "education",
+        "experience": "experience"
+    },
+    "cat_feature_intro": {
+        "ethnicity": "ethnicity",
+        "smsa": "smsa",
+        "region": "region",
+        "parttime": "parttime"
+    }
+}

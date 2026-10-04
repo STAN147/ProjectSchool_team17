@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 8,
+    "n_cat_features": 12,
+    "train_size": 65129,
+    "val_size": 16283,
+    "test_size": 20354,
+    "source": "https://archive.ics.uci.edu/dataset/296/diabetes+130-us+hospitals+for+years+1999-2008"
+}

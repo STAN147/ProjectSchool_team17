@@ -1,0 +1,28 @@
+{
+    "name": "3D_Estimation_using_RSSI_of_WLAN_dataset_complete_1_target",
+    "n_num_features": 12,
+    "n_cat_features": 0,
+    "train_size": 9216,
+    "val_size": 2304,
+    "test_size": 2880,
+    "source": "https://www.openml.org/search?type=data&status=active&id=45720&sort=runs",
+    "task_intro": "3D Location Estimation using RSSI of WLAN dataset.The 3D Location Estimation Using RSSI of Wireless LAN challengeaims to develop an AI/ML-based localization algorithm that canaccurately estimate the position of a receiver based on RSS informationfrom surrounding radio transmitters including height information(enabling the estimation of the target's 3D location).",
+    "task_type": "regression",
+    "openml_id": 45720,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "unixtime": "unixtime",
+        "frequency": "frequency",
+        "channel": "channel",
+        "rssi": "rssi",
+        "ap_latitude": "ap_latitude",
+        "ap_longitude": "ap_longitude",
+        "distance_to_ap1": "distance_to_ap1",
+        "distance_to_ap2": "distance_to_ap2",
+        "distance_to_ap3": "distance_to_ap3",
+        "distance_to_ap4": "distance_to_ap4",
+        "latitude": "latitude",
+        "longitude": "longitude"
+    },
+    "cat_feature_intro": {}
+}

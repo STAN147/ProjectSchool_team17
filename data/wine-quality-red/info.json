@@ -1,0 +1,21 @@
+{
+    "name": "wine-quality-red",
+    "n_num_features": 4,
+    "n_cat_features": 0,
+    "train_size": 1023,
+    "val_size": 256,
+    "test_size": 320,
+    "source": "https://www.openml.org/search?type=data&status=active&id=40691&sort=runs",
+    "task_intro": "wine-quality-red-pmlb",
+    "task_type": "multiclass",
+    "openml_id": 40691,
+    "imbalance_ratio": 68.1,
+    "n_classes": 6,
+    "num_feature_intro": {
+        "density": "density",
+        "pH": "pH",
+        "sulphates": "sulphates",
+        "alcohol": "alcohol"
+    },
+    "cat_feature_intro": {}
+}

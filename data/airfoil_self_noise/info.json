@@ -1,0 +1,21 @@
+{
+    "name": "airfoil_self_noise",
+    "n_num_features": 5,
+    "n_cat_features": 0,
+    "train_size": 961,
+    "val_size": 241,
+    "test_size": 301,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43919&sort=runs",
+    "task_intro": "**Citation**\n\nPlease refer to UCI's [citation policy](https://archive.ics.uci.edu/ml/citation_policy.html).\n\n**Source**\n\nDonor: Dr Roberto Lopez robertolopez '@' intelnics.com Intelnics\n\nCreators:\nThomas F. Brooks, D. Stuart Pope and Michael A. Marcolini NASA\n\nNote that the names of the columns have been altered to be more descriptive.\n\n**Data Description**\n\nThe NASA data set comprises different size NACA 0012 airfoils at various wind tunnel speeds and angles of attack. The span of the airfoil and the observer position were the same in all of the experiments.\n\n**Attribute description**\n\nThis problem has the following inputs:\n\n* frequency - Frequency, in Hertzs.\n* angle -  Angle of attack, in degrees.\n* length - Chord length, in meters.\n* velocity - Free-stream velocity, in meters per second.\n* thickness - Suction side displacement thickness, in meters.\n\nThe only output is:\n\n* pressure - Scaled sound pressure level, in decibels.\n\nRelevant Papers:\n\nT.F. Brooks, D.S. Pope, and A.M. Marcolini.\nAirfoil self-noise and prediction.\nTechnical report, NASA RP-1218, July 1989.\n\nK. Lau.\nA neural networks approach for aerofoil noise prediction.\nMaster thesis, Department of Aeronautics.\nImperial College of Science, Technology and Medicine (London, United Kingdom), 2006.\n\nR. Lopez.\nNeural Networks for Variational Problems in Engineering.\nPhD Thesis, Technical University of Catalonia, 2008.",
+    "task_type": "regression",
+    "openml_id": 43919,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "frequency": "frequency",
+        "angle": "angle",
+        "length": "length",
+        "velocity": "velocity",
+        "thickness": "thickness"
+    },
+    "cat_feature_intro": {}
+}

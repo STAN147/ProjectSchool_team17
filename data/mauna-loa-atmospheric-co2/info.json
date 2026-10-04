@@ -1,0 +1,23 @@
+{
+    "name": "mauna-loa-atmospheric-co2",
+    "n_num_features": 5,
+    "n_cat_features": 1,
+    "train_size": 1424,
+    "val_size": 356,
+    "test_size": 445,
+    "source": "https://www.openml.org/search?type=data&status=active&id=41187&sort=runs",
+    "task_intro": "**Weekly carbon-dioxide concentration averages derived from continuous air samples for the Mauna Loa Observatory, Hawaii, U.S.A.**<br><br>\nThese weekly averages are ultimately based on measurements of 4 air samples per hour taken atop intake lines on several towers during steady periods of CO2 concentration of not less than 6 hours per day; if no such periods are available on a given day, then no data are used for that day. The _Weight_ column gives the number of days used in each weekly average. _Flag_ codes are explained in the NDP writeup, available electronically from the [home page](http://cdiac.ess-dive.lbl.gov/ftp/trends/co2/sio-keel-flask/maunaloa_c.dat) of this data set. CO2 concentrations are in terms of the 1999 calibration scale (Keeling et al., 2002) available electronically from the references in the NDP writeup which can be accessed from the home page of this data set.\n<br><br>\n### Feature Descriptions\n_co2_: average co2 concentration in ppvm <br>\n_year_: year of concentration measurement <br>\n_month_: month of concentration measurement <br>\n_day_: day of month of concentration measurement <br>\n_weight_: number of days used in each weekly average <br>\n_flag_: flag code <br>\n_station_: station code <br>\n<br>\n**Author**: Carbon Dioxide Research Group, Scripps Institution of Oceanography, University of California-San Diego, La Jolla, California, USA 92023-0444 <br>\n**Source**: [original](http://cdiac.ess-dive.lbl.gov/ftp/trends/co2/sio-keel-flask/maunaloa_c.dat) - September 2004",
+    "task_type": "regression",
+    "openml_id": 41187,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "year": "year",
+        "month": "month",
+        "day": "day",
+        "weight": "weight",
+        "flag": "flag"
+    },
+    "cat_feature_intro": {
+        "station": "station"
+    }
+}

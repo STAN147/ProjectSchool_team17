@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 10,
+    "n_cat_features": 0,
+    "train_size": 23508,
+    "val_size": 5878,
+    "test_size": 7347,
+    "source": "https://archive.ics.uci.edu/dataset/551/gas+turbine+co+and+nox+emission+data+set"
+}

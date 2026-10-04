@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 7,
+    "n_num_features": 16,
+    "n_cat_features": 0,
+    "train_size": 8710,
+    "val_size": 2178,
+    "test_size": 2723,
+    "source": "https://archive.ics.uci.edu/dataset/602/dry+bean+dataset"
+}

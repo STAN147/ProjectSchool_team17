@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 11,
+    "n_cat_features": 6,
+    "train_size": 23216,
+    "val_size": 5804,
+    "test_size": 7255,
+    "source": "https://www.kaggle.com/datasets/mariyamalshatta/inn-hotels-group"
+}

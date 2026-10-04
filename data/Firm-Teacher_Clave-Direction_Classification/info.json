@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 4,
+    "n_num_features": 0,
+    "n_cat_features": 16,
+    "train_size": 6912,
+    "val_size": 1728,
+    "test_size": 2160,
+    "source": "https://archive.ics.uci.edu/dataset/324/firm+teacher+clave+direction+classification"
+}

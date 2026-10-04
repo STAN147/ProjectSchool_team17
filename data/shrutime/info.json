@@ -1,0 +1,27 @@
+{
+    "name": "shrutime",
+    "n_num_features": 4,
+    "n_cat_features": 6,
+    "train_size": 6400,
+    "val_size": 1600,
+    "test_size": 2000,
+    "source": "https://www.openml.org/search?type=data&status=active&id=45062&sort=runs",
+    "task_intro": "This data set contains details of a bank's customers and the target variable is a binary variable reflecting the fact whether the customer left the bank (closed his account) or he continues to be a customer.Source: https://www.kaggle.com/datasets/shrutimechlearn/churn-modelling",
+    "task_type": "binclass",
+    "openml_id": 45062,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "CreditScore": "CreditScore",
+        "Age": "Age",
+        "Balance": "Balance",
+        "EstimatedSalary": "EstimatedSalary"
+    },
+    "cat_feature_intro": {
+        "Geography": "Geography",
+        "IsActiveMember": "IsActiveMember",
+        "Tenure": "Tenure",
+        "Gender": "Gender",
+        "HasCrCard": "HasCrCard",
+        "NumOfProducts": "NumOfProducts"
+    }
+}

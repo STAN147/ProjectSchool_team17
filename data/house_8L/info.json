@@ -1,0 +1,24 @@
+{
+    "name": "house_8L",
+    "n_num_features": 8,
+    "n_cat_features": 0,
+    "train_size": 14581,
+    "val_size": 3646,
+    "test_size": 4557,
+    "source": "https://www.openml.org/search?type=data&status=active&id=218&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown -   \n**Please cite**:   \n\nThis database was designed on the basis of data provided by US Census\n Bureau [http://www.census.gov] (under Lookup Access\n [http://www.census.gov/cdrom/lookup]: Summary Tape File 1). The data\n were collected as part of the 1990 US census. These are mostly counts\n cumulated at different survey levels. For the purpose of this data set\n a level State-Place was used. Data from all states was obtained. Most\n of the counts were changed into appropriate proportions.  There are 4\n different data sets obtained from this database: House(8H) House(8L)\n House(16H) House(16L) These are all concerned with predicting the\n median price of the house in the region based on demographic\n composition and a state of housing market in the region. A number in\n the name signifies the number of attributes of the data set. A\n following letter denotes a very rough approximation to the difficulty\n of the task. For Low task difficulty, more correlated attributes were\n chosen as signified by univariate smooth fit of that input on the\n target. Tasks with High difficulty have had their attributes chosen to\n make the modelling more difficult due to higher variance or lower\n correlation of the inputs to the target.\n \n Original source: DELVE repository of data. \n Source: collection of regression datasets by Luis Torgo (ltorgo@ncc.up.pt) at\n http://www.ncc.up.pt/~ltorgo/Regression/DataSets.html\n Characteristics: 22784 cases, 9 continuous attributes.",
+    "task_type": "regression",
+    "openml_id": 218,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "P3": "P3",
+        "P6p4": "P6p4",
+        "P11p3": "P11p3",
+        "P16p2": "P16p2",
+        "P19p2": "P19p2",
+        "H5p2": "H5p2",
+        "H15p1": "H15p1",
+        "H40p4": "H40p4"
+    },
+    "cat_feature_intro": {}
+}

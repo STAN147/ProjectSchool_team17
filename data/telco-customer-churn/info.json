@@ -1,0 +1,36 @@
+{
+    "name": "telco-customer-churn",
+    "n_num_features": 3,
+    "n_cat_features": 15,
+    "train_size": 4507,
+    "val_size": 1127,
+    "test_size": 1409,
+    "source": "https://www.openml.org/search?type=data&status=active&id=42178&sort=runs",
+    "task_intro": "Context\n\"Predict behavior to retain customers. You can analyze all relevant customer data and develop focused customer retention programs.\" [IBM Sample Data Sets]\n\nContent\nEach row represents a customer, each column contains customer's attributes described on the column Metadata.\n\nThe data set includes information about:\n\nCustomers who left within the last month - the column is called Churn\nServices that each customer has signed up for - phone, multiple lines, internet, online security, online backup, device protection, tech support, and streaming TV and movies\nCustomer account information - how long they've been a customer, contract, payment method, paperless billing, monthly charges, and total charges\nDemographic info about customers - gender, age range, and if they have partners and dependents\nInspiration\nTo explore this type of models and learn more about the subject.\n\nTaken from Kaggle: https://www.kaggle.com/blastchar/telco-customer-churn/download",
+    "task_type": "binclass",
+    "openml_id": 42178,
+    "imbalance_ratio": 2.7683253076511503,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "SeniorCitizen": "SeniorCitizen",
+        "tenure": "tenure",
+        "MonthlyCharges": "MonthlyCharges"
+    },
+    "cat_feature_intro": {
+        "gender": "gender",
+        "Partner": "Partner",
+        "Dependents": "Dependents",
+        "PhoneService": "PhoneService",
+        "MultipleLines": "MultipleLines",
+        "InternetService": "InternetService",
+        "OnlineSecurity": "OnlineSecurity",
+        "OnlineBackup": "OnlineBackup",
+        "DeviceProtection": "DeviceProtection",
+        "TechSupport": "TechSupport",
+        "StreamingTV": "StreamingTV",
+        "StreamingMovies": "StreamingMovies",
+        "Contract": "Contract",
+        "PaperlessBilling": "PaperlessBilling",
+        "PaymentMethod": "PaymentMethod"
+    }
+}

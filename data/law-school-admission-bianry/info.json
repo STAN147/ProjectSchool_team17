@@ -1,0 +1,28 @@
+{
+    "name": "law-school-admission-bianry",
+    "n_num_features": 7,
+    "n_cat_features": 4,
+    "train_size": 13312,
+    "val_size": 3328,
+    "test_size": 4160,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43889&sort=runs",
+    "task_intro": "Law School Admissions (Binarized) \n Survey among students attending law school in the U.S. in 1991. \n The dataset was obtained from the R-package fairml. \n The response variable has been changed to a binary version: Whether ugpa is greater than 3.\n The race1 variables has been binarized to labels white and non-white.",
+    "task_type": "binclass",
+    "openml_id": 43889,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "age": "age",
+        "decile1": "decile1",
+        "decile3": "decile3",
+        "fam_inc": "fam_inc",
+        "lsat": "lsat",
+        "ugpa": "ugpa",
+        "bar": "bar"
+    },
+    "cat_feature_intro": {
+        "gender": "gender",
+        "race1": "race1",
+        "cluster": "cluster",
+        "fulltime": "fulltime"
+    }
+}

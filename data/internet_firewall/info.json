@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 4,
+    "n_num_features": 7,
+    "n_cat_features": 0,
+    "train_size": 41940,
+    "val_size": 10485,
+    "test_size": 13107,
+    "source": "https://archive.ics.uci.edu/dataset/542/internet+firewall+data"
+}

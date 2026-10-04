@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 8,
+    "n_num_features": 75,
+    "n_cat_features": 0,
+    "train_size": 691,
+    "val_size": 173,
+    "test_size": 216,
+    "source": "https://archive.ics.uci.edu/dataset/342/mice+protein+expression"
+}

@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 6,
+    "n_cat_features": 3,
+    "train_size": 34521,
+    "val_size": 8631,
+    "test_size": 10788,
+    "source": "https://www.kaggle.com/datasets/joebeachcapital/diamonds"
+}

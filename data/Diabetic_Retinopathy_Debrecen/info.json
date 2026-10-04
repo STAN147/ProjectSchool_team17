@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 16,
+    "n_cat_features": 3,
+    "train_size": 736,
+    "val_size": 184,
+    "test_size": 231,
+    "source": "https://archive.ics.uci.edu/dataset/329/diabetic+retinopathy+debrecen"
+}

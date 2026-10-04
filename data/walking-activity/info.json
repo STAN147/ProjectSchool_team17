@@ -1,0 +1,20 @@
+{
+    "name": "walking-activity",
+    "n_num_features": 4,
+    "n_cat_features": 0,
+    "train_size": 95572,
+    "val_size": 23893,
+    "test_size": 29867,
+    "source": "https://www.openml.org/search?type=data&status=active&id=1509&sort=runs",
+    "task_intro": "**Author**: P. Casale, O. Pujol, P. Radeva.    \n**Source**: [UCI](https://archive.ics.uci.edu/ml/datasets/User+Identification+From+Walking+Activity)  \n**Please cite**: Casale, P. Pujol, O. and Radeva, P. 'Personalization and user verification in wearable systems using biometric walking patterns' Personal and Ubiquitous Computing, 16(5), 563-580, 2012\n\n**User Identification From Walking Activity Data Set**  \nThe dataset collects data from an Android smartphone positioned in the chest pocket. Accelerometer Data are collected from 22 participants walking in the wild over a predefined path. The dataset is intended for Activity Recognition research purposes. It provides challenges for identification and authentication of people using motion patterns. \n\n**Note: the original per-user datasets were joined into one dataset**\n\n### Attribute Information  \nTime-step, x acceleration, y acceleration, z acceleration  \nTarget: User ID.",
+    "task_type": "multiclass",
+    "openml_id": 1509,
+    "n_classes": 22,
+    "num_feature_intro": {
+        "V1": "V1",
+        "V2": "V2",
+        "V3": "V3",
+        "V4": "V4"
+    },
+    "cat_feature_intro": {}
+}

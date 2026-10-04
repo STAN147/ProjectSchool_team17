@@ -1,0 +1,23 @@
+{
+    "name": "analcatdata_supreme",
+    "n_num_features": 7,
+    "n_cat_features": 0,
+    "train_size": 2592,
+    "val_size": 649,
+    "test_size": 811,
+    "source": "https://www.openml.org/search?type=data&status=active&id=504&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown - Date unknown  \n**Please cite**:   \n\nanalcatdata    A collection of data sets used in the book \"Analyzing Categorical Data,\"\nby Jeffrey S. Simonoff, Springer-Verlag, New York, 2003. The submission\nconsists of a zip file containing two versions of each of 84 data sets,\nplus this README file. Each data set is given in comma-delimited ASCII\n(.csv) form, and Microsoft Excel (.xls) form.\n\nNOTICE: These data sets may be used freely for scientific, educational and/or\nnoncommercial purposes, provided suitable acknowledgment is given (by citing\nthe above-named reference).\n\nFurther details concerning the book, including information on statistical software\n(including sample S-PLUS/R and SAS code), are available at the web site\n\nhttp://www.stern.nyu.edu/~jsimonof/AnalCatData\n\n\nInformation about the dataset\nCLASSTYPE: numeric\nCLASSINDEX: none specific\n\n\nNote: Quotes, Single-Quotes and Backslashes were removed, Blanks replaced\nwith Underscores",
+    "task_type": "regression",
+    "openml_id": 504,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "Actions_taken": "Actions_taken",
+        "Liberal": "Liberal",
+        "Unconstitutional": "Unconstitutional",
+        "Precedent_alteration": "Precedent_alteration",
+        "Unanimous": "Unanimous",
+        "Year_of_decision": "Year_of_decision",
+        "Lower_court_disagreement": "Lower_court_disagreement"
+    },
+    "cat_feature_intro": {}
+}

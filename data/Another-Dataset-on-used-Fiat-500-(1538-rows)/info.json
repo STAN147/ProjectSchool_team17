@@ -1,0 +1,22 @@
+{
+    "name": "Another-Dataset-on-used-Fiat-500-(1538-rows)",
+    "n_num_features": 6,
+    "n_cat_features": 0,
+    "train_size": 984,
+    "val_size": 246,
+    "test_size": 308,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43828&sort=runs",
+    "task_intro": "This dataset has been created from a query done on an website specialized in used cars and contains 1538 rows\nDescription of colums:\nmodel: Fiat 500 comes in several 'flavours' :'pop', 'lounge', 'sport'\nengine_power: number of Kw of the engine\nageindays: age of the car in number of days (from the time the dataset has been created)\nkm: kilometers of the car\nprevious_owners: number of previous owners\nlat: latitude of the seller (the price of cars in Italy varies from North to South of the country)\nlon: longitude of the seller (the price of cars in Italy varies from North to South of the country)\nprice: selling price (the target)\nI collected this dataset to train myself and test regression algorithms. Hope this can help people to train as well.",
+    "task_type": "regression",
+    "openml_id": 43828,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "engine_power": "engine_power",
+        "age_in_days": "age_in_days",
+        "km": "km",
+        "previous_owners": "previous_owners",
+        "lat": "lat",
+        "lon": "lon"
+    },
+    "cat_feature_intro": {}
+}

@@ -1,0 +1,21 @@
+{
+    "name": "wine",
+    "n_num_features": 4,
+    "n_cat_features": 0,
+    "train_size": 1634,
+    "val_size": 409,
+    "test_size": 511,
+    "source": "https://www.openml.org/search?type=data&status=active&id=44091&sort=runs",
+    "task_intro": "Dataset used in the tabular data benchmark https://github.com/LeoGrin/tabular-benchmark, transformed in the same way. This dataset belongs to the \"classification on numerical features\" benchmark.\n    Original source: https://archive.ics.uci.edu/ml/datasets/wine+quality Please give credit to the original source if you use this dataset.",
+    "task_type": "binclass",
+    "openml_id": 44091,
+    "imbalance_ratio": 1.0,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "density": "density",
+        "pH": "pH",
+        "sulphates": "sulphates",
+        "alcohol": "alcohol"
+    },
+    "cat_feature_intro": {}
+}

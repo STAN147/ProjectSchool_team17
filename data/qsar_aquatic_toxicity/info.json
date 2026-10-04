@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 8,
+    "n_cat_features": 0,
+    "train_size": 348,
+    "val_size": 88,
+    "test_size": 110,
+    "source": "https://archive.ics.uci.edu/dataset/505/qsar+aquatic+toxicity"
+}

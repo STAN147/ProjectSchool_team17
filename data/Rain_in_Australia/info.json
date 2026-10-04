@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 3,
+    "n_num_features": 12,
+    "n_cat_features": 6,
+    "train_size": 93094,
+    "val_size": 23274,
+    "test_size": 29092,
+    "source": "https://www.kaggle.com/datasets/jsphyg/weather-dataset-rattle-package"
+}

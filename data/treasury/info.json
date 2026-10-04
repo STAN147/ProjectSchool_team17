@@ -1,0 +1,31 @@
+{
+    "name": "treasury",
+    "n_num_features": 15,
+    "n_cat_features": 0,
+    "train_size": 671,
+    "val_size": 168,
+    "test_size": 210,
+    "source": "https://www.openml.org/search?type=data&status=active&id=42367&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: KEEL - [original](https://sci2s.ugr.es/keel/dataset.php?cod=42) - Date unknown  \n**Please cite**:   \n\n**Treasury Dataset**\n\nThis file contains the Economic data information of USA from 01/04/1980 to 02/04/2000 on a weekly basis. From given features, the goal is to predict 1 Month CD Rate.\n\n**Attributes Information**\n     1. 1Y-CMaturityRate real [77.055, 142.645]\n     2. 30Y-CMortgageRate real [3.02, 17.15]\n     3. 3M-Rate-AuctionAverage real [6.49, 18.63]\n     4. 3M-Rate-SecondaryMarket real [2.67, 16.75]\n     5. 3Y-CMaturityRate real [2.69, 16.76]\n     6. 5Y-CMaturityRate real [4.09, 16.47]\n     7. BankCredit real [4.17, 16.13]\n     8. Currency real [1130.9, 4809.2]\n     9. DemandDeposits real [105.6, 533.0]\n     10. FederalFunds real [225.8, 412.1]\n     11. MoneyStock real [2.86, 20.06]\n     12. CheckableDeposits real [381.1, 1154.1]\n     13. LoansLeases real [269.9, 803.4]\n     14. SavingsDeposits real [868.1, 3550.3]\n     15. TradeCurrencies real [175.6, 1758.1]\n     16. 1MonthCDRate real [3.02, 20.76]",
+    "task_type": "regression",
+    "openml_id": 42367,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "1Y-CMaturityRate": "1Y-CMaturityRate",
+        "30Y-CMortgageRate": "30Y-CMortgageRate",
+        "3M-Rate-AuctionAverage": "3M-Rate-AuctionAverage",
+        "3M-Rate-SecondaryMarket": "3M-Rate-SecondaryMarket",
+        "3Y-CMaturityRate": "3Y-CMaturityRate",
+        "5Y-CMaturityRate": "5Y-CMaturityRate",
+        "bankCredit": "bankCredit",
+        "currency": "currency",
+        "demandDeposits": "demandDeposits",
+        "federalFunds": "federalFunds",
+        "moneyStock": "moneyStock",
+        "checkableDeposits": "checkableDeposits",
+        "loansLeases": "loansLeases",
+        "savingsDeposits": "savingsDeposits",
+        "tradeCurrencies": "tradeCurrencies"
+    },
+    "cat_feature_intro": {}
+}

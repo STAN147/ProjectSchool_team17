@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 3,
+    "n_cat_features": 5,
+    "train_size": 2977,
+    "val_size": 745,
+    "test_size": 931,
+    "source": "https://www.kaggle.com/datasets/tawfikelmetwally/employee-dataset"
+}

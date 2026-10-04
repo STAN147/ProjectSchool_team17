@@ -1,0 +1,22 @@
+{
+    "name": "sulfur",
+    "n_num_features": 6,
+    "n_cat_features": 0,
+    "train_size": 6451,
+    "val_size": 1613,
+    "test_size": 2017,
+    "source": "https://www.openml.org/search?type=data&status=active&id=23515&sort=runs",
+    "task_intro": "&quot;The sulfur recovery unit (SRU) removes environmental pollutants from acid gas\nstreams before they are released into the atmosphere. Furthermore, elemental sulfur\nis recovered as a valuable by-product.&quot;\n\n5 inputs variables are gas and air flows.\n2 outputs to predict are H2S and SO2 concentrations\n\nSee Appendix A.5 of Fortuna, L., Graziani, S., Rizzo, A., Xibilia, M.G. &quot;Soft Sensors for Monitoring and Control of Industrial Processes&quot; (Springer 2007) for more info.",
+    "task_type": "regression",
+    "openml_id": 23515,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "a1": "a1",
+        "a2": "a2",
+        "a3": "a3",
+        "a4": "a4",
+        "a5": "a5",
+        "y2": "y2"
+    },
+    "cat_feature_intro": {}
+}

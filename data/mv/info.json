@@ -1,0 +1,27 @@
+{
+    "name": "mv",
+    "n_num_features": 7,
+    "n_cat_features": 3,
+    "train_size": 26091,
+    "val_size": 6523,
+    "test_size": 8154,
+    "source": "https://www.openml.org/search?type=data&status=active&id=344&sort=runs",
+    "task_intro": "**Author**: Luis Torgo  \n**Source**: [original](http://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html) -   \n**Please cite**:   \n\nThis is an artificial data set with dependencies between the attribute values. The cases are generated using the following method:\n\nX1 : uniformly distributed over [-5,5]\nX2 : uniformly distributed over [-15,-10]\nX3 : IF (X1 > 0) THEN X3 = green\n ELSE X3 = red with probability 0.4 and X4=brown with prob. 0.6\nX4 : IF (X3=green) THEN X4=X1+2X2\n ELSE X4=X1/2 with prob. 0.3, and X4=X2/2 with prob. 0.7\nX5 : uniformly distributed over [-1,1]\nX6 : X6=X4*[epsilon], where [epsilon] is uniformly distribute over [0,5]\nX7 : X7=yes with prob. 0.3 and X7=no with prob. 0.7\nX8 : IF (X5 < 0.5) THEN X8 = normal ELSE X8 = large\nX9 : uniformly distributed over [100,500]\nX10 : uniformly distributed integer over the interval [1000,1200]\n \nObtain the value of the target variable Y using the rules:\nIF (X2 > 2 ) THEN Y = 35 - 0.5 X4\n ELSE IF (-2 <= X4 <= 2) THEN Y = 10 - 2 X1\n ELSE IF (X7 = yes) THEN Y = 3 -X1/X4\n ELSE IF (X8 = normal) THEN Y = X6 + X1\n ELSE Y = X1/2\n\nSource: collection of regression datasets by Luis Torgo (ltorgo@ncc.up.pt) at http://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html",
+    "task_type": "regression",
+    "openml_id": 344,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "x1": "x1",
+        "x2": "x2",
+        "x4": "x4",
+        "x5": "x5",
+        "x6": "x6",
+        "x9": "x9",
+        "x10": "x10"
+    },
+    "cat_feature_intro": {
+        "x3": "x3",
+        "x7": "x7",
+        "x8": "x8"
+    }
+}

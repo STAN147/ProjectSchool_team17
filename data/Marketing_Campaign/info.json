@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 19,
+    "n_cat_features": 8,
+    "train_size": 1433,
+    "val_size": 359,
+    "test_size": 448,
+    "source": "https://www.kaggle.com/datasets/rodsaldanha/arketing-campaign"
+}

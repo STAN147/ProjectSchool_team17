@@ -1,0 +1,24 @@
+{
+    "name": "puma8NH",
+    "n_num_features": 8,
+    "n_cat_features": 0,
+    "train_size": 5242,
+    "val_size": 1311,
+    "test_size": 1639,
+    "source": "https://www.openml.org/search?type=data&status=active&id=225&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown -   \n**Please cite**:   \n\nThis is a family of datasets synthetically generated from a realistic\n simulation of the dynamics of a Unimation Puma 560 robot arm. There\n are eight datastets in this family . In this repository we only have\n two of them. They are all variations on the same model; a realistic\n simulation of the dynamics of a Puma 560 robot arm. The task in these\n datasets is to predict the angular accelaration of one of the robot\n arm's links. The inputs include angular positions, velocities and\n torques of the robot arm. The family has been specifically generated\n for the delve environment and so the individual datasets span the\n corners of a cube whose dimensions represent:\n \n Number of inputs 8. \n degree of non-linearity (fairly linear or non-linear) \n amount of noise in the output (moderate or high). \n \n Source: collection of regression datasets by Luis Torgo (ltorgo@ncc.up.pt) at\n http://www.ncc.up.pt/~ltorgo/Regression/DataSets.html\n Original Source: DELVE repository of data. \n Characteristics: 8192 (4500+3692) cases, 9 continuous variables.",
+    "task_type": "regression",
+    "openml_id": 225,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "theta1": "theta1",
+        "theta2": "theta2",
+        "theta3": "theta3",
+        "thetad1": "thetad1",
+        "thetad2": "thetad2",
+        "thetad3": "thetad3",
+        "tau1": "tau1",
+        "tau2": "tau2"
+    },
+    "cat_feature_intro": {}
+}

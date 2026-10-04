@@ -1,0 +1,32 @@
+{
+    "name": "ada_prior",
+    "n_num_features": 6,
+    "n_cat_features": 8,
+    "train_size": 2919,
+    "val_size": 730,
+    "test_size": 913,
+    "source": "https://www.openml.org/search?type=data&status=active&id=1037&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown - Date unknown  \n**Please cite**:   \n\nDatasets from the Agnostic Learning vs. Prior Knowledge Challenge (http://www.agnostic.inf.ethz.ch)\n\nDataset from: http://www.agnostic.inf.ethz.ch/datasets.php\n\nModified by TunedIT (converted to ARFF format)\n\n\nADA is the marketing database\n\nThe task of ADA is to discover high revenue people from census data. This is a two-class classification problem. The raw data from the census bureau is known as the Adult database in the UCI machine-learning repository. The 14 original attributes (features) include age, workclass,  education, education,\nmarital status, occupation, native country, etc. It contains continuous, binary and categorical features. This dataset is from \"prior knowledge track\", i.e. has access to the original features and their identity.\n\n\nNumber of examples:\nPos_ex Neg_ex Tot_ex\nTrain  1029  3118  4147\nValid   103   312   415\n\nThis dataset contains samples from both training and validation datasets.\n\n### Attribute information  \n1. age Instance\u2019s age (numeric)\n2. workclass Instance\u2019s work class (nominal)\n3. fnlwgt Instance\u2019s sampling weight (numeric)\n4. education Instance\u2019s education level (nominal)\n5. educationNum Instance\u2019s education level (numeric version)\n6. maritalStatus Instance\u2019s marital status (nominal)\n7. occupation Instance\u2019s occupation (nominal)\n8. relationship Instance\u2019s type of relationship (nominal)\n9. race Instance\u2019s race (nominal)\n10. sex Instance\u2019s sex (nominal)\n11. capitalGain Instance\u2019s capital gain (numeric)\n12. capitalLoss Instance\u2019s capital loss (numeric)\n13. hoursPerWeek Instance\u2019s number of working hours (numeric)\n14. nativeCountry Instance\u2019s native country (numeric)\n15. label Class attribute (1: the instance earns more than 50K a year; -1 otherwise)",
+    "task_type": "binclass",
+    "openml_id": 1037,
+    "imbalance_ratio": 3.030035335689046,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "age": "age",
+        "fnlwgt": "fnlwgt",
+        "educationNum": "educationNum",
+        "capitalGain": "capitalGain",
+        "capitalLoss": "capitalLoss",
+        "hoursPerWeek": "hoursPerWeek"
+    },
+    "cat_feature_intro": {
+        "workclass": "workclass",
+        "education": "education",
+        "maritalStatus": "maritalStatus",
+        "occupation": "occupation",
+        "relationship": "relationship",
+        "race": "race",
+        "sex": "sex",
+        "nativeCountry": "nativeCountry"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "name": "Intersectional-Bias-Assessment",
+    "n_num_features": 14,
+    "n_cat_features": 5,
+    "train_size": 7040,
+    "val_size": 1760,
+    "test_size": 2200,
+    "source": "https://www.openml.org/search?type=data&status=active&id=45040&sort=runs",
+    "task_intro": "This synthetic dataset contains demographic and clinical data used to train a\nclassifier to predict a diagnosis (of schizophrenia or depression) and assess\nthe model performance for intersectional bias.\n\nThis dataset is used in the tutorial 'An Intersectional Approach to Model\nConstruction and Evaluation in Mental Health Care' presented at ACM FAccT 2022.",
+    "task_type": "binclass",
+    "openml_id": 45040,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "Anhedonia": "Anhedonia",
+        "Dep_Mood": "Dep_Mood",
+        "Sleep": "Sleep",
+        "Tired": "Tired",
+        "Appetite": "Appetite",
+        "Rumination": "Rumination",
+        "Concentration": "Concentration",
+        "Psychomotor": "Psychomotor",
+        "Delusion": "Delusion",
+        "Suspicious": "Suspicious",
+        "Withdrawal": "Withdrawal",
+        "Passive": "Passive",
+        "Tension": "Tension",
+        "Unusual_Thought": "Unusual_Thought"
+    },
+    "cat_feature_intro": {
+        "dataset": "dataset",
+        "Sex": "Sex",
+        "Race": "Race",
+        "Housing": "Housing",
+        "Delay": "Delay"
+    }
+}

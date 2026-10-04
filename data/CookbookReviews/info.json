@@ -1,0 +1,23 @@
+{
+    "name": "CookbookReviews",
+    "n_num_features": 7,
+    "n_cat_features": 0,
+    "train_size": 11636,
+    "val_size": 2909,
+    "test_size": 3637,
+    "source": "https://www.openml.org/search?type=data&status=active&id=45744&sort=runs",
+    "task_intro": "The \"Cookbook Reviews\" is an extensive data set that includes a range of information about user interactions and recipe reviews. It contains important details like the recipe name, where it stands in the list of the top 100 recipes, a special recipe code, and user information like the user ID, name, and internal reputation rate. A unique comment ID and other attributes, such as the creation timestamp, response count, and the total number of upvotes and downvotes, are attached to each review comment. Users' opinions of recipes are rated on a 5-star rating system, with 0 representing no rating at all.",
+    "task_type": "regression",
+    "openml_id": 45744,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "rec_no": "rec_no",
+        "rec_cd": "rec_cd",
+        "user_reput": "user_reput",
+        "response_no": "response_no",
+        "upvotes": "upvotes",
+        "downvotes": "downvotes",
+        "max_rating": "max_rating"
+    },
+    "cat_feature_intro": {}
+}

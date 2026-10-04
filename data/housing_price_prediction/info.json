@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 5,
+    "n_cat_features": 7,
+    "train_size": 348,
+    "val_size": 88,
+    "test_size": 109,
+    "source": "https://www.kaggle.com/datasets/harishkumardatalab/housing-price-prediction"
+}

@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 3,
+    "n_num_features": 5,
+    "n_cat_features": 29,
+    "train_size": 2831,
+    "val_size": 708,
+    "test_size": 885,
+    "source": "https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success"
+}

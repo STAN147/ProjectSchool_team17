@@ -1,0 +1,26 @@
+{
+    "name": "BNG(breast-w)",
+    "n_num_features": 9,
+    "n_cat_features": 0,
+    "train_size": 25193,
+    "val_size": 6299,
+    "test_size": 7874,
+    "source": "https://www.openml.org/search?type=data&status=active&id=251&sort=runs",
+    "task_intro": null,
+    "task_type": "binclass",
+    "openml_id": 251,
+    "imbalance_ratio": 1.9060977410305626,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "Clump_Thickness": "Clump_Thickness",
+        "Cell_Size_Uniformity": "Cell_Size_Uniformity",
+        "Cell_Shape_Uniformity": "Cell_Shape_Uniformity",
+        "Marginal_Adhesion": "Marginal_Adhesion",
+        "Single_Epi_Cell_Size": "Single_Epi_Cell_Size",
+        "Bare_Nuclei": "Bare_Nuclei",
+        "Bland_Chromatin": "Bland_Chromatin",
+        "Normal_Nucleoli": "Normal_Nucleoli",
+        "Mitoses": "Mitoses"
+    },
+    "cat_feature_intro": {}
+}

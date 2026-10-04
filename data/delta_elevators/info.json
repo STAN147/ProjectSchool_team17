@@ -1,0 +1,22 @@
+{
+    "name": "delta_elevators",
+    "n_num_features": 6,
+    "n_cat_features": 0,
+    "train_size": 6090,
+    "val_size": 1523,
+    "test_size": 1904,
+    "source": "https://www.openml.org/search?type=data&status=active&id=198&sort=runs",
+    "task_intro": "**Author**: Rui Camacho (rcamacho@garfield.fe.up.pt)  \n**Source**: [Regression datasets collection Luis Torgo](http://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html)  \n**Please cite**:   \n\nThis data set is also obtained from the task of controlling the ailerons of a F16 aircraft, although the target variable and attributes are different from the ailerons domain. The target variable here is a variation instead of an absolute value, and there was some pre-selection of the attributes.",
+    "task_type": "regression",
+    "openml_id": 198,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "climbRate": "climbRate",
+        "Altitude": "Altitude",
+        "RollRate": "RollRate",
+        "curRoll": "curRoll",
+        "diffClb": "diffClb",
+        "diffDiffClb": "diffDiffClb"
+    },
+    "cat_feature_intro": {}
+}

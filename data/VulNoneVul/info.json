@@ -1,0 +1,32 @@
+{
+    "name": "VulNoneVul",
+    "n_num_features": 16,
+    "n_cat_features": 0,
+    "train_size": 3642,
+    "val_size": 911,
+    "test_size": 1139,
+    "source": "https://www.openml.org/search?type=data&status=active&id=44150&sort=runs",
+    "task_intro": "Vulnerability Dataset For Binary Classification",
+    "task_type": "binclass",
+    "openml_id": 44150,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "paramList": "paramList",
+        "cyclomaticNum": "cyclomaticNum",
+        "loopNum": "loopNum",
+        "nestingDegree": "nestingDegree",
+        "SLOC": "SLOC",
+        "ALOC": "ALOC",
+        "localVars": "localVars",
+        "localPtrVars": "localPtrVars",
+        "pointerArgs": "pointerArgs",
+        "callees": "callees",
+        "callers": "callers",
+        "height": "height",
+        "conditions": "conditions",
+        "cmps": "cmps",
+        "jmps": "jmps",
+        "ptrAssn": "ptrAssn"
+    },
+    "cat_feature_intro": {}
+}

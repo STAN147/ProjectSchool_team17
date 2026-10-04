@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 7,
+    "n_cat_features": 1,
+    "train_size": 2672,
+    "val_size": 669,
+    "test_size": 836,
+    "source": "https://archive.ics.uci.edu/dataset/1/abalone"
+}

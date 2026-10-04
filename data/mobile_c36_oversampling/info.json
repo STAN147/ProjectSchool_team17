@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 6,
+    "n_cat_features": 0,
+    "train_size": 33126,
+    "val_size": 8282,
+    "test_size": 10352,
+    "source": "https://archive.ics.uci.edu/dataset/755/accelerometer+gyro+mobile+phone+dataset"
+}

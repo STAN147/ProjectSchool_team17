@@ -1,0 +1,23 @@
+{
+    "name": "mammography",
+    "n_num_features": 6,
+    "n_cat_features": 0,
+    "train_size": 7156,
+    "val_size": 1790,
+    "test_size": 2237,
+    "source": "https://www.openml.org/search?type=data&status=active&id=310&sort=runs",
+    "task_intro": "**Author**:   \n  \n**Source**: Unknown -   \n**Please cite**:   \n\nMammography dataset\n\nPast Usage:\n1. Woods, K., Doss, C., Bowyer, K., Solka, J., Priebe, C.,",
+    "task_type": "binclass",
+    "openml_id": 310,
+    "imbalance_ratio": 42.011538461538464,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "attr1": "attr1",
+        "attr2": "attr2",
+        "attr3": "attr3",
+        "attr4": "attr4",
+        "attr5": "attr5",
+        "attr6": "attr6"
+    },
+    "cat_feature_intro": {}
+}

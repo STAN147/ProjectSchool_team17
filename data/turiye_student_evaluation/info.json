@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 5,
+    "n_num_features": 30,
+    "n_cat_features": 2,
+    "train_size": 3724,
+    "val_size": 932,
+    "test_size": 1164,
+    "source": "https://archive.ics.uci.edu/dataset/262/turkiye+student+evaluation"
+}

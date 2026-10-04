@@ -1,0 +1,30 @@
+{
+    "name": "avocado_sales",
+    "n_num_features": 11,
+    "n_cat_features": 2,
+    "train_size": 11679,
+    "val_size": 2920,
+    "test_size": 3650,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43927&sort=runs",
+    "task_intro": "Historical data on avocado prices and sales volume in multiple US markets. For this version Date column is dropped and month and day information in kept.",
+    "task_type": "regression",
+    "openml_id": 43927,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "Total Volume": "Total Volume",
+        "4046": "4046",
+        "4225": "4225",
+        "4770": "4770",
+        "Total Bags": "Total Bags",
+        "Small Bags": "Small Bags",
+        "Large Bags": "Large Bags",
+        "XLarge Bags": "XLarge Bags",
+        "year": "year",
+        "month": "month",
+        "day": "day"
+    },
+    "cat_feature_intro": {
+        "type": "type",
+        "region": "region"
+    }
+}

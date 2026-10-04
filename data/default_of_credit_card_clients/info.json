@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 14,
+    "n_cat_features": 9,
+    "train_size": 19200,
+    "val_size": 4800,
+    "test_size": 6000,
+    "source": "https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients"
+}

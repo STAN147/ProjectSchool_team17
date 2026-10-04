@@ -1,0 +1,34 @@
+{
+    "name": "national-longitudinal-survey-binary",
+    "n_num_features": 9,
+    "n_cat_features": 7,
+    "train_size": 3140,
+    "val_size": 786,
+    "test_size": 982,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43892&sort=runs",
+    "task_intro": "National Longitudinal Survey (Binarized) \n Survey results from the U.S. Bureau of Labor Statistics to gather information on the labour market activities and other life events of several groups. \n The dataset was obtained from the R-package fairml. \n The response variable has been changed to a binary version: Whether income90 is greater than 1.7",
+    "task_type": "binclass",
+    "openml_id": 43892,
+    "imbalance_ratio": 1.648677819751754,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "age": "age",
+        "income96": "income96",
+        "height": "height",
+        "weight": "weight",
+        "famsize": "famsize",
+        "illegalact": "illegalact",
+        "charged": "charged",
+        "jobsnum90": "jobsnum90",
+        "afqt89": "afqt89"
+    },
+    "cat_feature_intro": {
+        "race": "race",
+        "gender": "gender",
+        "grade90": "grade90",
+        "partner": "partner",
+        "genhealth": "genhealth",
+        "typejob90": "typejob90",
+        "jobtrain90": "jobtrain90"
+    }
+}

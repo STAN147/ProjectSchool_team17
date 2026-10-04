@@ -1,0 +1,24 @@
+{
+    "name": "houses",
+    "n_num_features": 8,
+    "n_cat_features": 0,
+    "train_size": 13209,
+    "val_size": 3303,
+    "test_size": 4128,
+    "source": "https://www.openml.org/search?type=data&status=active&id=537&sort=runs",
+    "task_intro": "**Author**:  Kelley Pace\n\n**Source**: http://lib.stat.cmu.edu/datasets/\n\n**Please cite**:   \n\nIf you use an algorithm, dataset, or other information from StatLib, please acknowledge both StatLib and the original contributor of the material. \n\nPace and Barry (1997), \"Sparse Spatial Autoregressions\", Statistics and Probability Letters.\n\n@article{pace1997sparse,\n  title={Sparse spatial autoregressions},\n  author={Pace, R Kelley and Barry, Ronald},\n  journal={Statistics \\& Probability Letters},\n  volume={33},\n  number={3},\n  pages={291--297},\n  year={1997},\n  publisher={Elsevier}\n}\n\n**Data description**\n\nS&P Letters Data\nWe collected information on the variables using all the block groups in California from the 1990 Census. In this sample a block group on average includes 1425.5 individuals living in a geographically compact area. Naturally, the geographical area included varies inversely with the population density. We computed distances among the centroids of each block group as measured in latitude and longitude. We excluded all the block groups reporting zero entries for the independent and dependent variables. The final data contained 20,640 observations on 9 variables. The dependent variable is ln(median house value).",
+    "task_type": "regression",
+    "openml_id": 537,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "median_income": "median_income",
+        "housing_median_age": "housing_median_age",
+        "total_rooms": "total_rooms",
+        "total_bedrooms": "total_bedrooms",
+        "population": "population",
+        "households": "households",
+        "latitude": "latitude",
+        "longitude": "longitude"
+    },
+    "cat_feature_intro": {}
+}

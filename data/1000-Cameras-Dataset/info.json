@@ -1,0 +1,26 @@
+{
+    "name": "1000-Cameras-Dataset",
+    "n_num_features": 10,
+    "n_cat_features": 0,
+    "train_size": 664,
+    "val_size": 166,
+    "test_size": 208,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43714&sort=runs",
+    "task_intro": "Context\nSome camera enthusiast went and described 1,000 cameras based on 13 properties! \nContent\nRow one describes the datatype for each column and can probably be removed.\nThe 13 properties of each camera:\n\nModel\nRelease date\nMax resolution\nLow resolution\nEffective pixels\nZoom wide (W)\nZoom tele (T)\nNormal focus range\nMacro focus range\nStorage included\nWeight (inc. batteries)\nDimensions\nPrice\n\nAcknowledgements\nThese datasets have been gathered and cleaned up by Petra Isenberg, Pierre Dragicevic and Yvonne Jansen.  The original source can be found here.\nThis dataset has been converted to CSV.",
+    "task_type": "regression",
+    "openml_id": 43714,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "Release_date": "Release_date",
+        "Max_resolution": "Max_resolution",
+        "Low_resolution": "Low_resolution",
+        "Effective_pixels": "Effective_pixels",
+        "Zoom_tele_(T)": "Zoom_tele_(T)",
+        "Normal_focus_range": "Normal_focus_range",
+        "Macro_focus_range": "Macro_focus_range",
+        "Storage_included": "Storage_included",
+        "Weight_(inc._batteries)": "Weight_(inc._batteries)",
+        "Dimensions": "Dimensions"
+    },
+    "cat_feature_intro": {}
+}

@@ -1,0 +1,27 @@
+{
+    "name": "BNG(cmc)",
+    "n_num_features": 2,
+    "n_cat_features": 7,
+    "train_size": 35388,
+    "val_size": 8848,
+    "test_size": 11060,
+    "source": "https://www.openml.org/search?type=data&status=active&id=255&sort=runs",
+    "task_intro": null,
+    "task_type": "multiclass",
+    "openml_id": 255,
+    "imbalance_ratio": 1.893387964971479,
+    "n_classes": 3,
+    "num_feature_intro": {
+        "Wifes_age": "Wifes_age",
+        "Number_of_children_ever_born": "Number_of_children_ever_born"
+    },
+    "cat_feature_intro": {
+        "Wifes_education": "Wifes_education",
+        "Husbands_education": "Husbands_education",
+        "Wifes_religion": "Wifes_religion",
+        "Wifes_now_working\\%3F": "Wifes_now_working\\%3F",
+        "Husbands_occupation": "Husbands_occupation",
+        "Standard-of-living_index": "Standard-of-living_index",
+        "Media_exposure": "Media_exposure"
+    }
+}

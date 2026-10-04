@@ -1,0 +1,25 @@
+{
+    "name": "BNG(echoMonths)",
+    "n_num_features": 5,
+    "n_cat_features": 3,
+    "train_size": 11196,
+    "val_size": 2800,
+    "test_size": 3500,
+    "source": "https://www.openml.org/search?type=data&status=active&id=1199&sort=runs",
+    "task_intro": null,
+    "task_type": "regression",
+    "openml_id": 1199,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "age": "age",
+        "fractional": "fractional",
+        "epss": "epss",
+        "lvdd": "lvdd",
+        "wall_score": "wall_score"
+    },
+    "cat_feature_intro": {
+        "still_alive": "still_alive",
+        "pericardial": "pericardial",
+        "alive_at_1": "alive_at_1"
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 35,
+    "n_num_features": 80,
+    "n_cat_features": 0,
+    "train_size": 872,
+    "val_size": 219,
+    "test_size": 273,
+    "source": "https://archive.ics.uci.edu/dataset/160/uji+pen+characters"
+}

@@ -1,0 +1,26 @@
+{
+    "name": "Kaggle_bike_sharing_demand_challange",
+    "n_num_features": 3,
+    "n_cat_features": 6,
+    "train_size": 6966,
+    "val_size": 1742,
+    "test_size": 2178,
+    "source": "https://www.openml.org/search?type=data&status=active&id=1414&sort=runs",
+    "task_intro": "**Author**: Niels Rood  \n**Source**: [original](http://www.kaggle.com/c/bike-sharing-demand/data) - 2015-02-11  \n**Please cite**:   \n\nModified version of the training dataset of the Bike Sharing Demand challenge running on Kaggle (http://www.kaggle.com/c/bike-sharing-demand/)\n\nIf you use the problem in publication, please cite:\n\nFanaee-T, Hadi, and Gama, Joao, Event labeling combining ensemble detectors and background knowledge, Progress in Artificial Intelligence (2013): pp. 1-15, Springer Berlin Heidelberg.",
+    "task_type": "regression",
+    "openml_id": 1414,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "temp": "temp",
+        "atemp": "atemp",
+        "windspeed": "windspeed"
+    },
+    "cat_feature_intro": {
+        "time": "time",
+        "season": "season",
+        "holiday": "holiday",
+        "workingday": "workingday",
+        "weather": "weather",
+        "dayOfWeek": "dayOfWeek"
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "name": "kropt",
+    "n_num_features": 0,
+    "n_cat_features": 6,
+    "train_size": 17955,
+    "val_size": 4489,
+    "test_size": 5612,
+    "source": "https://www.openml.org/search?type=data&status=active&id=184&sort=runs",
+    "task_intro": "Classify a chess game based on the position of the white king, the white rook and the black king.",
+    "task_type": "multiclass",
+    "openml_id": 184,
+    "imbalance_ratio": 168.62962962962962,
+    "n_classes": 18,
+    "num_feature_intro": {},
+    "cat_feature_intro": {
+        "white_king_col": "white_king_col",
+        "white_king_row": "white_king_row",
+        "white_rook_col": "white_rook_col",
+        "white_rook_row": "white_rook_row",
+        "black_king_col": "black_king_col",
+        "black_king_row": "black_king_row"
+    }
+}

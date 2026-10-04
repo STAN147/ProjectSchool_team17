@@ -1,0 +1,26 @@
+{
+    "name": "BNG(tic-tac-toe)",
+    "n_num_features": 0,
+    "n_cat_features": 9,
+    "train_size": 25193,
+    "val_size": 6299,
+    "test_size": 7874,
+    "source": "https://www.openml.org/search?type=data&status=active&id=137&sort=runs",
+    "task_intro": null,
+    "task_type": "binclass",
+    "openml_id": 137,
+    "imbalance_ratio": 1.8810011709601873,
+    "n_classes": 2,
+    "num_feature_intro": {},
+    "cat_feature_intro": {
+        "top-left-square": "top-left-square",
+        "top-middle-square": "top-middle-square",
+        "top-right-square": "top-right-square",
+        "middle-left-square": "middle-left-square",
+        "middle-middle-square": "middle-middle-square",
+        "middle-right-square": "middle-right-square",
+        "bottom-left-square": "bottom-left-square",
+        "bottom-middle-square": "bottom-middle-square",
+        "bottom-right-square": "bottom-right-square"
+    }
+}

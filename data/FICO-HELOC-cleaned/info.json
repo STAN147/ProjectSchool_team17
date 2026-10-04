@@ -1,0 +1,41 @@
+{
+    "name": "FICO-HELOC-cleaned",
+    "n_num_features": 21,
+    "n_cat_features": 2,
+    "train_size": 6316,
+    "val_size": 1580,
+    "test_size": 1975,
+    "source": "https://www.openml.org/search?type=data&status=active&id=45553&sort=runs",
+    "task_intro": "This dataset is from the \"Explainable Machine Learning Challenge\":\n\n> The Explainable Machine Learning Challenge is a collaboration between Google, FICO and academics at Berkeley, Oxford, Imperial, UC Irvine and MIT, to generate new research in the area of algorithmic explainability. Teams will be challenged to create machine learning models with both high accuracy and explainability; they will use a real-world financial dataset provided by FICO. Designers and end users of machine learning algorithms will both benefit from more interpretable and explainable algorithms. Machine learning model designers will benefit from Model explanations, written explanations describing the functioning of a trained model. These might include information about which variables or examples are particularly important, they might explain the logic used by an algorithm, and/or characterize input/output relationships between variables and predictions. We expect teams to tell the story of their model such that these explanations will be qualitatively evaluated by data scientists at FICO.\n\nFurther information can be retrieved from the [FICO website](https://community.fico.com/s/explainable-machine-learning-challenge).\n\n**Notes**\n* We have obtained the dataset from [Kaggle](https://www.kaggle.com/datasets/averkiyoliabev/home-equity-line-of-creditheloc)\n* This is a cleaned version of the Kaggle dataset, in which we have removed all rows that only contained `-9`, a special value according to the FAQ.\n* Please request access to the data on the FICO website to obtain the full description of the features.\n* In this version we have encoded the special values (-9, -8, -7) as missing values to make the data more amenable to non-tree models.",
+    "task_type": "binclass",
+    "openml_id": 45553,
+    "imbalance_ratio": 1.0846884899683211,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "ExternalRiskEstimate": "ExternalRiskEstimate",
+        "MSinceOldestTradeOpen": "MSinceOldestTradeOpen",
+        "MSinceMostRecentTradeOpen": "MSinceMostRecentTradeOpen",
+        "AverageMInFile": "AverageMInFile",
+        "NumSatisfactoryTrades": "NumSatisfactoryTrades",
+        "NumTrades60Ever2DerogPubRec": "NumTrades60Ever2DerogPubRec",
+        "NumTrades90Ever2DerogPubRec": "NumTrades90Ever2DerogPubRec",
+        "PercentTradesNeverDelq": "PercentTradesNeverDelq",
+        "MSinceMostRecentDelq": "MSinceMostRecentDelq",
+        "NumTotalTrades": "NumTotalTrades",
+        "NumTradesOpeninLast12M": "NumTradesOpeninLast12M",
+        "PercentInstallTrades": "PercentInstallTrades",
+        "MSinceMostRecentInqexcl7days": "MSinceMostRecentInqexcl7days",
+        "NumInqLast6M": "NumInqLast6M",
+        "NumInqLast6Mexcl7days": "NumInqLast6Mexcl7days",
+        "NetFractionRevolvingBurden": "NetFractionRevolvingBurden",
+        "NetFractionInstallBurden": "NetFractionInstallBurden",
+        "NumRevolvingTradesWBalance": "NumRevolvingTradesWBalance",
+        "NumInstallTradesWBalance": "NumInstallTradesWBalance",
+        "NumBank2NatlTradesWHighUtilization": "NumBank2NatlTradesWHighUtilization",
+        "PercentTradesWBalance": "PercentTradesWBalance"
+    },
+    "cat_feature_intro": {
+        "MaxDelq2PublicRecLast12M": "MaxDelq2PublicRecLast12M",
+        "MaxDelqEver": "MaxDelqEver"
+    }
+}

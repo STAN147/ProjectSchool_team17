@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 3,
+    "n_num_features": 3,
+    "n_cat_features": 0,
+    "train_size": 6389,
+    "val_size": 1598,
+    "test_size": 1997,
+    "source": "https://archive.ics.uci.edu/dataset/586/ble+rssi+dataset+for+indoor+localization"
+}

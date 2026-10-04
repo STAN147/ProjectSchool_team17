@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 3,
+    "n_num_features": 13,
+    "n_cat_features": 0,
+    "train_size": 3036,
+    "val_size": 760,
+    "test_size": 950,
+    "source": "https://archive.ics.uci.edu/dataset/852/gender+gap+in+spanish+wp"
+}

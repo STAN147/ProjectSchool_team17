@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 7,
+    "n_cat_features": 0,
+    "train_size": 2438,
+    "val_size": 610,
+    "test_size": 762,
+    "source": "https://archive.ics.uci.edu/dataset/545/rice+cammeo+and+osmancik"
+}

@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 6,
+    "n_cat_features": 4,
+    "train_size": 6400,
+    "val_size": 1600,
+    "test_size": 2000,
+    "source": "https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset"
+}

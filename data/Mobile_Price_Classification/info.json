@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 4,
+    "n_num_features": 14,
+    "n_cat_features": 6,
+    "train_size": 1280,
+    "val_size": 320,
+    "test_size": 400,
+    "source": "https://www.kaggle.com/datasets/iabhishekofficial/mobile-price-classification"
+}

@@ -1,0 +1,42 @@
+{
+    "name": "CPMP-2015-regression",
+    "n_num_features": 23,
+    "n_cat_features": 2,
+    "train_size": 1348,
+    "val_size": 338,
+    "test_size": 422,
+    "source": "https://www.openml.org/search?type=data&status=active&id=41700&sort=runs",
+    "task_intro": "source: An Algorithm Selection Benchmark for the Container Pre-Marshalling Problem (CPMP)\nauthors: K. Tierney and Y. Malitsky (features) / K. Tierney and D. Pacino and S. Voss (algorithms)\ntranslator in coseal format: K. Tierney\n\nThis is an extension of the 2013 premarshalling dataset that includes more features and a set of test instances. \n\nThere are three sets of features:\n\nfeature_values.arff contains the full set of features from iteration 2 of our latent feature analysis (LFA) process (see paper)\nfeature_values_itr1.arff contains only the features after iteration 1 of LFA\nfeature_values_orig.arff containers the features used in PREMARHSALLING-ASTAR-2013\n\nWe also provide test data with an identical naming scheme (see _test). \n\nThe features for the pre-marshalling problem are all extremely easy and fast to\ncompute, thus the feature_costs.arff file has been omitted, as it would be time\n0 for every feature (regardless of using original, iteration 1 or iteration 2\nfeatures).\n\nThe feature computation code is available at https://bitbucket.org/eusorpb/cpmp-as\n\nNote: previously the scenario was called PREMARSHALLING-ASTAR-2015. To save same space, we renamed the scenario.",
+    "task_type": "regression",
+    "openml_id": 41700,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "repetition": "repetition",
+        "stacks": "stacks",
+        "tiers": "tiers",
+        "stack.tier.ratio": "stack.tier.ratio",
+        "container.density": "container.density",
+        "empty.stack.pct": "empty.stack.pct",
+        "overstowing.stack.pct": "overstowing.stack.pct",
+        "overstowing.2cont.stack.pct": "overstowing.2cont.stack.pct",
+        "group.same.min": "group.same.min",
+        "group.same.max": "group.same.max",
+        "group.same.mean": "group.same.mean",
+        "group.same.stdev": "group.same.stdev",
+        "top.good.min": "top.good.min",
+        "top.good.max": "top.good.max",
+        "top.good.mean": "top.good.mean",
+        "top.good.stdev": "top.good.stdev",
+        "overstowage.pct": "overstowage.pct",
+        "bflb": "bflb",
+        "left.density": "left.density",
+        "tier.weighted.groups": "tier.weighted.groups",
+        "avg.l1.top.left.lg.group": "avg.l1.top.left.lg.group",
+        "cont.empty.grt.estack": "cont.empty.grt.estack",
+        "pct.bottom.pct.on.top": "pct.bottom.pct.on.top"
+    },
+    "cat_feature_intro": {
+        "algorithm": "algorithm",
+        "runstatus": "runstatus"
+    }
+}

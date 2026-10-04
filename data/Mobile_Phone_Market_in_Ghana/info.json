@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 4,
+    "n_cat_features": 10,
+    "train_size": 2304,
+    "val_size": 576,
+    "test_size": 720,
+    "source": "https://www.kaggle.com/datasets/redpen12/mobile-phone-market-in-ghana"
+}

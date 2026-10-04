@@ -1,0 +1,27 @@
+{
+    "name": "Heart-Disease-Dataset-(Comprehensive)",
+    "n_num_features": 11,
+    "n_cat_features": 0,
+    "train_size": 761,
+    "val_size": 191,
+    "test_size": 238,
+    "source": "https://www.openml.org/search?type=data&status=active&id=43672&sort=runs",
+    "task_intro": "Context\nHeart Disease Dataset (Most comprehensive)\nContent\nHeart disease is also known as Cardiovascular diseases (CVDs) are the number 1 cause of death globally, taking an estimated 17.9 million lives each year which is about 32 of all deaths globally. CVDs are a group of disorders of the heart and blood vessels and include coronary heart disease, cerebrovascular disease, rheumatic heart disease, and other conditions. Four out of 5CVD deaths are due to heart attacks and strokes, and one-third of these deaths occur prematurely in people under 70 years of age.\nWe have curated this dataset by combining different datasets already available independently but not combined before. W have combined them over 11 common features which makes it the largest heart disease dataset available for research purposes. The five datasets used for its curation are:\nDatabase:                 of instances:\n\nCleveland:                                          303\nHungarian:                                         294\nSwitzerland:                                       123\nLong Beach VA:                                 200\nStalog (Heart) Data Set:                    270\n\nTotal                                            1190\nAcknowledgements\nThe dataset is taken from three other research datasets used in different research papers. The Nature article listing heart disease database and names of popular datasets used in various heart disease research is shared below.\nhttps://www.nature.com/articles/s41597-019-0206-3\nInspiration\nCan you find interesting insight from the largest heart disease dataset available so far and build predictive model which can assist medical practitioners in detecting early-stage heart disease ?",
+    "task_type": "binclass",
+    "openml_id": 43672,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "age": "age",
+        "sex": "sex",
+        "chest_pain_type": "chest_pain_type",
+        "resting_bp_s": "resting_bp_s",
+        "cholesterol": "cholesterol",
+        "fasting_blood_sugar": "fasting_blood_sugar",
+        "resting_ecg": "resting_ecg",
+        "max_heart_rate": "max_heart_rate",
+        "exercise_angina": "exercise_angina",
+        "oldpeak": "oldpeak",
+        "ST_slope": "ST_slope"
+    },
+    "cat_feature_intro": {}
+}

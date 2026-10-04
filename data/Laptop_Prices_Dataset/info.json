@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 8,
+    "n_cat_features": 0,
+    "train_size": 2841,
+    "val_size": 711,
+    "test_size": 889,
+    "source": "https://www.kaggle.com/datasets/talhabarkaatahmad/laptop-prices-dataset-october-2023"
+}

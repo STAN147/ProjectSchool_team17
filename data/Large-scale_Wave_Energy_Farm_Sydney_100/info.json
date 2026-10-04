@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 201,
+    "n_cat_features": 0,
+    "train_size": 1483,
+    "val_size": 371,
+    "test_size": 464,
+    "source": "https://archive.ics.uci.edu/dataset/882/large-scale+wave+energy+farm"
+}

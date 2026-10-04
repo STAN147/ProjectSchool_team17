@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 14,
+    "n_cat_features": 3,
+    "train_size": 2132,
+    "val_size": 534,
+    "test_size": 667,
+    "source": "https://www.kaggle.com/datasets/mnassrib/telecom-churn-datasets"
+}

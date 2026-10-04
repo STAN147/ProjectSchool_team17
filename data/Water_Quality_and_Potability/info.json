@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 8,
+    "n_cat_features": 0,
+    "train_size": 2096,
+    "val_size": 524,
+    "test_size": 656,
+    "source": "https://www.kaggle.com/datasets/uom190346a/water-quality-and-potability"
+}

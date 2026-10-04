@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 3,
+    "n_cat_features": 2,
+    "train_size": 336,
+    "val_size": 84,
+    "test_size": 106,
+    "source": "https://www.openml.org/search?type=data&status=active&id=703"
+}

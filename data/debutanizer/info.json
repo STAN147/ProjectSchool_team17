@@ -1,0 +1,23 @@
+{
+    "name": "debutanizer",
+    "n_num_features": 7,
+    "n_cat_features": 0,
+    "train_size": 1532,
+    "val_size": 383,
+    "test_size": 479,
+    "source": "https://www.openml.org/search?type=data&status=active&id=23516&sort=runs",
+    "task_intro": "&quot;The debutanizer column is part of a desulfuring and naphtha splitter plant.&quot;\n\nu1 Top temperature\nu2 Top pressure\nu3 Reflux flow\nu4 Flow to next process\nu5 6th tray temperature\nu6 Bottom temperature\nu7 Bottom temperature\ny Butane content in the debutanizer bottoms (Naphtha splitter feed)\n\nSee Appendix A.3 of Fortuna, L., Graziani, S., Rizzo, A., Xibilia, M.G. &quot;Fortuna, L., Graziani, S., Rizzo, A., Xibilia, M.G.&quot; (Springer 2007) for more info.",
+    "task_type": "regression",
+    "openml_id": 23516,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "u1": "u1",
+        "u2": "u2",
+        "u3": "u3",
+        "u4": "u4",
+        "u5": "u5",
+        "u6": "u6",
+        "u7": "u7"
+    },
+    "cat_feature_intro": {}
+}

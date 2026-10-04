@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 11,
+    "n_cat_features": 0,
+    "train_size": 3134,
+    "val_size": 784,
+    "test_size": 980,
+    "source": "https://archive.ics.uci.edu/dataset/186/wine+quality"
+}

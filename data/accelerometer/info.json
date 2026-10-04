@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 4,
+    "n_num_features": 3,
+    "n_cat_features": 1,
+    "train_size": 97922,
+    "val_size": 24481,
+    "test_size": 30601,
+    "source": "https://archive.ics.uci.edu/dataset/846/accelerometer"
+}

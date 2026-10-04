@@ -1,0 +1,26 @@
+{
+    "name": "Shipping",
+    "n_num_features": 5,
+    "n_cat_features": 4,
+    "train_size": 7039,
+    "val_size": 1760,
+    "test_size": 2200,
+    "source": "https://www.openml.org/search?type=data&status=active&id=45074&sort=runs",
+    "task_intro": "An international e-commerce company based wants to discover key insights from their customer database. They want to use some of the most advanced machine learning techniques to study their customers. The company sells electronic products",
+    "task_type": "binclass",
+    "openml_id": 45074,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "Customer_care_calls": "Customer_care_calls",
+        "Customer_rating": "Customer_rating",
+        "Prior_purchases": "Prior_purchases",
+        "Discount_offered": "Discount_offered",
+        "Weight_in_gms": "Weight_in_gms"
+    },
+    "cat_feature_intro": {
+        "Warehouse_block": "Warehouse_block",
+        "Mode_of_Shipment": "Mode_of_Shipment",
+        "Product_importance": "Product_importance",
+        "Gender": "Gender"
+    }
+}

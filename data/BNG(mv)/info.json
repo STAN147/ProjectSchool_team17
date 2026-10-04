@@ -1,0 +1,27 @@
+{
+    "name": "BNG(mv)",
+    "n_num_features": 7,
+    "n_cat_features": 3,
+    "train_size": 50388,
+    "val_size": 12597,
+    "test_size": 15747,
+    "source": "https://www.openml.org/search?type=data&status=active&id=1213&sort=runs",
+    "task_intro": null,
+    "task_type": "regression",
+    "openml_id": 1213,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "x1": "x1",
+        "x2": "x2",
+        "x4": "x4",
+        "x5": "x5",
+        "x6": "x6",
+        "x9": "x9",
+        "x10": "x10"
+    },
+    "cat_feature_intro": {
+        "x3": "x3",
+        "x7": "x7",
+        "x8": "x8"
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 7,
+    "n_cat_features": 0,
+    "train_size": 1457,
+    "val_size": 365,
+    "test_size": 456,
+    "source": "https://archive.ics.uci.edu/dataset/887/national+health+and+nutrition+health+survey+2013-2014+(nhanes)+age+prediction+subset"
+}

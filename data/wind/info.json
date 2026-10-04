@@ -1,0 +1,30 @@
+{
+    "name": "wind",
+    "n_num_features": 14,
+    "n_cat_features": 0,
+    "train_size": 4207,
+    "val_size": 1052,
+    "test_size": 1315,
+    "source": "https://www.openml.org/search?type=data&status=active&id=503&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown - Date unknown  \n**Please cite**:   \n\nwind   daily average wind speeds for 1961-1978 at 12 synoptic meteorological\nstations in the Republic of Ireland (Haslett and raftery 1989).\n\nThese data were analyzed in detail in the following article:\nHaslett, J. and Raftery, A. E. (1989). Space-time Modelling with\nLong-memory Dependence: Assessing Ireland's Wind Power Resource\n(with Discussion). Applied Statistics 38, 1-50.\n\nEach line corresponds to one day of data in the following format:\nyear, month, day, average wind speed at each of the stations in the order given\nin Fig.4 of Haslett and Raftery :\nRPT, VAL, ROS, KIL, SHA, BIR, DUB, CLA, MUL, CLO, BEL, MAL\n\nFortan format : ( i2, 2i3, 12f6.2)\n\nThe data are in knots, not in m/s.\n\nPermission granted for unlimited distribution.\n\nPlease report all anomalies to fraley@stat.washington.edu\n\nBe aware that the dataset is 532494 bytes long (thats over half a\nMegabyte).  Please be sure you want the data before you request it.\n\n\nInformation about the dataset\nCLASSTYPE: numeric\nCLASSINDEX: none specific",
+    "task_type": "regression",
+    "openml_id": 503,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "year": "year",
+        "month": "month",
+        "day": "day",
+        "RPT": "RPT",
+        "VAL": "VAL",
+        "ROS": "ROS",
+        "KIL": "KIL",
+        "SHA": "SHA",
+        "BIR": "BIR",
+        "DUB": "DUB",
+        "CLA": "CLA",
+        "MUL": "MUL",
+        "CLO": "CLO",
+        "BEL": "BEL"
+    },
+    "cat_feature_intro": {}
+}

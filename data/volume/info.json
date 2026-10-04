@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 53,
+    "n_cat_features": 0,
+    "train_size": 32635,
+    "val_size": 8159,
+    "test_size": 10199,
+    "source":"https://archive.ics.uci.edu/dataset/363/facebook+comment+volume+dataset"
+}

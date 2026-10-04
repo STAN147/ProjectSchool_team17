@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 3,
+    "n_num_features": 17,
+    "n_cat_features": 5,
+    "train_size": 64000,
+    "val_size": 16000,
+    "test_size": 20000,
+    "source": "https://www.kaggle.com/code/clkmuhammed/credit-score-classification-part-1-data-cleaning#B.-Numeric-Column-NaN-Values:-Reassign-Group-Min-Max"
+}

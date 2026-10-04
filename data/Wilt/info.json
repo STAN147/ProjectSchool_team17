@@ -1,0 +1,10 @@
+{   "name":"Wilt",
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 5,
+    "n_cat_features": 0,
+    "train_size": 3084,
+    "val_size": 772,
+    "test_size": 965,
+    "source":"https://www.openml.org/search?type=data&id=44489"
+}

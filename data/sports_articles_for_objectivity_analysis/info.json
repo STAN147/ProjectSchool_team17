@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 57,
+    "n_cat_features": 2,
+    "train_size": 640,
+    "val_size": 160,
+    "test_size": 200,
+    "source": "https://archive.ics.uci.edu/dataset/450/sports+articles+for+objectivity+analysis"
+}

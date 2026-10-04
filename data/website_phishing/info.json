@@ -1,0 +1,25 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 3,
+    "n_num_features": 0,
+    "n_cat_features": 9,
+    "train_size": 865,
+    "val_size": 217,
+    "test_size": 271,
+    "task_intro": "The phishing problem is considered a vital issue in .COM industry especially e-banking and e-commerce taking the number of online transactions involving payments. We have identified different features related to legitimate and phishy websites and collected 1353 different websites from difference sources. We collected 548 legitimate websites out of 1353 websites. There is 702 phishing URLs, and 103 suspicious URLs.",
+  "feature_intro": {
+    "SFH": "if having server-side request forgery.",
+    "popUpWidnow": "if popping up widnow.",
+    "SSLfinal_State": "SSL final state.",
+    "Request_URL": "request URL class.",
+    "URL_of_Anchor": "URL of anchor class.",
+    "web_traffic": "web traffic.",
+    "URL_Length": "URL length.",
+    "age_of_domain": "age of domain.",
+    "having_IP_Address": "if having IP address."
+  },
+  "target_intro": {
+    "Result": "website class (1=Legitimate; 0=Suspicious; -1=Phishy) ."
+  },
+  "source": "https://archive.ics.uci.edu/dataset/379/website+phishing"
+}

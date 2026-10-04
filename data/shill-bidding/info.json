@@ -1,0 +1,19 @@
+{
+    "name": "shill-bidding",
+    "n_num_features": 3,
+    "n_cat_features": 0,
+    "train_size": 4044,
+    "val_size": 1012,
+    "test_size": 1265,
+    "source": "https://www.openml.org/search?type=data&status=active&id=42889&sort=runs",
+    "task_intro": "We scraped a large number of eBay auctions of a popular product. After preprocessing the auction data, we build the SB dataset. The goal is to share the labelled SB dataset with the researchers.",
+    "task_type": "binclass",
+    "openml_id": 42889,
+    "n_classes": 2,
+    "num_feature_intro": {
+        "Starting_Price_Average": "Starting_Price_Average",
+        "Winning_Ratio": "Winning_Ratio",
+        "Auction_Duration": "Auction_Duration"
+    },
+    "cat_feature_intro": {}
+}

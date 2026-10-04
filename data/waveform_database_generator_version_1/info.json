@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 3,
+    "n_num_features": 21,
+    "n_cat_features": 0,
+    "train_size": 3200,
+    "val_size": 800,
+    "test_size": 1000,
+    "source": "https://archive.ics.uci.edu/dataset/107/waveform+database+generator+version+1"
+}

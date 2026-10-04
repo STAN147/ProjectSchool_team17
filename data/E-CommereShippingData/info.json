@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 6,
+    "n_cat_features": 4,
+    "train_size": 7039,
+    "val_size": 1760,
+    "test_size": 2200,
+    "source": "https://www.kaggle.com/datasets/prachi13/customer-analytics"
+}

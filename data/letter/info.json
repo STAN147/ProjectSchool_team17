@@ -1,0 +1,32 @@
+{
+    "name": "letter",
+    "n_num_features": 15,
+    "n_cat_features": 0,
+    "train_size": 12800,
+    "val_size": 3200,
+    "test_size": 4000,
+    "source": "https://www.openml.org/search?type=data&status=active&id=6&sort=runs",
+    "task_intro": "**Author**: David J. Slate  \n**Source**: [UCI](https://archive.ics.uci.edu/ml/datasets/Letter+Recognition) - 01-01-1991  \n**Please cite**: P. W. Frey and D. J. Slate. \"Letter Recognition Using Holland-style Adaptive Classifiers\". Machine Learning 6(2), 1991  \n\n1. TITLE: \n  Letter Image Recognition Data \n \n    The objective is to identify each of a large number of black-and-white\n    rectangular pixel displays as one of the 26 capital letters in the English\n    alphabet.  The character images were based on 20 different fonts and each\n    letter within these 20 fonts was randomly distorted to produce a file of\n    20,000 unique stimuli.  Each stimulus was converted into 16 primitive\n    numerical attributes (statistical moments and edge counts) which were then\n    scaled to fit into a range of integer values from 0 through 15.  We\n    typically train on the first 16000 items and then use the resulting model\n    to predict the letter category for the remaining 4000.  See the article\n    cited above for more details.",
+    "task_type": "multiclass",
+    "openml_id": 6,
+    "imbalance_ratio": 1.1076294277929155,
+    "n_classes": 26,
+    "num_feature_intro": {
+        "x-box": "x-box",
+        "y-box": "y-box",
+        "high": "high",
+        "onpix": "onpix",
+        "x-bar": "x-bar",
+        "y-bar": "y-bar",
+        "x2bar": "x2bar",
+        "y2bar": "y2bar",
+        "xybar": "xybar",
+        "x2ybr": "x2ybr",
+        "xy2br": "xy2br",
+        "x-ege": "x-ege",
+        "xegvy": "xegvy",
+        "y-ege": "y-ege",
+        "yegvx": "yegvx"
+    },
+    "cat_feature_intro": {}
+}

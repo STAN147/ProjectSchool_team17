@@ -1,0 +1,34 @@
+{
+    "name": "baseball",
+    "n_num_features": 15,
+    "n_cat_features": 1,
+    "train_size": 857,
+    "val_size": 215,
+    "test_size": 268,
+    "source": "https://www.openml.org/search?type=data&status=active&id=185&sort=runs",
+    "task_intro": "Database of baseball players and play statistics, including 'Games_played', 'At_bats', 'Runs', 'Hits', 'Doubles', 'Triples', 'Home_runs', 'RBIs', 'Walks', 'Strikeouts', 'Batting_average', 'On_base_pct', 'Slugging_pct' and 'Fielding_ave' \n\nNotes:  \n* Quotes, Single-Quotes and Backslashes were removed, Blanks replaced with Underscores\n* Player is an identifier that should be ignored when modelling the data",
+    "task_type": "multiclass",
+    "openml_id": 185,
+    "imbalance_ratio": 21.31578947368421,
+    "n_classes": 3,
+    "num_feature_intro": {
+        "Number_seasons": "Number_seasons",
+        "Games_played": "Games_played",
+        "At_bats": "At_bats",
+        "Runs": "Runs",
+        "Hits": "Hits",
+        "Doubles": "Doubles",
+        "Triples": "Triples",
+        "Home_runs": "Home_runs",
+        "RBIs": "RBIs",
+        "Walks": "Walks",
+        "Strikeouts": "Strikeouts",
+        "Batting_average": "Batting_average",
+        "On_base_pct": "On_base_pct",
+        "Slugging_pct": "Slugging_pct",
+        "Fielding_ave": "Fielding_ave"
+    },
+    "cat_feature_intro": {
+        "Position": "Position"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 26,
+    "n_cat_features": 0,
+    "train_size": 9598,
+    "val_size": 2400,
+    "test_size": 3000,
+    "source":null
+}

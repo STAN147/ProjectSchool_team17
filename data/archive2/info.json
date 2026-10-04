@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 11,
+    "n_cat_features": 1,
+    "train_size": 731,
+    "val_size": 183,
+    "test_size": 229,
+    "source": "https://www.kaggle.com/datasets/yasserh/wine-quality-dataset"
+}

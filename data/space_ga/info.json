@@ -1,0 +1,22 @@
+{
+    "name": "space_ga",
+    "n_num_features": 6,
+    "n_cat_features": 0,
+    "train_size": 1988,
+    "val_size": 497,
+    "test_size": 622,
+    "source": "https://www.openml.org/search?type=data&status=active&id=507&sort=runs",
+    "task_intro": "**Author**:   \n**Source**: Unknown - Date unknown  \n**Please cite**:   \n\nGeographical Analysis Spatial Data\n\nThis georeferenced data set was used in:\n\nPace, R. Kelley, and Ronald Barry, Quick Computation of Regressions with a Spatially\nAutoregressive Dependent Variable, Geographical Analysis, Volume 29, Number 3, July\n1997, p. 232-247.\n\nIt contains 3,107 observations on U.S. county votes cast in the 1980 presidential election.\nSpecifically, it contains the total number of votes cast in the 1980 presidential election per\ncounty (VOTES), the population in each county of 18 years of age or older (POP), the\npopulation in each county with a 12th grade or higher education (EDUCATION), the\nnumber of owner-occupied housing units (HOUSES), the aggregate income (INCOME), the X\nspatial coordinate of the county (XCOORD), and the Y spatial coordinate of the county\n(YCOORD).\n\nThe dependent variable is the log of the proportion of votes cast for both candidates in the\n1980 presidential election. Hence, we can express our dependent variable as ln(VOTES/\nPOP) = ln(VOTES)-ln(POP).\n\nThe overall data set has the following structure\n\n[ln(VOTES/POP) POP EDUCATION HOUSES INCOME XCOORD YCOORD]\n\nAdditional details can be found, along with other data, manuscripts, free spatial software, and\nso forth, at www.spatial-statistics.com or www.finance.lsu.edu/re (follow the spatial statistics\nlink). In particular, the above mentioned manuscript which used the data is available for\ndownload. If you have any questions, send an email to kelley@spatial-statistics.com.\n\n\n\n\n\n\nInformation about the dataset\nCLASSTYPE: numeric\nCLASSINDEX: 1",
+    "task_type": "regression",
+    "openml_id": 507,
+    "n_classes": 1,
+    "num_feature_intro": {
+        "POP": "POP",
+        "EDUCATION": "EDUCATION",
+        "HOUSES": "HOUSES",
+        "INCOME": "INCOME",
+        "XCOORD": "XCOORD",
+        "YCOORD": "YCOORD"
+    },
+    "cat_feature_intro": {}
+}

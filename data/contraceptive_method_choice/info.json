@@ -1,0 +1,10 @@
+{
+    "task_type": "multiclass",
+    "num_classes": 3,
+    "n_num_features": 5,
+    "n_cat_features": 4,
+    "train_size": 942,
+    "val_size": 236,
+    "test_size": 295,
+    "source": "https://archive.ics.uci.edu/dataset/30/contraceptive+method+choice"
+}

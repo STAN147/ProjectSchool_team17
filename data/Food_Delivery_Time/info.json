@@ -1,0 +1,9 @@
+{
+    "task_type": "regression",
+    "n_num_features": 6,
+    "n_cat_features": 2,
+    "train_size": 29179,
+    "val_size": 7295,
+    "test_size": 9119,
+    "source": "https://www.kaggle.com/datasets/rajatkumar30/food-delivery-time"
+}

@@ -1,0 +1,10 @@
+{
+    "task_type": "binclass",
+    "num_classes": 2,
+    "n_num_features": 3,
+    "n_cat_features": 0,
+    "train_size": 25566,
+    "val_size": 6392,
+    "test_size": 7990,
+    "source": "https://www.openml.org/search?type=data&status=any&sort=runs&order=desc&id=1220"
+}
