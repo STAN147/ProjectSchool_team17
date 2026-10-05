@@ -33,7 +33,7 @@ class ModernNCAEncoder(nn.Module):
 
         in_dim = 0
         if num_continuous > 0:
-            in_dim += num_continuous * plr_dim  
+            in_dim += num_continuous * (plr_dim if plr_module is not None else 1)
         if num_categorical > 0:
             in_dim += num_categorical
             
@@ -67,10 +67,11 @@ class ModernNCAEncoder(nn.Module):
     ) -> torch.Tensor:
         features = []
     
-        if x_num is not None and self.plr_module is not None:
-            x_num_emb = self.plr_module(x_num)
-            x_num_flat = x_num_emb.flatten(start_dim=1)
-            features.append(x_num_flat)
+        if x_num is not None:
+            features.append(
+                self.plr_module(x_num).flatten(start_dim=1)
+                if self.plr_module is not None else x_num
+            )
             
         if x_cat is not None:
             features.append(x_cat)
@@ -78,4 +79,4 @@ class ModernNCAEncoder(nn.Module):
         x_concat = torch.cat(features, dim=1)
         encoded = self.network(x_concat)
         projected = self.post_mlp(encoded)
-        return self.final_bn(projected)
+        return projected

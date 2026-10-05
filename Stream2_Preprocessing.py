@@ -19,7 +19,7 @@ class TabularPreprocessor:
         self.num_cols = numerical_columns
         self.cat_cols = categorical_columns
 
-        self.num_imputer = SimpleImputer(strategy="mean")
+        self.num_imputer = SimpleImputer(strategy="mean", keep_empty_features=True)
         self.cat_imputer = SimpleImputer(strategy="constant", fill_value="__missing__")
 
         self.scaler = StandardScaler()

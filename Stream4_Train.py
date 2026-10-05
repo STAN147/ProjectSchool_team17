@@ -5,7 +5,9 @@ def sample_candidates(train_size: int, batch_indices: torch.Tensor, sample_rate:
     available = torch.arange(train_size)
     mask = ~torch.isin(available, batch_indices)
     available = available[mask]
-    num_samples = int(train_size * sample_rate)
+    if available.numel() < 2:
+        raise ValueError("At least two candidate examples are required")
+    num_samples = min(available.numel(), max(2, int(train_size * sample_rate)))
     shuffled = torch.randperm(available.size(0))
     return available[shuffled[:num_samples]]
 
@@ -16,8 +18,8 @@ def compute_neighbor_probabilities(query_batch: torch.Tensor, sample_candidates_
     return probabilities
 
 def compute_nca_predictions(probabilities: torch.Tensor, sample_candidates_y: torch.Tensor, task_type: str, num_classes: int = None) -> torch.Tensor:
-    if task_type == "multiclass":
-        y_one_hot = F.one_hot(sample_candidates_y, num_classes=num_classes).float()
+    if task_type in ("binary", "multiclass"):
+        y_one_hot = F.one_hot(sample_candidates_y.long().view(-1), num_classes=num_classes).float()
         predictions = probabilities @ y_one_hot
     if task_type == "regression":
         y = sample_candidates_y.view(-1, 1).float()
@@ -25,12 +27,12 @@ def compute_nca_predictions(probabilities: torch.Tensor, sample_candidates_y: to
     return predictions
 
 def compute_nca_loss(query_batch_predictions, query_batch_y, task_type: str) -> torch.Tensor:
-    if task_type == "multiclass":
+    if task_type in ("binary", "multiclass"):
         eps = 1e-8
         log_probs = torch.log(query_batch_predictions + eps)
-        loss = F.nll_loss(log_probs, query_batch_y)
+        loss = F.nll_loss(log_probs, query_batch_y.long().view(-1))
     if task_type == "regression":
-        loss = F.mse_loss(query_batch_predictions, query_batch_y.float())
+        loss = F.mse_loss(query_batch_predictions, query_batch_y.float().view(-1))
     return loss
 
 class Trainer:
@@ -45,11 +47,16 @@ class Trainer:
         x_num_train, x_cat_train, y_train = train_data
         print(x_cat_train)
         train_size = y_train.size(0)
+        if train_size < 4:
+            raise ValueError("At least four training examples are required for BatchNorm/SNS")
+        batch_size = min(self.batch_size, train_size - 2)
         for epoch in range(epochs):
             self.encoder.train()
             s = torch.randperm(train_size)
-            for i in range(0, train_size, self.batch_size):
-                batch_indices = s[i:i + self.batch_size]
+            for i in range(0, train_size, batch_size):
+                batch_indices = s[i:i + batch_size]
+                if batch_indices.numel() < 2:
+                    continue
                 query_x_num = x_num_train[batch_indices] if x_num_train is not None else None
                 query_x_cat = x_cat_train[batch_indices] if x_cat_train is not None else None
                 query_y = y_train[batch_indices]
@@ -80,7 +87,7 @@ class Trainer:
         x_cat_test = test_data[1]
         
         ref_size = y_ref.size(0)
-        test_size = x_num_test.size(0)
+        test_size = (x_num_test if x_num_test is not None else x_cat_test).size(0)
         
         self.encoder.eval()
         all_predictions = []
@@ -90,11 +97,14 @@ class Trainer:
             ref_idx = torch.randperm(ref_size)[:ref_sample_size]
             
             cand_y = y_ref[ref_idx]
-            z_cand = self.encoder(x_num_ref[ref_idx], x_cat_ref[ref_idx])
+            z_cand = self.encoder(
+                x_num_ref[ref_idx] if x_num_ref is not None else None,
+                x_cat_ref[ref_idx] if x_cat_ref is not None else None,
+            )
             
             for i in range(0, test_size, self.batch_size):
-                query_x_num = x_num_test[i : i + self.batch_size]
-                query_x_cat = x_cat_test[i : i + self.batch_size]
+                query_x_num = x_num_test[i : i + self.batch_size] if x_num_test is not None else None
+                query_x_cat = x_cat_test[i : i + self.batch_size] if x_cat_test is not None else None
                 z_query = self.encoder(query_x_num, query_x_cat)
                 probabilities = compute_neighbor_probabilities(z_query, z_cand, T=1.0)
                 predictions = compute_nca_predictions(probabilities, cand_y, task_type, num_classes)
@@ -117,11 +127,14 @@ class Trainer:
             ref_idx = torch.randperm(ref_size)[:ref_sample_size]
             
             cand_y = y_ref[ref_idx]
-            z_cand = self.encoder(x_num_ref[ref_idx], x_cat_ref[ref_idx])
+            z_cand = self.encoder(
+                x_num_ref[ref_idx] if x_num_ref is not None else None,
+                x_cat_ref[ref_idx] if x_cat_ref is not None else None,
+            )
 
             for i in range(0, val_size, self.batch_size):
-                query_x_num = x_num_val[i : i + self.batch_size]
-                query_x_cat = x_cat_val[i : i + self.batch_size]
+                query_x_num = x_num_val[i : i + self.batch_size] if x_num_val is not None else None
+                query_x_cat = x_cat_val[i : i + self.batch_size] if x_cat_val is not None else None
                 query_y = y_val[i : i + self.batch_size]
                 
                 z_query = self.encoder(query_x_num, query_x_cat)
@@ -130,6 +143,6 @@ class Trainer:
                 predictions = compute_nca_predictions(probabilities, cand_y, task_type, num_classes)
                 loss = compute_nca_loss(predictions, query_y, task_type)
                 
-                total_loss += loss.item()
+                total_loss += loss.item() * query_y.shape[0]
 
-        return total_loss / (val_size / self.batch_size)
+        return total_loss / val_size

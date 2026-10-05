@@ -12,15 +12,12 @@ import copy
 import random
 
 import numpy as np
-import optuna
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, TensorDataset
 
-from catboost import CatBoostClassifier, CatBoostRegressor
-from xgboost import XGBClassifier, XGBRegressor
 
 import pandas as pd
 
@@ -366,10 +363,12 @@ class TorchMLP:
 
 def prepare_data(model_name, dataset, preprocessor=None):
     if model_name == "catboost":
+        frames = [dataset.X_train.copy(), dataset.X_val.copy(), dataset.X_test.copy()]
+        for frame in frames:
+            for column in dataset.categorical_columns:
+                frame[column] = frame[column].fillna("__missing__").astype(str)
         return (
-            dataset.X_train,
-            dataset.X_val,
-            dataset.X_test,
+            *frames,
             dataset.y_train,
             dataset.y_val,
             dataset.y_test,
@@ -377,13 +376,16 @@ def prepare_data(model_name, dataset, preprocessor=None):
 
     preprocessor.fit(dataset.X_train)
 
-    train_nums, train_cols = preprocessor.transform(dataset.X_train)
-    val_nums, val_cols = preprocessor.transform(dataset.X_val)
-    test_nums, test_cols = preprocessor.transform(dataset.X_test)
+    def matrix(X, y):
+        processed = preprocessor.transform(X, y)
+        return torch.cat(
+            [part for part in (processed.x_num, processed.x_cat) if part is not None],
+            dim=1,
+        ).cpu().numpy()
 
-    X_train = np.concatenate([train_nums, train_cols], axis=1)
-    X_val = np.concatenate([val_nums, val_cols], axis=1)
-    X_test = np.concatenate([test_nums, test_cols], axis=1)
+    X_train = matrix(dataset.X_train, dataset.y_train)
+    X_val = matrix(dataset.X_val, dataset.y_val)
+    X_test = matrix(dataset.X_test, dataset.y_test)
 
     return X_train, X_val, X_test, dataset.y_train, dataset.y_val, dataset.y_test
 
@@ -392,6 +394,8 @@ def build_model(model_name, task_type, config, seed):
     is_classification = task_type in ("binary", "multiclass")
 
     if model_name == "catboost":
+        from catboost import CatBoostClassifier, CatBoostRegressor
+
         if is_classification:
             return CatBoostClassifier(
                 **config,
@@ -410,6 +414,8 @@ def build_model(model_name, task_type, config, seed):
                 **config)
 
     elif model_name == "xgboost":
+        from xgboost import XGBClassifier, XGBRegressor
+
         if is_classification:
             return XGBClassifier(
                 **config,
@@ -442,6 +448,11 @@ def fit_model(model, model_name, X_train, X_val, y_train, y_val):
     return model
 
 def compute_metric(task_type, y_true, y_pred):
+  y_true = np.asarray(y_true).reshape(-1)
+  y_pred = np.asarray(y_pred).reshape(-1)
+  if y_true.shape != y_pred.shape:
+    raise ValueError("Targets and predictions must have matching shapes")
+
   if task_type in ("binary", "multiclass"):
     return "accuracy", (y_true == y_pred).mean()
   elif task_type == "regression":
@@ -660,6 +671,8 @@ def objective(trial, model_name, dataset, seed, preprocessor):
 
   X_train, X_val, _, y_train, y_val, _ = prepare_data(model_name, dataset, preprocessor)
   model = build_model(model_name, dataset.task_type, config, seed)
+  if model_name == "catboost":
+    model.set_params(cat_features=dataset.categorical_columns)
   model = fit_model(model, model_name, X_train, X_val, y_train, y_val)
 
   y_pred = model.predict(X_val)
@@ -668,12 +681,17 @@ def objective(trial, model_name, dataset, seed, preprocessor):
   return metric_value
 
 def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials):
+  import optuna
+
   if dataset.task_type == "regression":
     direction ='minimize'
   else:
     direction ='maximize'
 
-  study = optuna.create_study(direction=direction)
+  study = optuna.create_study(
+    direction=direction,
+    sampler=optuna.samplers.TPESampler(seed=seed),
+  )
   study.optimize(lambda trial: objective(trial, model_name, dataset, seed, preprocessor), n_trials=n_trials)
 
   return study.best_trial.user_attrs["config"]
@@ -683,6 +701,8 @@ def run_experiment(model_name, dataset, seed, config, preprocessor):
   X_train, X_val, X_test, y_train, y_val, y_test = prepare_data(model_name, dataset, preprocessor)
 
   model = build_model(model_name, dataset.task_type, config, seed)
+  if model_name == "catboost":
+    model.set_params(cat_features=dataset.categorical_columns)
   model = fit_model(model, model_name, X_train, X_val, y_train, y_val)
 
   y_pred = model.predict(X_test)
@@ -692,27 +712,6 @@ def run_experiment(model_name, dataset, seed, config, preprocessor):
   return ExperimentResult(dataset.dataset_name, model_name, seed, dataset.task_type, metric_name, metric_value, y_pred, y_test, config)
 
 """## EVAL"""
-
-def run_experiments(model_names, datasets, seeds, preprocessor, n_trials = 100):
-  results = []
-  for dataset in datasets:
-    for model_name in model_names:
-      best_params = tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials)
-      for seed in seeds:
-        result = run_experiment(model_name, dataset, seed, best_params, preprocessor)
-        results.append(result)
-
-
-
-results = run_experiments(
-    model_names=["catboost"],
-    datasets=[],
-    seeds=[0],
-    preprocessor=preprocessor,
-    n_trials=10
-)
-
-import pandas as pd
 
 def run_experiments(model_names, datasets, seeds, preprocessor, n_trials=100):
     results = []

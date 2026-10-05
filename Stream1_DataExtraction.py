@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import json
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 from pathlib import Path
 from typing import Literal
 
@@ -89,6 +90,15 @@ def extract_from_raw (dataset_dir) :
 
     with open(dataset_dir / "info.json") as info:
         metadata = json.load(info)
+
+    metadata.setdefault("num_feature_intro", {
+        f"N_{j}": f"N_{j}"
+        for j in range(N_train.shape[1] if N_train is not None else 0)
+    })
+    metadata.setdefault("cat_feature_intro", {
+        f"C_{j}": f"C_{j}"
+        for j in range(C_train.shape[1] if C_train is not None else 0)
+    })
 # <<< Dataset files extraction >>>
 
 # <<< Merging train-test split and numerical/categorical columns >>>
@@ -122,7 +132,9 @@ def load_dataset (dataset_name, seed) :
 
     X, y, metadata = extract_from_raw(Path("./data") / dataset_name)
 
-    if metadata["task_type"] in ["binclass", "multiclass"]:
+    task_type = {"binclass": "binary"}.get(metadata["task_type"], metadata["task_type"])
+
+    if task_type in ["binary", "multiclass"]:
         # 64% train, 36% temporary
         X_train, X_tmp, y_train, y_tmp = train_test_split(
             X,
@@ -157,13 +169,22 @@ def load_dataset (dataset_name, seed) :
             random_state=seed,
         )
 
+    n_classes = 0
+    if task_type in ("binary", "multiclass"):
+        label_encoder = LabelEncoder().fit(y_train)
+        y_train, y_val, y_test = [
+            pd.Series(label_encoder.transform(part), index=part.index, name="target")
+            for part in (y_train, y_val, y_test)
+        ]
+        n_classes = len(label_encoder.classes_)
+
     return TabularDataset(
         dataset_name,
         X_train, y_train,
         X_val, y_val,
         X_test, y_test,
-        n_classes=int(metadata["n_classes"]),
+        n_classes=n_classes,
         numerical_columns=list(metadata["num_feature_intro"].keys()),
         categorical_columns=list(metadata["cat_feature_intro"].keys()),
-        task_type=metadata["task_type"]
+        task_type=task_type
     )
