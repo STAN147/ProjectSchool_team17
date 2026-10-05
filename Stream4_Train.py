@@ -1,3 +1,5 @@
+import copy
+
 import torch
 import torch.nn.functional as F
 
@@ -40,16 +42,23 @@ class Trainer:
         self.encoder = encoder
         self.learning_rate = config.get("lr", 1e-3)
         self.batch_size = config.get("batch_size", 1024)
+        self.patience = config.get("patience", 20)
+        self.verbose = config.get("verbose", True)
         self.optimizer = torch.optim.AdamW(self.encoder.parameters(), lr=self.learning_rate, 
             weight_decay=config.get("weight_decay", 1e-4))
 
     def fit(self, train_data: tuple, epochs: int, sample_rate: float, task_type: str, num_classes: int = None, val_data: tuple = None):
         x_num_train, x_cat_train, y_train = train_data
-        print(x_cat_train)
         train_size = y_train.size(0)
         if train_size < 4:
             raise ValueError("At least four training examples are required for BatchNorm/SNS")
         batch_size = min(self.batch_size, train_size - 2)
+        best_state = None
+        best_score = float("inf") if task_type == "regression" else -float("inf")
+        bad_epochs = 0
+        self.best_epoch = 0
+        self.best_score = None
+        self.epochs_trained = 0
         for epoch in range(epochs):
             self.encoder.train()
             s = torch.randperm(train_size)
@@ -77,9 +86,26 @@ class Trainer:
                 loss.backward()
                 self.optimizer.step()
 
+            self.epochs_trained = epoch + 1
             if val_data is not None:
-                val_loss = self.evaluate(train_data, val_data, task_type, num_classes)
-                print(f"Epoch {epoch+1} val Loss: {val_loss}")
+                val_loss, score = self.evaluate(train_data, val_data, task_type, num_classes, return_metric=True)
+                if self.verbose:
+                    print(f"Epoch {epoch+1} val Loss: {val_loss} val metric: {score}")
+                improved = score < best_score if task_type == "regression" else score > best_score
+                if improved:
+                    best_score = score
+                    best_state = copy.deepcopy(self.encoder.state_dict())
+                    self.best_epoch = epoch + 1
+                    self.best_score = score
+                    bad_epochs = 0
+                else:
+                    bad_epochs += 1
+                if self.patience is not None and bad_epochs >= self.patience:
+                    break
+
+        if best_state is not None:
+            self.encoder.load_state_dict(best_state)
+        return self
 
     def predict(self, train_reference_data: tuple, test_data: tuple, task_type: str, num_classes: int = None, max_candidates: int = 1000000) -> torch.Tensor:
         x_num_ref, x_cat_ref, y_ref = train_reference_data
@@ -112,7 +138,7 @@ class Trainer:
 
         return torch.cat(all_predictions, dim=0)
 
-    def evaluate(self, train_reference_data: tuple, val_data: tuple, task_type: str, num_classes: int = None, max_candidates: int = 100000) -> float:
+    def evaluate(self, train_reference_data: tuple, val_data: tuple, task_type: str, num_classes: int = None, max_candidates: int = 100000, return_metric: bool = False) -> float | tuple[float, float]:
         x_num_ref, x_cat_ref, y_ref = train_reference_data
         x_num_val, x_cat_val, y_val = val_data
         
@@ -121,6 +147,7 @@ class Trainer:
         
         self.encoder.eval()
         total_loss = 0.0
+        total_metric = 0.0
         
         with torch.no_grad():
             ref_sample_size = min(max_candidates, ref_size)
@@ -144,5 +171,11 @@ class Trainer:
                 loss = compute_nca_loss(predictions, query_y, task_type)
                 
                 total_loss += loss.item() * query_y.shape[0]
+                if task_type == "regression":
+                    total_metric += ((predictions - query_y.float().view(-1)) ** 2).sum().item()
+                else:
+                    total_metric += (predictions.argmax(dim=1) == query_y.view(-1)).sum().item()
 
-        return total_loss / val_size
+        val_loss = total_loss / val_size
+        score = (total_metric / val_size) ** 0.5 if task_type == "regression" else total_metric / val_size
+        return (val_loss, score) if return_metric else val_loss

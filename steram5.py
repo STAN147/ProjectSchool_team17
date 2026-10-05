@@ -391,11 +391,16 @@ def prepare_data(model_name, dataset, preprocessor=None):
 
 def build_model(model_name, task_type, config, seed):
 
+    config = config.copy()
     is_classification = task_type in ("binary", "multiclass")
 
     if model_name == "catboost":
         from catboost import CatBoostClassifier, CatBoostRegressor
 
+        config.setdefault("early_stopping_rounds", 50)
+        config.setdefault("eval_metric", "Accuracy" if is_classification else "RMSE")
+        config.setdefault("use_best_model", True)
+        config.setdefault("allow_writing_files", False)
         if is_classification:
             return CatBoostClassifier(
                 **config,
@@ -416,6 +421,8 @@ def build_model(model_name, task_type, config, seed):
     elif model_name == "xgboost":
         from xgboost import XGBClassifier, XGBRegressor
 
+        config.setdefault("early_stopping_rounds", 50)
+        config.setdefault("eval_metric", {"binary": "error", "multiclass": "merror", "regression": "rmse"}[task_type])
         if is_classification:
             return XGBClassifier(
                 **config,
@@ -665,8 +672,9 @@ def suggest_params(trial, model_name):
             f"Unknown model: {model_name}"
         )
 
-def objective(trial, model_name, dataset, seed, preprocessor):
+def objective(trial, model_name, dataset, seed, preprocessor, model_config=None):
   config = suggest_params(trial, model_name)
+  config.update(model_config or {})
   trial.set_user_attr("config", config)
 
   X_train, X_val, _, y_train, y_val, _ = prepare_data(model_name, dataset, preprocessor)
@@ -680,7 +688,7 @@ def objective(trial, model_name, dataset, seed, preprocessor):
 
   return metric_value
 
-def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials):
+def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials, model_config=None):
   import optuna
 
   if dataset.task_type == "regression":
@@ -692,7 +700,7 @@ def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials):
     direction=direction,
     sampler=optuna.samplers.TPESampler(seed=seed),
   )
-  study.optimize(lambda trial: objective(trial, model_name, dataset, seed, preprocessor), n_trials=n_trials)
+  study.optimize(lambda trial: objective(trial, model_name, dataset, seed, preprocessor, model_config), n_trials=n_trials)
 
   return study.best_trial.user_attrs["config"]
 
@@ -713,17 +721,19 @@ def run_experiment(model_name, dataset, seed, config, preprocessor):
 
 """## EVAL"""
 
-def run_experiments(model_names, datasets, seeds, preprocessor, n_trials=100):
+def run_experiments(model_names, datasets, seeds, preprocessor, n_trials=100, tune_seed=0, model_configs=None):
     results = []
 
     for dataset in datasets:
         for model_name in model_names:
+            model_config = (model_configs or {}).get(model_name, {})
             best_params = tune_hyperparameters(
                 model_name=model_name,
                 dataset=dataset,
-                seed=0,
+                seed=tune_seed,
                 preprocessor=preprocessor,
-                n_trials=n_trials
+                n_trials=n_trials,
+                model_config=model_config,
             )
 
             for seed in seeds:
