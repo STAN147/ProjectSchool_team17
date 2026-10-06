@@ -690,7 +690,30 @@ def objective(trial, model_name, dataset, seed, preprocessor, model_config=None)
 
   return metric_value
 
-def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials, model_config=None, storage=None, study_name=None):
+def optuna_patience_reached(study, patience=10):
+  import optuna
+
+  if patience < 1:
+    raise ValueError("Optuna patience must be positive")
+  best_value = None
+  bad_trials = 0
+  for trial in study.get_trials(deepcopy=False, states=(optuna.trial.TrialState.COMPLETE,)):
+    improved = best_value is None or (trial.value < best_value if study.direction.name == "MINIMIZE" else trial.value > best_value)
+    if improved:
+      best_value = trial.value
+      bad_trials = 0
+    else:
+      bad_trials += 1
+  return bad_trials >= patience
+
+
+def stop_optuna_if_no_improvement(study, trial, patience=10):
+  if trial.state.name == "COMPLETE" and optuna_patience_reached(study, patience):
+    print("Optuna", study.study_name, "stopped: no improvement for", patience, "trials")
+    study.stop()
+
+
+def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials, model_config=None, storage=None, study_name=None, optuna_patience=10):
   import optuna
 
   if dataset.task_type == "regression":
@@ -708,8 +731,14 @@ def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials, mode
   completed = len(study.get_trials(deepcopy=False, states=(optuna.trial.TrialState.COMPLETE,)))
   remaining = max(0, n_trials - completed)
   print("Optuna", study.study_name, "completed", completed, "remaining", remaining)
-  if remaining:
-    study.optimize(lambda trial: objective(trial, model_name, dataset, seed, preprocessor, model_config), n_trials=remaining)
+  if remaining and not optuna_patience_reached(study, optuna_patience):
+    study.optimize(
+      lambda trial: objective(trial, model_name, dataset, seed, preprocessor, model_config),
+      n_trials=remaining,
+      callbacks=[lambda study, trial: stop_optuna_if_no_improvement(study, trial, optuna_patience)],
+    )
+  elif remaining:
+    print("Optuna", study.study_name, "already stopped: no improvement for", optuna_patience, "trials")
 
   return {**study.best_trial.user_attrs["config"], **(model_config or {})}
 
