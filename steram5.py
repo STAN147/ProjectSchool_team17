@@ -397,6 +397,8 @@ def build_model(model_name, task_type, config, seed):
     if model_name == "catboost":
         from catboost import CatBoostClassifier, CatBoostRegressor
 
+        if config.get("task_type") == "GPU" and torch.cuda.is_available():
+            torch.cuda.empty_cache()
         config.setdefault("early_stopping_rounds", 50)
         config.setdefault("eval_metric", "Accuracy" if is_classification else "RMSE")
         config.setdefault("use_best_model", True)
@@ -688,7 +690,7 @@ def objective(trial, model_name, dataset, seed, preprocessor, model_config=None)
 
   return metric_value
 
-def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials, model_config=None):
+def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials, model_config=None, storage=None, study_name=None):
   import optuna
 
   if dataset.task_type == "regression":
@@ -699,10 +701,17 @@ def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials, mode
   study = optuna.create_study(
     direction=direction,
     sampler=optuna.samplers.TPESampler(seed=seed),
+    storage=storage,
+    study_name=study_name,
+    load_if_exists=True,
   )
-  study.optimize(lambda trial: objective(trial, model_name, dataset, seed, preprocessor, model_config), n_trials=n_trials)
+  completed = len(study.get_trials(deepcopy=False, states=(optuna.trial.TrialState.COMPLETE,)))
+  remaining = max(0, n_trials - completed)
+  print("Optuna", study.study_name, "completed", completed, "remaining", remaining)
+  if remaining:
+    study.optimize(lambda trial: objective(trial, model_name, dataset, seed, preprocessor, model_config), n_trials=remaining)
 
-  return study.best_trial.user_attrs["config"]
+  return {**study.best_trial.user_attrs["config"], **(model_config or {})}
 
 def run_experiment(model_name, dataset, seed, config, preprocessor):
   model_name = model_name.lower()

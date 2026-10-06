@@ -116,7 +116,7 @@ def extract_from_raw (dataset_dir) :
             columns=metadata["cat_feature_intro"]
         ))
 
-    targets = np.concatenate([y_train, y_val, y_test], axis=0)
+    targets = np.concatenate([y_train, y_val, y_test], axis=0).reshape(-1)
 # <<< Merging train-test split and numerical/categorical columns >>>
 
     return pd.concat(parts, axis=1), pd.Series(targets, name="target"), metadata

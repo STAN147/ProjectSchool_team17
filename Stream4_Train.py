@@ -4,18 +4,18 @@ import torch
 import torch.nn.functional as F
 
 def sample_candidates(train_size: int, batch_indices: torch.Tensor, sample_rate: float) -> torch.Tensor:
-    available = torch.arange(train_size)
+    available = torch.arange(train_size, device=batch_indices.device)
     mask = ~torch.isin(available, batch_indices)
     available = available[mask]
-    if available.numel() < 2:
-        raise ValueError("At least two candidate examples are required")
-    num_samples = min(available.numel(), max(2, int(train_size * sample_rate)))
-    shuffled = torch.randperm(available.size(0))
+    num_samples = int(available.numel() * sample_rate)
+    shuffled = torch.randperm(available.size(0), device=batch_indices.device)
     return available[shuffled[:num_samples]]
 
-def compute_neighbor_probabilities(query_batch: torch.Tensor, sample_candidates_batch: torch.Tensor, T: float = 1.0) -> torch.Tensor:
+def compute_neighbor_probabilities(query_batch: torch.Tensor, sample_candidates_batch: torch.Tensor, T: float = 1.0, is_train: bool = False) -> torch.Tensor:
     distances = torch.cdist(query_batch, sample_candidates_batch, p=2.0)
     distances = -distances / T if T != 1.0 else -distances
+    if is_train:
+        distances.fill_diagonal_(-torch.inf)
     probabilities = F.softmax(distances, dim=-1)
     return probabilities
 
@@ -39,7 +39,8 @@ def compute_nca_loss(query_batch_predictions, query_batch_y, task_type: str) -> 
 
 class Trainer:
     def __init__(self, encoder: torch.nn.Module, config: dict):
-        self.encoder = encoder
+        self.device = torch.device(config.get("device", "cuda:0" if torch.cuda.is_available() else "cpu"))
+        self.encoder = encoder.to(self.device)
         self.learning_rate = config.get("lr", 1e-3)
         self.batch_size = config.get("batch_size", 1024)
         self.patience = config.get("patience", 20)
@@ -47,12 +48,17 @@ class Trainer:
         self.optimizer = torch.optim.AdamW(self.encoder.parameters(), lr=self.learning_rate, 
             weight_decay=config.get("weight_decay", 1e-4))
 
+    def _to_device(self, data: tuple) -> tuple:
+        return tuple(part.to(self.device) if part is not None else None for part in data)
+
     def fit(self, train_data: tuple, epochs: int, sample_rate: float, task_type: str, num_classes: int = None, val_data: tuple = None):
+        train_data = self._to_device(train_data)
+        val_data = self._to_device(val_data) if val_data is not None else None
         x_num_train, x_cat_train, y_train = train_data
         train_size = y_train.size(0)
-        if train_size < 4:
-            raise ValueError("At least four training examples are required for BatchNorm/SNS")
-        batch_size = min(self.batch_size, train_size - 2)
+        if train_size < 2:
+            raise ValueError("At least two training examples are required for BatchNorm/SNS")
+        batch_size = min(self.batch_size, train_size)
         best_state = None
         best_score = float("inf") if task_type == "regression" else -float("inf")
         bad_epochs = 0
@@ -61,7 +67,7 @@ class Trainer:
         self.epochs_trained = 0
         for epoch in range(epochs):
             self.encoder.train()
-            s = torch.randperm(train_size)
+            s = torch.randperm(train_size, device=self.device)
             for i in range(0, train_size, batch_size):
                 batch_indices = s[i:i + batch_size]
                 if batch_indices.numel() < 2:
@@ -76,10 +82,19 @@ class Trainer:
                 cand_y = y_train[candidate_indices]
                 self.optimizer.zero_grad()
 
-                z_query = self.encoder(query_x_num, query_x_cat)
-                z_cand = self.encoder(cand_x_num, cand_x_cat)
+                if candidate_indices.numel() == 1:
+                    # BatchNorm cannot train on a single external candidate.
+                    z_cand = self.encoder(
+                        torch.cat([query_x_num, cand_x_num]) if query_x_num is not None else None,
+                        torch.cat([query_x_cat, cand_x_cat]) if query_x_cat is not None else None,
+                    )
+                    z_query = z_cand[:batch_indices.numel()]
+                else:
+                    z_query = self.encoder(query_x_num, query_x_cat)
+                    z_cand = torch.cat([z_query, self.encoder(cand_x_num, cand_x_cat)]) if candidate_indices.numel() else z_query
+                cand_y = torch.cat([query_y, cand_y])
 
-                probs = compute_neighbor_probabilities(z_query, z_cand)
+                probs = compute_neighbor_probabilities(z_query, z_cand, is_train=True)
                 predictions = compute_nca_predictions(probs, cand_y, task_type, num_classes)
                 loss = compute_nca_loss(predictions, query_y, task_type)
 
@@ -108,6 +123,8 @@ class Trainer:
         return self
 
     def predict(self, train_reference_data: tuple, test_data: tuple, task_type: str, num_classes: int = None, max_candidates: int = 1000000) -> torch.Tensor:
+        train_reference_data = self._to_device(train_reference_data)
+        test_data = self._to_device(test_data)
         x_num_ref, x_cat_ref, y_ref = train_reference_data
         x_num_test = test_data[0]
         x_cat_test = test_data[1]
@@ -120,7 +137,7 @@ class Trainer:
         
         with torch.no_grad():
             ref_sample_size = min(max_candidates, ref_size)
-            ref_idx = torch.randperm(ref_size)[:ref_sample_size]
+            ref_idx = torch.randperm(ref_size, device=self.device)[:ref_sample_size]
             
             cand_y = y_ref[ref_idx]
             z_cand = self.encoder(
@@ -139,6 +156,8 @@ class Trainer:
         return torch.cat(all_predictions, dim=0)
 
     def evaluate(self, train_reference_data: tuple, val_data: tuple, task_type: str, num_classes: int = None, max_candidates: int = 100000, return_metric: bool = False) -> float | tuple[float, float]:
+        train_reference_data = self._to_device(train_reference_data)
+        val_data = self._to_device(val_data)
         x_num_ref, x_cat_ref, y_ref = train_reference_data
         x_num_val, x_cat_val, y_val = val_data
         
@@ -151,7 +170,7 @@ class Trainer:
         
         with torch.no_grad():
             ref_sample_size = min(max_candidates, ref_size)
-            ref_idx = torch.randperm(ref_size)[:ref_sample_size]
+            ref_idx = torch.randperm(ref_size, device=self.device)[:ref_sample_size]
             
             cand_y = y_ref[ref_idx]
             z_cand = self.encoder(
