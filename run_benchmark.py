@@ -9,6 +9,7 @@ import csv
 import hashlib
 import json
 import os
+import math
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -69,6 +70,13 @@ def gpu_index(value):
     return number
 
 
+def positive_seconds(value):
+    number = float(value)
+    if not math.isfinite(number) or number <= 0:
+        raise argparse.ArgumentTypeError("Log interval must be positive and finite")
+    return number
+
+
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--user", required=True, choices=USER_DATASETS, help="Назначенная группа датасетов")
@@ -84,6 +92,7 @@ def parse_args():
     parser.add_argument("--max-boost-rounds", type=positive_int, default=2000)
     parser.add_argument("--optuna-patience", type=positive_int, default=10)
     parser.add_argument("--cpu-threads", type=positive_int, default=4)
+    parser.add_argument("--log-interval", type=positive_seconds, default=60, help="Training progress interval in seconds")
     parser.add_argument("--smoke", action="store_true", help="Короткий запуск: stock по умолчанию, 1 trial, 1 сид, 1 эпоха, 2 дерева")
     return parser.parse_args()
 
@@ -137,6 +146,10 @@ def main():
         print("GPU", args.gpu, torch.cuda.get_device_name(device))
     print("User", args.user, "Device", device)
     print("Config", json.dumps(config, ensure_ascii=False))
+    from run_progress import RunProgress
+    progress = RunProgress(args.user, config, args.log_interval,
+                           synchronize=(lambda: torch.cuda.synchronize(device)) if device.type == "cuda" else (lambda: None))
+    print("Progress", progress.path, "Timings", progress.timings_path, flush=True)
 
     def prepare_run(dataset_name, seed):
         dataset = load_dataset(dataset_name, seed=seed)
@@ -194,7 +207,9 @@ def main():
             }
             trial.set_user_attr("config", params)
             trainer_trial = Trainer(build_modern_nca(params, config["tune_seed"], train_run), params)
-            trainer_trial.fit(train_data, config["max_epochs"], params["sample_rate"], dataset_run.task_type, dataset_run.n_classes, val_data)
+            with progress.measure(dataset_run.dataset_name, "modernnca", phase="optuna", trial=trial.number, seed=config["tune_seed"]) as timing:
+                trainer_trial.fit(train_data, config["max_epochs"], params["sample_rate"], dataset_run.task_type, dataset_run.n_classes, val_data)
+            trial.set_user_attr("training_seconds", timing["seconds"])
             return trainer_trial.best_score
 
         study = optuna.create_study(
@@ -205,16 +220,19 @@ def main():
             load_if_exists=True,
         )
         completed = len(study.get_trials(deepcopy=False, states=(optuna.trial.TrialState.COMPLETE,)))
+        progress.register_study(dataset_run.dataset_name, "modernnca", study)
         remaining = max(0, config["n_trials"] - completed)
         print("Optuna", study.study_name, "completed", completed, "remaining", remaining)
         if remaining and not optuna_patience_reached(study, config["optuna_patience"]):
             study.optimize(
                 nca_objective,
                 n_trials=remaining,
-                callbacks=[lambda study, trial: stop_optuna_if_no_improvement(study, trial, config["optuna_patience"])],
+                callbacks=[lambda study, trial: progress.trial_finished(dataset_run.dataset_name, "modernnca", study, trial),
+                           lambda study, trial: stop_optuna_if_no_improvement(study, trial, config["optuna_patience"])],
             )
         elif remaining:
             print("Optuna", study.study_name, "already stopped: no improvement for", config["optuna_patience"], "trials")
+        progress.tuning_finished(dataset_run.dataset_name, "modernnca")
         return {**study.best_trial.user_attrs["config"], "device": str(device)}
 
 
@@ -223,15 +241,17 @@ def main():
         val_data = (val_run.x_num, val_run.x_cat, val_run.y)
         model = build_modern_nca(params, seed, train_run)
         trainer = Trainer(model, params)
-        trainer.fit(train_data, config["max_epochs"], params["sample_rate"], dataset_run.task_type, dataset_run.n_classes, val_data)
+        with progress.measure(dataset_run.dataset_name, "modernnca", seed=seed):
+            trainer.fit(train_data, config["max_epochs"], params["sample_rate"], dataset_run.task_type, dataset_run.n_classes, val_data)
         print(dataset_run.dataset_name, "modernnca", seed, "best epoch", trainer.best_epoch, "epochs trained", trainer.epochs_trained)
 
-        predictions = trainer.predict(
-            train_data,
-            (test_run.x_num, test_run.x_cat),
-            dataset_run.task_type,
-            dataset_run.n_classes,
-        )
+        with progress.measure(dataset_run.dataset_name, "modernnca", operation="predict", seed=seed):
+            predictions = trainer.predict(
+                train_data,
+                (test_run.x_num, test_run.x_cat),
+                dataset_run.task_type,
+                dataset_run.n_classes,
+            )
 
         if dataset_run.task_type in ("binary", "multiclass"):
             predictions = predictions.argmax(dim=1)
@@ -282,16 +302,26 @@ def main():
         csv.DictWriter(output, fieldnames=result_columns).writeheader()
     print("Results", results_path)
 
+    for dataset_name in config["datasets"]:
+        for model_name in config["models"]:
+            try:
+                study = optuna.load_study(study_name=f"{dataset_name}:{model_name}:{tuning_tag}", storage=optuna_storage)
+            except KeyError:
+                continue
+            progress.register_study(dataset_name, model_name, study)
+
 
     def save_metric(record):
         with results_path.open("a", encoding="utf-8", newline="") as output:
             writer = csv.DictWriter(output, fieldnames=result_columns)
             writer.writerow({**record, "config": json.dumps(record["config"], ensure_ascii=False)})
         records.append(record)
+        progress.final_finished(record["dataset"], record["model"])
 
     for dataset_name in config["datasets"]:
         print("Dataset", dataset_name)
-        dataset_tune, prep_tune, train_tune, val_tune, test_tune = prepare_run(dataset_name, config["tune_seed"])
+        with progress.measure(dataset_name, phase="prepare", operation="prepare", seed=config["tune_seed"]):
+            dataset_tune, prep_tune, train_tune, val_tune, test_tune = prepare_run(dataset_name, config["tune_seed"])
         best_params = {}
 
         if "modernnca" in config["models"]:
@@ -308,10 +338,12 @@ def main():
                 model_config=baseline_configs[model_name],
                 storage=optuna_storage,
                 study_name=f"{dataset_name}:{model_name}:{tuning_tag}",
+                progress=progress,
             )
 
         for seed in config["seeds"]:
-            dataset_run, prep_run, train_run, val_run, test_run = prepare_run(dataset_name, seed)
+            with progress.measure(dataset_name, phase="prepare", operation="prepare", seed=seed):
+                dataset_run, prep_run, train_run, val_run, test_run = prepare_run(dataset_name, seed)
 
             if "modernnca" in config["models"]:
                 save_metric(run_modern_nca(seed, dataset_run, train_run, val_run, test_run, best_params["modernnca"]))
@@ -323,6 +355,7 @@ def main():
                     seed=seed,
                     config=best_params[model_name],
                     preprocessor=prep_run,
+                    progress=progress,
                 )
                 save_metric({
                     "dataset": result.dataset,
@@ -337,6 +370,7 @@ def main():
 
     results = pd.DataFrame(records, columns=result_columns)
     print(results[["dataset", "model", "seed", "metric", "metric_value"]])
+    progress.close()
 
 
 if __name__ == "__main__":

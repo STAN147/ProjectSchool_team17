@@ -8,6 +8,7 @@ Original file is located at
 """
 
 from dataclasses import dataclass
+from contextlib import nullcontext
 import copy
 import random
 
@@ -674,7 +675,7 @@ def suggest_params(trial, model_name):
             f"Unknown model: {model_name}"
         )
 
-def objective(trial, model_name, dataset, seed, preprocessor, model_config=None):
+def objective(trial, model_name, dataset, seed, preprocessor, model_config=None, progress=None):
   config = suggest_params(trial, model_name)
   config.update(model_config or {})
   trial.set_user_attr("config", config)
@@ -683,7 +684,10 @@ def objective(trial, model_name, dataset, seed, preprocessor, model_config=None)
   model = build_model(model_name, dataset.task_type, config, seed)
   if model_name == "catboost":
     model.set_params(cat_features=dataset.categorical_columns)
-  model = fit_model(model, model_name, X_train, X_val, y_train, y_val)
+  with (progress.measure(dataset.dataset_name, model_name, phase="optuna", trial=trial.number, seed=seed) if progress else nullcontext()) as timing:
+    model = fit_model(model, model_name, X_train, X_val, y_train, y_val)
+  if progress:
+    trial.set_user_attr("training_seconds", timing["seconds"])
 
   y_pred = model.predict(X_val)
   _, metric_value = compute_metric(dataset.task_type, y_val, y_pred)
@@ -713,7 +717,7 @@ def stop_optuna_if_no_improvement(study, trial, patience=10):
     study.stop()
 
 
-def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials, model_config=None, storage=None, study_name=None, optuna_patience=10):
+def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials, model_config=None, storage=None, study_name=None, optuna_patience=10, progress=None):
   import optuna
 
   if dataset.task_type == "regression":
@@ -729,29 +733,36 @@ def tune_hyperparameters(model_name, dataset, seed, preprocessor, n_trials, mode
     load_if_exists=True,
   )
   completed = len(study.get_trials(deepcopy=False, states=(optuna.trial.TrialState.COMPLETE,)))
+  if progress:
+    progress.register_study(dataset.dataset_name, model_name, study)
   remaining = max(0, n_trials - completed)
   print("Optuna", study.study_name, "completed", completed, "remaining", remaining)
   if remaining and not optuna_patience_reached(study, optuna_patience):
     study.optimize(
-      lambda trial: objective(trial, model_name, dataset, seed, preprocessor, model_config),
+      lambda trial: objective(trial, model_name, dataset, seed, preprocessor, model_config, progress),
       n_trials=remaining,
-      callbacks=[lambda study, trial: stop_optuna_if_no_improvement(study, trial, optuna_patience)],
+      callbacks=([lambda study, trial: progress.trial_finished(dataset.dataset_name, model_name, study, trial)] if progress else [])
+                + [lambda study, trial: stop_optuna_if_no_improvement(study, trial, optuna_patience)],
     )
   elif remaining:
     print("Optuna", study.study_name, "already stopped: no improvement for", optuna_patience, "trials")
 
+  if progress:
+    progress.tuning_finished(dataset.dataset_name, model_name)
   return {**study.best_trial.user_attrs["config"], **(model_config or {})}
 
-def run_experiment(model_name, dataset, seed, config, preprocessor):
+def run_experiment(model_name, dataset, seed, config, preprocessor, progress=None):
   model_name = model_name.lower()
   X_train, X_val, X_test, y_train, y_val, y_test = prepare_data(model_name, dataset, preprocessor)
 
   model = build_model(model_name, dataset.task_type, config, seed)
   if model_name == "catboost":
     model.set_params(cat_features=dataset.categorical_columns)
-  model = fit_model(model, model_name, X_train, X_val, y_train, y_val)
+  with (progress.measure(dataset.dataset_name, model_name, seed=seed) if progress else nullcontext()):
+    model = fit_model(model, model_name, X_train, X_val, y_train, y_val)
 
-  y_pred = model.predict(X_test)
+  with (progress.measure(dataset.dataset_name, model_name, operation="predict", seed=seed) if progress else nullcontext()):
+    y_pred = model.predict(X_test)
 
   metric_name, metric_value = compute_metric(dataset.task_type, y_test, y_pred)
 
