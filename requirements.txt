@@ -1,0 +1,6 @@
+# CUDA PyTorch is installed separately; see README.md.
+numpy
+pandas
+scikit-learn>=1.2
+optuna
+catboost
