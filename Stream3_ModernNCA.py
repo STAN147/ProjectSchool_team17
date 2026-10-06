@@ -40,11 +40,13 @@ class ModernNCAEncoder(nn.Module):
         if in_dim == 0:
             raise ValueError("Модель не может обучаться без признаков.")
         
-        layers = []
-        curr_dim = in_dim
+        layers = [nn.Linear(in_dim, embed_dim)]
+        curr_dim = embed_dim
         for _ in range(num_layers):
             layers.append(ModernNCABlock(curr_dim, hidden_dim, embed_dim, dropout_rate))
             curr_dim = embed_dim
+        if num_layers > 0:
+            layers.append(nn.BatchNorm1d(embed_dim))
         
         self.network = nn.Sequential(*layers)
 
