@@ -83,7 +83,7 @@ def parse_args():
     hardware = parser.add_mutually_exclusive_group(required=True)
     hardware.add_argument("--gpu", type=gpu_index, help="Физический индекс выделенной GPU; внутри процесса будет cuda:0")
     hardware.add_argument("--device", choices=["cpu"], help="Запуск на CPU")
-    parser.add_argument("--datasets", nargs="+", choices=[name for group in USER_DATASETS.values() for name in group], metavar="DATASET", help="Конкретные датасеты вместо всей группы")
+    parser.add_argument("--datasets", nargs="+", choices=[name for group in USER_DATASETS.values() for name in group] + ["walking-activity"], metavar="DATASET", help="Конкретные датасеты вместо всей группы")
     parser.add_argument("--models", nargs="+", choices=["modernnca", "catboost", "mlp", "xgboost"], default=["modernnca", "catboost"])
     parser.add_argument("--results-dir", default="results", help="Каталог результатов относительно папки проекта")
     parser.add_argument("--n-trials", type=positive_int, default=100)
