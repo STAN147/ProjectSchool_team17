@@ -52,9 +52,11 @@ class RunProgress:
             pairs = train_pairs + val * min(train, 100000)
             for model in config["models"]:
                 key = (dataset, model)
-                self.pending[key] = {"trials": config["n_trials"], "final": len(config["seeds"])}
+                self.pending[key] = {"trials": config["n_trials"], "final": len(config["seeds"]),
+                                     "pretrain": int(model == "encoder_catboost")}
                 self.weights[key] = {
                     "train": max(1, pairs if model == "modernnca" else n),
+                    "pretrain": max(1, pairs),
                     "predict": max(1, test * min(train, 1000000) if model == "modernnca" else test),
                 }
         folder = Path(config["results_dir"])
@@ -85,12 +87,18 @@ class RunProgress:
                 unknown.add(model)
                 continue
             remaining += fits * self.weights[key]["train"] * sum(train_rates) / len(train_rates)
+            if model == "encoder_catboost":
+                rates = self.rates[(model, "pretrain")]
+                if not rates:
+                    unknown.add(model)
+                else:
+                    remaining += (pending["pretrain"] + pending["final"]) * self.weights[key]["pretrain"] * sum(rates) / len(rates)
             predict_rates = self.rates[(model, "predict")]
             if predict_rates:
                 remaining += pending["final"] * self.weights[key]["predict"] * sum(predict_rates) / len(predict_rates)
         if unknown:
             return None, sorted(unknown)
-        if self.current and self.current["operation"] in ("train", "predict"):
+        if self.current and self.current["operation"] in ("train", "predict", "pretrain"):
             key = (self.current["dataset"], self.current["model"])
             operation = self.current["operation"]
             rates = self.rates[(key[1], operation)]
@@ -113,11 +121,12 @@ class RunProgress:
             "elapsed_seconds": round(time.monotonic() - self.started, 3), "current": current,
             "remaining_trials_limit": sum(job["trials"] for job in self.pending.values()),
             "remaining_final_runs": sum(job["final"] for job in self.pending.values()),
+            "remaining_encoder_pretrains": sum(job["pretrain"] + (job["final"] if key[1] == "encoder_catboost" else 0) for key, job in self.pending.items()),
             "estimated_remaining_seconds": round(remaining, 3) if remaining is not None else None,
             "estimated_finish_utc": finish.isoformat() if finish else None,
             "estimated_finish_moscow": finish.astimezone(timezone(timedelta(hours=3))).isoformat() if finish else None,
             "waiting_for_model_timings": unknown,
-            "eta_note": "Rough estimate for this user, using measured fit times and remaining trial cap. NCA scales by train/validation pair counts; other models by rows. Early stopping, parameters and features can change it. Test cost is added after its first measurement; loading/preprocessing is not forecast.",
+            "eta_note": "Rough estimate for this user, using measured times and remaining trial cap. NCA training/pretraining scales by pair counts; CatBoost head fits and other models by rows. Hybrid pretraining is counted separately from head tuning. Early stopping, parameters and features can change it. Test cost is added after its first measurement; loading/preprocessing is not forecast.",
             "timings_file": str(self.timings_path),
         }
         temporary = self.path.with_suffix(f".{os.getpid()}.tmp")
@@ -161,7 +170,7 @@ class RunProgress:
         finally:
             timing.update(finished_at=now().isoformat(), seconds=round(time.monotonic() - clock, 6))
             with self.lock:
-                if timing["status"] == "finished" and operation in ("train", "predict"):
+                if timing["status"] == "finished" and operation in ("train", "predict", "pretrain"):
                     self.rates[(model, operation)].append(timing["seconds"] / self.weights[(dataset, model)][operation])
                 with self.timings_path.open("a", encoding="utf-8", newline="") as output:
                     csv.DictWriter(output, fieldnames=self.columns).writerow(timing)
@@ -174,6 +183,8 @@ class RunProgress:
             complete = [trial for trial in study.get_trials(deepcopy=False) if trial.state.name == "COMPLETE"]
             self.pending[(dataset, model)]["trials"] = max(0, self.trial_limit - len(complete))
             if study.study_name not in self.history_loaded:
+                if model == "encoder_catboost" and "encoder_pretraining_seconds" in study.user_attrs:
+                    self.rates[(model, "pretrain")].append(study.user_attrs["encoder_pretraining_seconds"] / self.weights[(dataset, model)]["pretrain"])
                 for trial in complete:
                     seconds = trial.user_attrs.get("training_seconds")
                     if seconds is None and trial.duration is not None:
@@ -193,7 +204,13 @@ class RunProgress:
     def tuning_finished(self, dataset, model):
         with self.lock:
             self.pending[(dataset, model)]["trials"] = 0
+            self.pending[(dataset, model)]["pretrain"] = 0
             self.report(f"TUNING_FINISHED dataset={dataset} model={model}")
+
+    def pretraining_finished(self, dataset, model):
+        with self.lock:
+            self.pending[(dataset, model)]["pretrain"] = 0
+            self._write()
 
     def final_finished(self, dataset, model):
         with self.lock:
@@ -208,7 +225,7 @@ class RunProgress:
             self.status, self.error, self.current = status, error, None
             if status == "finished":
                 for job in self.pending.values():
-                    job.update(trials=0, final=0)
+                    job.update(trials=0, final=0, pretrain=0)
             self.stop.set()
             self.report(status.upper())
         self.thread.join()

@@ -84,7 +84,7 @@ def parse_args():
     hardware.add_argument("--gpu", type=gpu_index, help="Физический индекс выделенной GPU; внутри процесса будет cuda:0")
     hardware.add_argument("--device", choices=["cpu"], help="Запуск на CPU")
     parser.add_argument("--datasets", nargs="+", choices=[name for group in USER_DATASETS.values() for name in group] + ["walking-activity"], metavar="DATASET", help="Конкретные датасеты вместо всей группы")
-    parser.add_argument("--models", nargs="+", choices=["modernnca", "catboost", "mlp", "xgboost"], default=["modernnca", "catboost"])
+    parser.add_argument("--models", nargs="+", choices=["modernnca", "catboost", "encoder_linear", "encoder_catboost", "mlp", "xgboost"], default=["modernnca", "catboost"])
     parser.add_argument("--results-dir", default="results", help="Каталог результатов относительно папки проекта")
     parser.add_argument("--n-trials", type=positive_int, default=100)
     parser.add_argument("--n-seeds", type=positive_int, default=15)
@@ -114,9 +114,10 @@ def main():
     from Stream2_Preprocessing import TabularPreprocessor, PLREmbeddings
     from Stream3_ModernNCA import ModernNCAEncoder
     from Stream4_Train import Trainer
+    from Stream5_NeuralHeads import LinearHeadTrainer, CatBoostEmbeddingTrainer
     from steram5 import (
         compute_metric, optuna_patience_reached, stop_optuna_if_no_improvement,
-        tune_hyperparameters, run_experiment,
+        tune_hyperparameters, run_experiment, suggest_params, build_model, fit_model,
     )
 
     device = torch.device("cuda:0" if args.gpu is not None else "cpu")
@@ -180,7 +181,35 @@ def main():
         )
 
 
-    def tune_modern_nca(dataset_run, train_run, val_run):
+    def build_trainer(model_name, params, seed, train, dataset):
+        encoder = build_modern_nca(params, seed, train)
+        if model_name == "modernnca":
+            return Trainer(encoder, params)
+        if model_name == "encoder_linear":
+            return LinearHeadTrainer(encoder, params, dataset.task_type, dataset.n_classes)
+        return CatBoostEmbeddingTrainer(encoder, params, dataset.task_type, dataset.n_classes, seed)
+
+
+    def fit_trainer(trainer, model_name, params, dataset, train_data, val_data):
+        if model_name == "modernnca":
+            return trainer.fit(train_data, config["max_epochs"], params["sample_rate"], dataset.task_type, dataset.n_classes, val_data)
+        return trainer.fit(train_data, val_data, config["max_epochs"])
+
+
+    saved_configs = {}
+
+    def fixed_nca_params(dataset_name):
+        if dataset_name not in saved_configs:
+            from saved_nca_params import load_modernnca_config
+            saved_configs[dataset_name] = {
+                **load_modernnca_config(dataset_name), "device": str(device),
+                "batch_size": config["batch_size"], "patience": config["patience"], "verbose": False,
+            }
+            print("Loaded best ModernNCA parameters", dataset_name, "from modernnca_best_params.json", flush=True)
+        return saved_configs[dataset_name].copy()
+
+
+    def tune_encoder(model_name, dataset_run, train_run, val_run):
         train_data = (train_run.x_num, train_run.x_cat, train_run.y)
         val_data = (val_run.x_num, val_run.x_cat, val_run.y)
         nca_params = {
@@ -189,8 +218,20 @@ def main():
             "patience": config["patience"],
             "verbose": False,
         }
+        prepared_embeddings = None
 
         def nca_objective(trial):
+            if model_name == "encoder_catboost":
+                # Only the CatBoost head is tuned; the NCA config and embeddings are fixed.
+                params = {**fixed_nca_params(dataset_run.dataset_name),
+                          "catboost": {**suggest_params(trial, "catboost"), **baseline_configs["catboost"]}}
+                trial.set_user_attr("config", params)
+                model = build_model("catboost", dataset_run.task_type, params["catboost"], config["tune_seed"])
+                with progress.measure(dataset_run.dataset_name, model_name, phase="optuna", trial=trial.number, seed=config["tune_seed"]) as timing:
+                    fit_model(model, "catboost", *prepared_embeddings, train_run.y.cpu().numpy(), val_run.y.cpu().numpy())
+                trial.set_user_attr("training_seconds", timing["seconds"])
+                _, score = compute_metric(dataset_run.task_type, val_run.y.cpu().numpy(), model.predict(prepared_embeddings[1]))
+                return score
             params = {
                 **nca_params,
                 # TALENT/configs/opt_space/modernNCA.json; имена параметров нашего энкодера.
@@ -201,14 +242,14 @@ def main():
                 "n_frequencies": trial.suggest_int("n_frequencies", 16, 96),
                 "frequency_scale": trial.suggest_float("frequency_scale", 0.005, 10.0, log=True),
                 "plr_dim": trial.suggest_int("plr_dim", 16, 64),
-                "sample_rate": trial.suggest_float("sample_rate", 0.05, 0.6),
+                **({"sample_rate": trial.suggest_float("sample_rate", 0.05, 0.6)} if model_name == "modernnca" else {}),
                 "lr": trial.suggest_float("lr", 1e-5, 0.1, log=True),
                 "weight_decay": trial.suggest_float("weight_decay", 1e-6, 1e-3, log=True) if trial.suggest_categorical("optional_weight_decay", [False, True]) else 0.0,
             }
             trial.set_user_attr("config", params)
-            trainer_trial = Trainer(build_modern_nca(params, config["tune_seed"], train_run), params)
-            with progress.measure(dataset_run.dataset_name, "modernnca", phase="optuna", trial=trial.number, seed=config["tune_seed"]) as timing:
-                trainer_trial.fit(train_data, config["max_epochs"], params["sample_rate"], dataset_run.task_type, dataset_run.n_classes, val_data)
+            trainer_trial = build_trainer(model_name, params, config["tune_seed"], train_run, dataset_run)
+            with progress.measure(dataset_run.dataset_name, model_name, phase="optuna", trial=trial.number, seed=config["tune_seed"]) as timing:
+                fit_trainer(trainer_trial, model_name, params, dataset_run, train_data, val_data)
             trial.set_user_attr("training_seconds", timing["seconds"])
             return trainer_trial.best_score
 
@@ -216,42 +257,53 @@ def main():
             direction="minimize" if dataset_run.task_type == "regression" else "maximize",
             sampler=optuna.samplers.TPESampler(seed=config["tune_seed"]),
             storage=optuna_storage,
-            study_name=f"{dataset_run.dataset_name}:modernnca:{tuning_tag}",
+            study_name=get_study_name(dataset_run.dataset_name, model_name),
             load_if_exists=True,
         )
         completed = len(study.get_trials(deepcopy=False, states=(optuna.trial.TrialState.COMPLETE,)))
-        progress.register_study(dataset_run.dataset_name, "modernnca", study)
+        progress.register_study(dataset_run.dataset_name, model_name, study)
         remaining = max(0, config["n_trials"] - completed)
         print("Optuna", study.study_name, "completed", completed, "remaining", remaining)
         if remaining and not optuna_patience_reached(study, config["optuna_patience"]):
+            if model_name == "encoder_catboost":
+                params = {**fixed_nca_params(dataset_run.dataset_name), "catboost": baseline_configs["catboost"]}
+                trainer_tune = build_trainer(model_name, params, config["tune_seed"], train_run, dataset_run)
+                with progress.measure(dataset_run.dataset_name, model_name, phase="optuna", operation="pretrain", seed=config["tune_seed"]) as timing:
+                    prepared_embeddings = trainer_tune.fit_encoder(train_data, val_data, config["max_epochs"])
+                study.set_user_attr("encoder_pretraining_seconds", timing["seconds"])
+                progress.pretraining_finished(dataset_run.dataset_name, model_name)
+                del trainer_tune
             study.optimize(
                 nca_objective,
                 n_trials=remaining,
-                callbacks=[lambda study, trial: progress.trial_finished(dataset_run.dataset_name, "modernnca", study, trial),
+                callbacks=[lambda study, trial: progress.trial_finished(dataset_run.dataset_name, model_name, study, trial),
                            lambda study, trial: stop_optuna_if_no_improvement(study, trial, config["optuna_patience"])],
             )
         elif remaining:
             print("Optuna", study.study_name, "already stopped: no improvement for", config["optuna_patience"], "trials")
-        progress.tuning_finished(dataset_run.dataset_name, "modernnca")
+        progress.tuning_finished(dataset_run.dataset_name, model_name)
         return {**study.best_trial.user_attrs["config"], "device": str(device)}
 
 
-    def run_modern_nca(seed, dataset_run, train_run, val_run, test_run, params):
+    def run_encoder(model_name, seed, dataset_run, train_run, val_run, test_run, params):
         train_data = (train_run.x_num, train_run.x_cat, train_run.y)
         val_data = (val_run.x_num, val_run.x_cat, val_run.y)
-        model = build_modern_nca(params, seed, train_run)
-        trainer = Trainer(model, params)
-        with progress.measure(dataset_run.dataset_name, "modernnca", seed=seed):
-            trainer.fit(train_data, config["max_epochs"], params["sample_rate"], dataset_run.task_type, dataset_run.n_classes, val_data)
-        print(dataset_run.dataset_name, "modernnca", seed, "best epoch", trainer.best_epoch, "epochs trained", trainer.epochs_trained)
+        trainer = build_trainer(model_name, params, seed, train_run, dataset_run)
+        if model_name == "encoder_catboost":
+            with progress.measure(dataset_run.dataset_name, model_name, operation="pretrain", seed=seed):
+                embeddings = trainer.fit_encoder(train_data, val_data, config["max_epochs"])
+            with progress.measure(dataset_run.dataset_name, model_name, seed=seed):
+                trainer.fit_head(*embeddings, train_run.y, val_run.y)
+        else:
+            with progress.measure(dataset_run.dataset_name, model_name, seed=seed):
+                fit_trainer(trainer, model_name, params, dataset_run, train_data, val_data)
+        print(dataset_run.dataset_name, model_name, seed, "best encoder epoch", trainer.best_epoch, "epochs trained", trainer.epochs_trained)
 
-        with progress.measure(dataset_run.dataset_name, "modernnca", operation="predict", seed=seed):
-            predictions = trainer.predict(
-                train_data,
-                (test_run.x_num, test_run.x_cat),
-                dataset_run.task_type,
-                dataset_run.n_classes,
-            )
+        with progress.measure(dataset_run.dataset_name, model_name, operation="predict", seed=seed):
+            if model_name == "modernnca":
+                predictions = trainer.predict(train_data, (test_run.x_num, test_run.x_cat), dataset_run.task_type, dataset_run.n_classes)
+            else:
+                predictions = trainer.predict((test_run.x_num, test_run.x_cat))
 
         if dataset_run.task_type in ("binary", "multiclass"):
             predictions = predictions.argmax(dim=1)
@@ -261,10 +313,10 @@ def main():
             test_run.y.cpu().numpy(),
             predictions.cpu().numpy(),
         )
-        print(dataset_run.dataset_name, "modernnca", seed, metric_name, metric_value)
+        print(dataset_run.dataset_name, model_name, seed, metric_name, metric_value)
         return {
             "dataset": dataset_run.dataset_name,
-            "model": "modernnca",
+            "model": model_name,
             "seed": seed,
             "task_type": dataset_run.task_type,
             "metric": metric_name,
@@ -273,7 +325,8 @@ def main():
         }
 
 
-    baseline_names = [name for name in config["models"] if name != "modernnca"]
+    neural_names = [name for name in config["models"] if name in ("modernnca", "encoder_linear", "encoder_catboost")]
+    baseline_names = [name for name in config["models"] if name not in neural_names]
     baseline_configs = {
         "catboost": {"iterations": config["max_boost_rounds"], "early_stopping_rounds": config["early_stopping_rounds"]},
         "xgboost": {"n_estimators": config["max_boost_rounds"], "early_stopping_rounds": config["early_stopping_rounds"]},
@@ -296,6 +349,14 @@ def main():
     if device.type == "cuda":
         tuning_settings["device"] = device.type  # Подбор CPU и GPU хранится отдельно.
     tuning_tag = hashlib.sha256(json.dumps(tuning_settings, sort_keys=True).encode()).hexdigest()[:12]
+
+    def get_study_name(dataset_name, model_name):
+        version = ""
+        if model_name == "encoder_catboost":
+            param_tag = hashlib.sha256(json.dumps(fixed_nca_params(dataset_name), sort_keys=True).encode()).hexdigest()[:12]
+            version = f":fixed-nca-v2:{param_tag}"
+        return f"{dataset_name}:{model_name}:{tuning_tag}{version}"
+
     results_path = results_dir / f"benchmark_{args.user}_{datetime.now(timezone.utc):%Y%m%d_%H%M%S_%fZ}.csv"
 
     with results_path.open("x", encoding="utf-8", newline="") as output:
@@ -305,7 +366,7 @@ def main():
     for dataset_name in config["datasets"]:
         for model_name in config["models"]:
             try:
-                study = optuna.load_study(study_name=f"{dataset_name}:{model_name}:{tuning_tag}", storage=optuna_storage)
+                study = optuna.load_study(study_name=get_study_name(dataset_name, model_name), storage=optuna_storage)
             except KeyError:
                 continue
             progress.register_study(dataset_name, model_name, study)
@@ -324,8 +385,8 @@ def main():
             dataset_tune, prep_tune, train_tune, val_tune, test_tune = prepare_run(dataset_name, config["tune_seed"])
         best_params = {}
 
-        if "modernnca" in config["models"]:
-            best_params["modernnca"] = tune_modern_nca(dataset_tune, train_tune, val_tune)
+        for model_name in neural_names:
+            best_params[model_name] = tune_encoder(model_name, dataset_tune, train_tune, val_tune)
 
         for model_name in baseline_names:
             best_params[model_name] = tune_hyperparameters(
@@ -345,8 +406,8 @@ def main():
             with progress.measure(dataset_name, phase="prepare", operation="prepare", seed=seed):
                 dataset_run, prep_run, train_run, val_run, test_run = prepare_run(dataset_name, seed)
 
-            if "modernnca" in config["models"]:
-                save_metric(run_modern_nca(seed, dataset_run, train_run, val_run, test_run, best_params["modernnca"]))
+            for model_name in neural_names:
+                save_metric(run_encoder(model_name, seed, dataset_run, train_run, val_run, test_run, best_params[model_name]))
 
             for model_name in baseline_names:
                 result = run_experiment(
