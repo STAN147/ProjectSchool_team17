@@ -1,0 +1,3 @@
+# Preserve archived evidence byte-for-byte across Windows and Linux.
+results/*.csv -text -diff
+results/*.log -text -diff

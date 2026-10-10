@@ -3,4 +3,8 @@ __pycache__/
 .venv/
 .ipynb_checkpoints/
 catboost_info/
-results/
+results/*
+!results/benchmark_all_30_datasets_4_models_1800_results.csv
+!results/benchmark_all_30_datasets_4_models_full.log
+!results/optuna.db
+runs/

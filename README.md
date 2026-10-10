@@ -1,106 +1,70 @@
-# ProjectSchool_team17
+# Tabular learning: ModernNCA and encoder heads
 
-Запуск на сервере — обычным Python-скриптом `run_benchmark.py`, без Jupyter.
-В скрипте сохранено распределение 29 датасетов между `user1`–`user5`, без `walking-activity`.
-По умолчанию: ModernNCA и CatBoost, максимум 100 trials Optuna, остановка после
-10 trials без улучшения, затем 15 сидов; `hidden_dim` и `embed_dim` — 64–512.
+[Русская версия](README.ru.md)
 
-Один раз установите зависимости в своей копии репозитория (Python 3.12):
+Research comparison of four models on 30 tabular datasets, including `walking-activity`: 15 seeds per dataset and model, 1,800 test evaluations. The repository contains data, experiment code and archived evidence.
+
+## Models
+
+| CLI name | Method |
+| --- | --- |
+| `modernnca` | Neural encoder with numerical PLR embeddings and a differentiable distance-weighted neighbor predictor. |
+| `catboost` | CatBoost on original features, with native categorical handling. |
+| `encoder_linear` | Encoder and linear head trained jointly; cross-entropy for classification, one output for regression. |
+| `encoder_catboost` | Encoder trained with the ModernNCA neighbor objective, then frozen; CatBoost fitted on its embeddings. |
+
+The hybrid always takes encoder hyperparameters from `modernnca_best_params.json`. During head tuning, embeddings are computed once; final evaluations retrain the encoder for each seed. Saved hyperparameters are not trained network weights.
+
+## Protocol
+
+- 20 classification and 10 regression datasets. Exact names are the keys of `modernnca_best_params.json`. Five predefined user groups cover 29 datasets; `walking-activity` is separate.
+- Each seed generates a 64%/16%/20% train/validation/test split, stratified for classification. Neural preprocessing is fitted on train: mean imputation and standardization for numerical features; a missing-value category and one-hot encoding for categorical inputs.
+- Optuna TPE uses validation accuracy (maximize) or RMSE (minimize), tuning seed 0, at most 100 trials, and stops after 10 consecutive trials without improvement. The hybrid reuses ModernNCA encoder parameters and tunes its CatBoost head separately.
+- Final test evaluations use seeds 0–14. Neural training: up to 200 epochs, patience 20, batch size 1,024. CatBoost: up to 2,000 iterations, early stopping patience 50.
+- `hidden_dim` and `embed_dim` search bounds are 64–512. This change and the additional heads make this an adaptation, rather than an exact reproduction of the reference paper, included as [KNN.pdf](KNN.pdf).
+
+## Setup and execution
+
+Run from the repository root on Linux. Server runs used Python 3.12, PyTorch 2.5.1 with CUDA 12.1, and NVIDIA RTX A4000 GPUs (16 GB). Other dependencies in `requirements.txt` are not fully version-locked.
 
 ```bash
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
 python -m pip install -r requirements.txt
-```
-
-Запуск из папки проекта:
-
-```bash
 tmux new -s benchmark
-source .venv/bin/activate
-python -u run_benchmark.py --user user1 --gpu 0 2>&1 | tee -a run_user1.log
 ```
 
-Замените `user1` своим номером группы и `0` физическим индексом согласованной GPU.
-Скрипт сам устанавливает `CUDA_VISIBLE_DEVICES`: редактировать `device` и ноутбук не нужно.
-Зависимости можно устанавливать внутри этой же сессии tmux, чтобы обрыв SSH не прерывал установку.
-
-Конкретный датасет вместо всей группы:
+Example: four models on one dataset, using an assigned GPU:
 
 ```bash
-python -u run_benchmark.py --user user3 --gpu 2 --datasets stock
+python -u run_benchmark.py --user user3 --gpu 0 --datasets stock \
+  --models modernnca catboost encoder_linear encoder_catboost \
+  --results-dir runs/stock 2>&1 | tee runs_stock.log
 ```
 
-Совсем короткий запуск: `--user user3 --gpu 2 --smoke` (stock, 1 trial,
-1 сид, 1 эпоха, 2 дерева). Другие флаги: `--n-trials`, `--n-seeds`,
-`--max-epochs`, `--max-boost-rounds`, `--optuna-patience`, `--cpu-threads`,
-`--results-dir`; для CPU — `--device cpu` вместо `--gpu`.
-Можно выбрать `--models modernnca catboost mlp xgboost`; для XGBoost дополнительно
-установите `xgboost>=2`. По умолчанию запускаются только ModernNCA и CatBoost.
+Omit `--datasets` for the group assigned to `--user user1`–`user5`; use `--datasets walking-activity` for the separate dataset. `--gpu` selects the physical GPU index. Each person should use their own checkout and an agreed GPU. By default, only `modernnca catboost` are selected.
 
-Отключиться без остановки: Ctrl+B, затем D. Вернуться после `ssh`:
-`tmux attach -t benchmark`. Ход выполнения: `tail -f run_user1.log`.
+Add `--smoke` for a minimal check: one trial, one seed, one epoch, two trees; dataset defaults to `stock`. For CPU, replace `--gpu 0` with `--device cpu`. Other options: `python run_benchmark.py --help`. Detach from tmux with Ctrl+B, then D; reconnect with `tmux attach -t benchmark`.
 
-Каждая метрика сразу записывается в `results/benchmark_userN_*.csv`, история Optuna —
-в `results/optuna.db`; каталог создаётся автоматически. Каждому участнику нужна своя
-копия репозитория. После прерывания повторите ту же команду: завершённые trials Optuna
-используются повторно, финальные прогоны по сидам начинаются заново. При изменении
-параметров обучения или пространства поиска создаётся отдельное исследование.
+Use a fresh `--results-dir runs/<name>` for new experiments to preserve the tracked archive. Outputs include metrics CSV, timing CSV, progress JSON and `optuna.db`. Console logs show dataset/model/stage, elapsed time and an evolving completion estimate; capture them with `tee`. Repeating a command in the same directory reuses compatible Optuna studies; final seed evaluations run again.
 
-При обучении скрипт пишет начало, конец и длительность каждого trial/сида, а также
-сообщение раз в 60 секунд: датасет, модель, текущий этап и прошедшее время.
-Интервал можно изменить флагом `--log-interval 30`. Сообщения попадают в тот же
-`run_userN.log` через `tee`.
+## Archived evidence
 
-Прогресс и примерное время окончания своего запуска (UTC и Москва):
+| File in `results/` | Contents |
+| --- | --- |
+| `benchmark_all_30_datasets_4_models_1800_results.csv` | Final metrics, seeds, configurations, sources and available timing measurements. |
+| `benchmark_all_30_datasets_4_models_full.log` | Consolidated source logs and timing records. |
+| `optuna.db` | Merged tuning history: 120 studies, 30 datasets, four models, 2,707 trials. |
+
+The final CSV is the metric record. The database preserves available archived studies; older logs can contain other runs of the same study. Detailed training/inference timing is available for `walking-activity` and the two encoder-head models. Other earlier runs have Optuna logs only; blank timing fields mean unavailable measurements. Inference timings measure test-batch prediction, not single-request latency.
+
+Compare mean scores across seeds within each dataset: higher accuracy and lower RMSE are better. Do not average raw accuracy and RMSE across tasks. Subset selection, changing splits across seeds, unpinned dependencies and shared-server load limit generalization and exact timing reproducibility.
+
+## Code and checks
+
+`Stream1_DataExtraction.py`: loading/splits; `Stream2_Preprocessing.py`: features; `Stream3_ModernNCA.py`: encoder; `Stream4_Train.py`: neighbor training; `Stream5_NeuralHeads.py`: alternative heads; `steram5.py`: baseline/tuning utilities. `run_benchmark.py` is the CLI entry point, `run_progress.py` handles timing/progress, and `Pipeline.ipynb` provides interactive execution.
 
 ```bash
-watch -n 10 cat results/progress_user4.json
+python -m unittest discover -s tests
 ```
-
-Замените `user4` своим номером. `status` показывает `running`, `finished`, `failed`
-или `interrupted`; `updated_at` позволяет заметить устаревший статус после аварийного
-завершения процесса. Длительности этапов сохраняются отдельно в
-`results/timings_userN_*.csv`, включая обучение Optuna и финальных сидов.
-
-ETA появляется после замеров всех выбранных моделей, либо использует историю
-совместимых исследований Optuna. Это приблизительная оценка по оставшемуся лимиту
-trials: ранняя остановка, параметры, число признаков и нагрузка сервера влияют на время.
-Для NCA учитывается число пар объектов, для остальных моделей — число строк;
-стоимость тестирования добавляется после первого замера, подготовка данных не прогнозируется.
-Статус относится только к своему запуску. Новые логи появятся при следующих запусках;
-уже работающие процессы после `git pull` не изменятся.
-
-Два дополнительных варианта того же небольшого энкодера:
-
-```bash
-python -u run_benchmark.py --user user4 --gpu 4 --models encoder_linear encoder_catboost
-```
-
-`encoder_linear`: энкодер и линейная голова обучаются совместно через backprop.
-В классификации — logits и cross-entropy при обучении, softmax при предсказании;
-в регрессии — один линейный выход и MSE.
-
-`encoder_catboost`: сначала энкодер обучается ровно через ModernNCA — тот же
-мягкий поиск соседей, SNS и loss из `Stream4_Train.Trainer`. Затем восстанавливается
-лучшая эпоха, энкодер фиксируется, и CatBoost обучается на его эмбеддингах. Градиента CatBoost
-через энкодер нет: обычные деревья не являются дифференцируемой головой.
-Для обеих стадий есть ранняя остановка на validation. Параметры энкодера, включая
-`sample_rate`, всегда берутся из `modernnca_best_params.json`: 30 лучших наборов
-гиперпараметров ModernNCA, по одному на датасет. Это единственная схема
-`encoder_catboost`: если файла или параметров датасета нет, запуск завершится
-с ошибкой. Файл читается без изменений. Это параметры обучения, не веса энкодера.
-Перед подбором CatBoost энкодер обучается один раз с tune seed, затем Optuna
-подбирает только CatBoost на фиксированных эмбеддингах. На каждом финальном сиде
-энкодер обучается заново с готовыми параметрами ModernNCA. Новые trials сохраняются
-в базе каталога результатов; версия исследования `fixed-nca-v2` и хеш параметров
-отделяют их от старых запусков. В логах время предобучения и обучения CatBoost
-учитывается отдельно. У `encoder_linear` собственного `sample_rate` нет.
-
-Новые варианты используют те же разбиения, сиды, лимиты обучения, сохранение
-метрик, продолжение Optuna и логи времени. Имена исследований отличаются от
-исходных моделей. Обучение выполняется заново для каждого финального сида.
-Можно сравнить все четыре через
-`--models modernnca catboost encoder_linear encoder_catboost`.
-Состав моделей по умолчанию остаётся прежним: ModernNCA и обычный CatBoost.
